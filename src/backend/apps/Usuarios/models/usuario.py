@@ -9,5 +9,5 @@ class Usuario(models.Model):
             db_table = 'Usuario'
             
     def __str__(self):
-        return f"{self.user.username} ({self.persona.primer_nombre})"
+        return f"{self.user.username}"
     
