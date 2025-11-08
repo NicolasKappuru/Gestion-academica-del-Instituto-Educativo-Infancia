@@ -3,7 +3,13 @@ from django.db import models
 from .persona import Persona
 from .acudiente import Acudiente
 
-class Estudiante(Persona):
+class Estudiante(models.Model):
+    models.OneToOneField(
+        Persona,
+        on_delete=models.CASCADE,  
+        primary_key=True,          
+        related_name='estudiante'        
+    )
     fecha_nacimiento = models.DateField()
     acudiente = models.ForeignKey(
         Acudiente,
