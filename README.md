@@ -7,6 +7,11 @@ python -m venv env
 ## Para activar el entorno (en windows)
 .\env\Scripts\Activate.ps1
 
+## Migrar la BD, una vez que la tengas creada en postgres con las mismas credenciales que se encuentran en el core/setting.py. A continuacion un ejemplo con el componente de usuarios. 
+
+python manage.py makemigrations usuarios
+python manage.py migrate
+
 
 
 

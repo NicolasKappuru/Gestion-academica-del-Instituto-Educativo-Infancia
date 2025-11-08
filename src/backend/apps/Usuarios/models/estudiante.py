@@ -7,8 +7,9 @@ class Estudiante(Persona):
     fecha_nacimiento = models.DateField()
     acudiente = models.ForeignKey(
         Acudiente,
-        on_delete=models.CASCADE,
-        related_name='estudiantes'
+        on_delete=models.SET_NULL,  # si borras al acudiente, el estudiante sigue existiendo
+        null=True,
+        related_name='estudiantes'  # permite acceder a los estudiantes desde el acudiente
     )
     class Meta:
         db_table = 'Estudiante'

@@ -12,7 +12,7 @@ class Persona(models.Model):
 
     class Meta:
         db_table = 'Persona'
-        abstract = False
+        abstract = True
 
     def __str__(self):
         return f"{self.primer_nombre} {self.primer_apellido}"
