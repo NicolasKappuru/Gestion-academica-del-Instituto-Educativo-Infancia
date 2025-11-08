@@ -3,4 +3,6 @@ from django.db import models
 from .persona import Persona
 
 class AdministradorDeUsuarios(Persona):
-    pass
+    
+    class Meta:
+        db_table = 'Administrador_de_usuarios'

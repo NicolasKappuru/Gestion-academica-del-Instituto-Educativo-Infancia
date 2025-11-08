@@ -11,6 +11,7 @@ class Persona(models.Model):
     usuario = models.OneToOneField(Usuario, on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
+        db_table = 'Persona'
         abstract = False
 
     def __str__(self):

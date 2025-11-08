@@ -3,7 +3,10 @@ from django.db import models
 from .persona import Persona
 
 class Acudiente(Persona):
-    estudiantes = models.ManyToManyField('Estudiante', related_name='acudientes')
+    
+    class Meta:
+        db_table = 'Acudiente'
 
-    def agregar_estudiante(self, acudido):
-        self.estudiantes.add(acudido)
+    def agregar_estudiante(self, estudiante):
+            estudiante.acudiente = self
+            estudiante.save()
