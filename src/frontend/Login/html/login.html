@@ -3,17 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+  <!-- Estilos separados -->
   <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" href="../../header/header.css">
+  <link rel="stylesheet" href="../../footer/footer.css">
 </head>
-<body>
-  <h2>Iniciar Sesión</h2>
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="Usuario" required>
-    <input type="password" id="password" placeholder="Contraseña" required>
-    <button type="submit">Entrar</button>
-  </form>
 
-  <p id="message"></p>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="main-header">
+    <div class="header-logo">
+      <div class="logo-circle"></div>
+      <div class="logo-text">
+        <h1>Instituto educativo</h1>
+        <h2>Infancia</h2>
+      </div>
+    </div>
+
+    <nav class="header-nav">
+      <a href="../../index.html" class="nav-link">Inicio</a>
+      <span class="nav-link">Contacto</span>
+      <div class="nav-box">
+        <span class="nav-icon">📅</span>
+      </div>
+      <a href="./login.html" class="nav-link login-link">
+        Iniciar sesión
+      </a>
+    </nav>
+
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm">
+      <label for="username">Usuario</label>
+      <input type="text" id="username" placeholder="Usuario" required>
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" placeholder="Contraseña" required>
+
+      <button type="submit">Ingresar</button>
+      <p class="forgot-password"><a href="#">¿Olvidaste tu contraseña?</a></p>
+    </form>
+
+    <p id="message"></p>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="main-footer">
+    <div class="footer-section">Somos una institución sobre...</div>
+    <div class="footer-section">Redes...</div>
+    <div class="footer-section">Cosas...</div>
+  </footer>
 
   <script src="../js/login.js" defer></script>
 </body>
