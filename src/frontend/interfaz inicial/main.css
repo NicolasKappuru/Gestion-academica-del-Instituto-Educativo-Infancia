@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 40px;
+}
+
+/* Noticias */
+.news-section {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.news-card {
+  width: 200px;
+  height: 250px;
+  background-color: #fceaea;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.news-card h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Preinscripción */
+.preinscripcion {
+  max-width: 300px;
+  background-color: transparent;
+  color: #555;
+  font-size: 14px;
+}
+
+.btn-preinscribir {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-preinscribir:hover {
+  background-color: #1976D2;
+}
