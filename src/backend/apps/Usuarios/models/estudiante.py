@@ -4,11 +4,12 @@ from .persona import Persona
 from .acudiente import Acudiente
 
 class Estudiante(models.Model):
-    models.OneToOneField(
+    id_persona = models.OneToOneField(
         Persona,
-        on_delete=models.CASCADE,  
-        primary_key=True,          
-        related_name='estudiante'        
+        on_delete=models.CASCADE,
+        primary_key=True,
+        db_column='id_persona',  
+        related_name='estudiante'
     )
     fecha_nacimiento = models.DateField()
     acudiente = models.ForeignKey(

@@ -2,10 +2,11 @@ from django.db import models
 from .persona import Persona
 
 class Infante_aspirante(models.Model):
-    models.OneToOneField(
+    id_persona = models.OneToOneField(
         Persona,
         on_delete=models.CASCADE,  
-        primary_key=True,          
+        primary_key=True,   
+        db_column='id_persona',  
         related_name='infante_aspirante'        
     )
     fecha_nacimiento = models.DateField()

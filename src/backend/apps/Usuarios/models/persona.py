@@ -1,14 +1,13 @@
 # apps/usuarios/models/persona.py
 from django.db import models
-from .usuario import Usuario
 
 class Persona(models.Model):
+    id_persona = models.AutoField(primary_key=True)
     primer_nombre = models.CharField(max_length=50)
-    segundo_nombre = models.CharField(max_length=50, blank=True, null=True)
+    segundo_nombre = models.CharField(max_length=50)
     primer_apellido = models.CharField(max_length=50)
     segundo_apellido = models.CharField(max_length=50, blank=True, null=True)
-    NIT = models.DecimalField(max_digits=10, decimal_places=0, unique=True)
-    usuario = models.OneToOneField(Usuario, on_delete=models.SET_NULL, null=True, blank=True)
+    NIT = models.DecimalField(max_digits=10, decimal_places=0, null=True, unique=True)
 
     class Meta:
         db_table = 'Persona'
