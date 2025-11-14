@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'apps.usuarios',
     'apps.login',
     'apps.formularios',
-    'apps.adacemico',
+    #'apps.adacemico',
     'apps.boletines',
     'apps.solicitudes',
 
@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'primeraInfancia',
         'USER': 'postgres',
-        'PASSWORD': 'angrybirds',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }

@@ -32,8 +32,7 @@ class FormularioInscripcion(APIView):
             segundo_nombre = segNomAcu,
             primer_apellido = priApeAcu,
             segundo_apellido = segApeAcu,
-            NIT = cedulaAcu,
-            usuario = None
+            NIT = cedulaAcu
         )
     
         personaInf = Persona(
@@ -41,17 +40,16 @@ class FormularioInscripcion(APIView):
             segundo_nombre = segNomInf,
             primer_apellido = priApeInf,
             segundo_apellido = segApeInf,
-            NIT = None,
-            usuario = None
+            NIT = None
         )
 
         acudienteAspirante = Acudiente_aspirante(
-            id = personaAcu,
+            id_persona = personaAcu,
             correo_electronico_aspirante = correoAcu
         )
 
         infanteAspirante = Infante_aspirante(
-            id = personaInf,
+            id_persona = personaInf,
             fecha_nacimiento = fechaInf
         )
     
