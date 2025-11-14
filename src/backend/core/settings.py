@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'apps.usuarios',
     'apps.login',
     'apps.formularios',
-    #'apps.adacemico',
+    'apps.adacemico',
     'apps.boletines',
     'apps.solicitudes',
 
