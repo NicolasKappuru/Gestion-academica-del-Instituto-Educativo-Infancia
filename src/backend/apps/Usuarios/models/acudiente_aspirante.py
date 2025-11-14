@@ -7,7 +7,6 @@ class Acudiente_aspirante(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
         db_column='id_persona',  
-        related_name='acudiente_aspirante'
     )
     correo_electronico_aspirante = models.EmailField()
 

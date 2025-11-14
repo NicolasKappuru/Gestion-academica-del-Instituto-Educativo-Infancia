@@ -33,7 +33,10 @@ INSTALLED_APPS = [
     #Apps de nuestra autoria
     'apps.usuarios',
     'apps.login',
-    'apps.formularios'
+    'apps.formularios',
+    'apps.adacemico',
+    'apps.boletines',
+    'apps.solicitudes',
 
 ]
 

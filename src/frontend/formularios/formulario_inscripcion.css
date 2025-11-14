@@ -1,0 +1,124 @@
+/* === ESTRUCTURA GENERAL === */
+.formulario-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+/* === SECCIONES === */
+.formulario-section {
+  background-color: #f9eeee;
+  border-radius: 6px;
+  padding: 1.5rem;
+  width: 320px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-section h2 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* === CAMPOS === */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.8rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* === CHECKBOX === */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-top: 0.8rem;
+  gap: 0.5rem;
+}
+
+.checkbox-group em {
+  font-size: 0.85rem;
+  color: #333;
+}
+
+/* === BOTÓN === */
+.form-boton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.btn-enviar {
+  background-color: #1e9be9;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn-enviar:hover {
+  background-color: #007acc;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .formulario-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+/* === MENSAJES DE VALIDACIÓN === */
+.msg-box {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f44336;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  font-weight: 600;
+  z-index: 999;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.msg-box.success {
+  background-color: #4caf50;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

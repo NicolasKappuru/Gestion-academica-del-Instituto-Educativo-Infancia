@@ -9,14 +9,13 @@ class Estudiante(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
         db_column='id_persona',  
-        related_name='estudiante'
     )
     fecha_nacimiento = models.DateField()
     acudiente = models.ForeignKey(
         Acudiente,
-        on_delete=models.SET_NULL,  # si borras al acudiente, el estudiante sigue existiendo
+        on_delete=models.SET_NULL,  
         null=True,
-        related_name='estudiantes'  # permite acceder a los estudiantes desde el acudiente
+        related_name='estudiantes'  
     )
     class Meta:
         db_table = 'Estudiante'

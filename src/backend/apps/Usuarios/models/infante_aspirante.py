@@ -7,7 +7,6 @@ class Infante_aspirante(models.Model):
         on_delete=models.CASCADE,  
         primary_key=True,   
         db_column='id_persona',  
-        related_name='infante_aspirante'        
     )
     fecha_nacimiento = models.DateField()
 

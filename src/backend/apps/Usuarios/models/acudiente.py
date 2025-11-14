@@ -8,7 +8,6 @@ class Acudiente(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
         db_column='id_persona',  
-        related_name='acudiente'
     )
     
     class Meta:
