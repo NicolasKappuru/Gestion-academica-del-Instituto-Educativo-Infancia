@@ -1,5 +1,4 @@
 from django.db import models
-from apps.usuarios.models.estudiante import Estudiante
 from apps.academico.models.periodo_academico import Periodo_academico
 
 class Boletin(models.Model):
@@ -8,7 +7,7 @@ class Boletin(models.Model):
     profesor_director = models.CharField(max_length=250)
 
     estudiante = models.ForeignKey(
-        Estudiante,
+        "usuarios.Estudiante",
         db_column='id_persona_estudiante',
         related_name='boletines',
         null=True,

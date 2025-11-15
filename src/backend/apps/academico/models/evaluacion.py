@@ -1,5 +1,6 @@
 from django.db import models
 from .logro import Logro
+from apps.boletines.models.boletin import Boletin
 
 class Evaluacion(models.Model):
     id_evaluacion = models.AutoField(primary_key=True)
@@ -13,7 +14,16 @@ class Evaluacion(models.Model):
         db_column='id_logro',
         on_delete=models.CASCADE
     )
-    
+
+    boletin = models.ForeignKey(
+        Boletin,
+        on_delete=models.SET_NULL,
+        null=True,          
+        blank=True,
+        db_column='id_boletin',
+        related_name='evaluaciones'
+    )
+
     class Meta:
         db_table = 'Evaluacion'
 
