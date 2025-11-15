@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'apps.academico',
     'apps.boletines',
     'apps.solicitudes',
+    'apps.citaciones',
 
 ]
 
