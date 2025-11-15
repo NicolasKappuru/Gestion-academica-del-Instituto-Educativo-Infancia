@@ -2,7 +2,7 @@
 from django.db import models
 from .persona import Persona
 from .acudiente import Acudiente
-from apps.adacemico.models.grupo import Grupo
+from apps.academico.models.grupo import Grupo
 
 class Estudiante(models.Model):
     id_persona = models.OneToOneField(
@@ -18,15 +18,18 @@ class Estudiante(models.Model):
         Acudiente,
         on_delete=models.SET_NULL,  
         null=True,
-        related_name='estudiantes'  
+        related_name='estudiantes', 
+        db_column='id_persona_acudiente'
     )
 
     grupo = models.ForeignKey(
-        Grupo,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='estudiantes'
+    Grupo,     
+    on_delete=models.SET_NULL,
+    null=True,
+    related_name='estudiantes',
+    db_column='id_grupo'
     )
+
     
     class Meta:
         db_table = 'Estudiante'

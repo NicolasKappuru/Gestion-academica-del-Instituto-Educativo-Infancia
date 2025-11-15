@@ -18,7 +18,7 @@ class Logro(models.Model):
 
     categoria_logros = models.ForeignKey(
         Categoria_logros,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         null=False,
         blank=False,
         db_column='id_categoria_logros',

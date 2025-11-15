@@ -7,7 +7,10 @@ class Grado(models.Model):
     cupos_grado = models.DecimalField(max_digits=2, decimal_places=0)
     periodo_acadmico = models.ForeignKey(
         Periodo_academico,
-        db_column='anio'
+        db_column='anio',
+        on_delete=models.SET_NULL,
+        null=True
+
     )
     
     class Meta:

@@ -9,6 +9,6 @@ class Infante_aspirante(models.Model):
         db_column='id_persona',  
     )
     fecha_nacimiento = models.DateField()
-
+    
     class Meta:
             db_table = 'Infante_aspirante'

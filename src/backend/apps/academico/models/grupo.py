@@ -9,12 +9,16 @@ class Grupo(models.Model):
 
     grado = models.ForeignKey(
         Grado,
-        db_column='id_grado'
+        db_column='id_grado',
+        on_delete=models.CASCADE,
+        null=True
+
     )
 
     profesor_director = models.ForeignKey(
         Profesor, 
         db_column="id_persona_profesor",
+        on_delete=models.SET_NULL,
         null=True,
         blank=True
     )

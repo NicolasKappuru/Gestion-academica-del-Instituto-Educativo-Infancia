@@ -10,7 +10,8 @@ class Evaluacion(models.Model):
     
     logro = models.ForeignKey(
         Logro,
-        db_column='id_logro'
+        db_column='id_logro',
+        on_delete=models.CASCADE
     )
     
     class Meta:
