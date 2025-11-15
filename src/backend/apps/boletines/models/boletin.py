@@ -4,7 +4,7 @@ from apps.academico.models.periodo_academico import Periodo_academico
 
 class Boletin(models.Model):
     id_boletin = models.AutoField(primary_key=True)
-    nombre_grupo = models.CharField(max_length=50) 
+    nombre_grupo = models.CharField(max_length=30) 
     profesor_director = models.CharField(max_length=250)
 
     estudiante = models.ForeignKey(
