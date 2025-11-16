@@ -30,7 +30,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       setTimeout(() => {
 
       if (data.role === "acudiente") {
-        window.location.href = "../boletines/boletines.html";
+        window.location.href = "../boletines/vista_boletines/boletines.html";
 
       } else if (data.role === "profesor") {
         window.location.href = "../vista_profesor.html";

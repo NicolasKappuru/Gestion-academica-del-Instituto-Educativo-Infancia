@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Boletines</title>
   <!-- Estilos separados -->
-  <link rel="stylesheet" href="./boletines.css">
-  <link rel="stylesheet" href="../header/header.css">
-  <link rel="stylesheet" href="../footer/footer.css">
+  <link rel="stylesheet" href="./boletin_particular.css">
+  <link rel="stylesheet" href="../../header/header.css">
+  <link rel="stylesheet" href="../../footer/footer.css">
 </head>
 
 <body>
@@ -34,26 +34,34 @@
     </header>
 
     <!-- ===== MAIN ===== -->
-    <main class="boletines-container">
+    <main class="boletin-particular-container">
 
-        <h2 class="titulo-boletines">Boletines</h2>
+        <div class="encabezado-boletin">
+            <h2 class="titulo-boletin-particular">
+            Historia académica de <span id="nombreEstudiante">Estudiante_nombre</span>
+            </h2>
 
-        <section class="tabla-boletines">
+            <button id="btnVolver" class="btn-volver">Volver</button>
+        </div>
+  
+        <section class="tabla-periodos">
             <table>
             <thead>
                 <tr>
-                <th>Nombre</th>
-                <th>Boletines</th>
+                <th>Periodo académico</th>
+                <th>Boletín</th>
                 </tr>
             </thead>
 
-            <tbody id="tablaBoletines">
+            <tbody id="tablaPeriodos">
                 <!-- Filas dinámicas -->
             </tbody>
             </table>
         </section>
 
     </main>
+
+<script src="./boletin_particular.js" defer></script>
 
 <script src="./boletines.js" defer></script>
 
@@ -65,6 +73,6 @@
       <div class="footer-section">Cosas...</div>
     </footer>
 
-    <script src="./boletines.js" defer></script>
+    <script src="./boletin_particular.js" defer></script>
 </body>
 </html>
