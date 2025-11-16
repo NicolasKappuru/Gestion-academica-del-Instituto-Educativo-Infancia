@@ -23,11 +23,11 @@ class Estudiante(models.Model):
     )
 
     grupo = models.ForeignKey(
-    Grupo,     
-    on_delete=models.SET_NULL,
-    null=True,
-    related_name='estudiantes',
-    db_column='id_grupo'
+        Grupo,     
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='estudiantes',
+        db_column='id_grupo'
     )
 
     

@@ -1,0 +1,44 @@
+.boletines-container {
+    padding: 30px 40px;
+    font-family: Arial, sans-serif;
+}
+
+/* Título */
+.titulo-boletines {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Tabla */
+.tabla-boletines table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-boletines th {
+    background: #e6e6e6;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+.tabla-boletines td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Botón VER */
+.btn-ver {
+    background: #3ea8ff;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-ver:hover {
+    background: #2196f3;
+}

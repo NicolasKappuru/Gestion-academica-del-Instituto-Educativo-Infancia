@@ -1,0 +1,91 @@
+.admin-usuarios-container {
+    padding: 30px 40px;
+    font-family: Arial, sans-serif;
+}
+
+/* Header del módulo */
+.admin-header-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    background: #f4f4f4;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.titulo-admin {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Selector de ROL */
+.rol-selector {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.rol-selector label {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.rol-selector select {
+    padding: 6px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+/* Botón crear */
+.btn-crear-usuario {
+    background: #3ea8ff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-crear-usuario:hover {
+    background: #2196f3;
+}
+
+/* Tabla */
+.tabla-usuarios table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-usuarios th {
+    background: #e6e6e6;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+.tabla-usuarios td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Botones habilitar/deshabilitar */
+.btn-accion {
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-habilitar {
+    background: #4caf50;
+    color: white;
+}
+
+.btn-deshabilitar {
+    background: #d9534f;
+    color: white;
+}

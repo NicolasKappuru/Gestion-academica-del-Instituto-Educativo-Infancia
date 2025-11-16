@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from apps.usuarios.models.persona import Persona
 from apps.usuarios.models.acudiente_aspirante import Acudiente_aspirante
 from apps.usuarios.models.infante_aspirante import Infante_aspirante
+from apps.solicitudes.models.solicitud import Solicitud
 
 @method_decorator(csrf_exempt, name='dispatch')
 class FormularioInscripcion(APIView):
@@ -52,7 +53,12 @@ class FormularioInscripcion(APIView):
             id_persona = personaInf,
             fecha_nacimiento = fechaInf
         )
-    
+
+        solicitud = Solicitud(
+            acudiente_aspirante = acudienteAspirante,
+            infante_aspirante = infanteAspirante,
+            grado_aplicar = grado,
+         )    
     
         try:
             # Guardar los objetos en la BD
@@ -60,7 +66,8 @@ class FormularioInscripcion(APIView):
             personaInf.save()
             acudienteAspirante.save()
             infanteAspirante.save()
-
+            solicitud.save()
+            
             return Response({
                 "message": "Preinscripción registrada correctamente"
             }, status=status.HTTP_201_CREATED)
