@@ -15,3 +15,5 @@ class Persona(models.Model):
 
     def __str__(self):
         return f"{self.primer_nombre} {self.primer_apellido}"
+    
+   

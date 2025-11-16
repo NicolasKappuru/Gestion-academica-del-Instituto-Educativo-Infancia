@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+
+from apps.usuarios.models import Usuario
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -16,15 +17,17 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            # Creamos el token JWT
+
+            usuario = Usuario.objects.get(user=user)
+
             refresh = RefreshToken.for_user(user)
+
             return Response({
                 "message": "Login correcto",
                 "username": user.username,
+                "role": usuario.role,        
                 "access": str(refresh.access_token),
                 "refresh": str(refresh)
             })
-        else:
-            return Response({
-                "error": "Credenciales inválidas"
-            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response({"error": "Credenciales inválidas"}, status=401)
