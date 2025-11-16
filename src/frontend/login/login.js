@@ -26,7 +26,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
       console.log("Token guardado:", data.access);
 
-      // ✅ Redirigimos al index.html después de 1 segundo
       setTimeout(() => {
 
       if (data.role === "acudiente") {
@@ -46,7 +45,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         window.location.href = "../index.html";
       }
 
-    }, 1000);
+    }, 500);
 
     } else {
       msg.textContent = data.error || "Error en el inicio de sesión.";

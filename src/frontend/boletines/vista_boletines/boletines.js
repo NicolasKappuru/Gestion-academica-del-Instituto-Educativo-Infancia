@@ -1,13 +1,28 @@
-// Datos de prueba (luego vendrán del backend)
-const estudiantesDemo = [
-    { nombre: "Pepito Perez" },
-    { nombre: "Juan Carlos" }
-];
+const username = localStorage.getItem("username");
 
-const tabla = document.getElementById("tablaBoletines");
+fetch("http://127.0.0.1:8000/api/listadoEstudiantesBoletines/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ username })
+})
+.then(resp => resp.json())
+.then(data => {
 
-// Render dinámico de la tabla
+    if (data.error) {
+        alert("Error: " + data.error);
+        return;
+    }
+
+    cargarBoletines(data.estudiantes);
+})
+.catch(err => {
+    console.error("Error de conexión:", err);
+});
+
 function cargarBoletines(lista) {
+    const tabla = document.getElementById("tablaBoletines");
     tabla.innerHTML = "";
 
     lista.forEach(est => {
@@ -24,11 +39,6 @@ function cargarBoletines(lista) {
     });
 }
 
-// Acción del botón VER
 function verBoletin(nombre) {
-    // Luego abrirás un PDF o una vista interna
     alert("Mostrando boletín de: " + nombre);
 }
-
-// Render inicial
-cargarBoletines(estudiantesDemo);
