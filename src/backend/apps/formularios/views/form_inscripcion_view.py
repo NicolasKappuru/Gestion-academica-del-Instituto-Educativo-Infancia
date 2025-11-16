@@ -53,6 +53,7 @@ class FormularioInscripcion(APIView):
             fecha_nacimiento = fechaInf
         )
     
+    
         try:
             # Guardar los objetos en la BD
             personaAcu.save()
