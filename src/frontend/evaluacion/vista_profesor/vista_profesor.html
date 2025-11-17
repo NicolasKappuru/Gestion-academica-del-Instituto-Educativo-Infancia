@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Administrador académico </title>
+  <!-- Estilos separados -->
+  <link rel="stylesheet" href="./vista_profesor.css">
+  <link rel="stylesheet" href="../../header/header.css">
+  <link rel="stylesheet" href="../../footer/footer.css">
+</head>
+
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="main-header">
+      <div class="header-logo">
+        <div class="logo-circle"></div>
+        <div class="logo-text">
+          <h1>Instituto educativo</h1>
+          <h2>Infancia</h2>
+        </div>
+      </div>
+
+      <nav class="header-nav">
+        <a href="../interfaz inicial/main.html" class="nav-link">Inicio</a>
+        <span class="nav-link">Contacto</span>
+        <div class="nav-box">
+          <span class="nav-icon">📅</span>
+        </div>
+        <a href="./login.html" class="nav-link login-link">
+          Iniciar sesión
+        </a>
+      </nav>
+
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="profesor-lista-container">
+
+        <div class="encabezado-lista">
+            <h2 class="titulo-seccion">
+                Lista de estudiantes<br>
+                grupo del Grupo_id
+            </h2>
+
+            <button class="btn-generar" onclick="window.location.href='index.html'">
+                Generar boletines
+            </button>
+        </div>
+
+        <div class="contenedor-tabla">
+            <table class="tabla-estudiantes">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaEstudiantes">
+                    <!-- Se llena dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="main-footer">
+      <div class="footer-section">Somos una institución sobre...</div>
+      <div class="footer-section">Redes...</div>
+      <div class="footer-section">Cosas...</div>
+    </footer>
+
+    <script src="./vista_profesor.js" defer></script>
+</body>
+</html>

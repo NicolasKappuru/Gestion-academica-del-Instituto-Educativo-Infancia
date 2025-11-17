@@ -1,0 +1,77 @@
+.profesor-lista-container {
+    padding: 30px;
+    background: #f4f4f4;
+}
+
+/* Encabezado: título + botón a la derecha */
+.encabezado-lista {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.titulo-seccion {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.btn-generar {
+    background: #2196f3;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn-generar:hover {
+    background: #0b7dda;
+}
+
+/* Tabla */
+.contenedor-tabla {
+    width: 70%;
+    max-height: 350px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    margin: 0 auto;
+}
+
+.tabla-estudiantes {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-estudiantes th {
+    background: #d6d6d6;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.tabla-estudiantes td {
+    padding: 15px;
+    border-bottom: 1px solid #c0c0c0;
+    background: #f2f2f2;
+    font-size: 17px;
+}
+
+/* Botón evaluar */
+.btn-evaluar {
+    background: #2196f3;
+    color: white;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-evaluar:hover {
+    background: #0b7dda;
+}
