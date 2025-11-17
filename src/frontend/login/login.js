@@ -35,7 +35,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         window.location.href = "../vista_profesor.html";
 
       } else if (data.role === "administrador_academico") {
-        window.location.href = "../vista_admin_academico.html";
+        window.location.href = "../academico/vista_admin_academico/vista_admin_academico.html";
 
       } else if (data.role === "administrador_usuarios") {
         window.location.href = "../usuarios/vista_admin_usuarios/vista_admin_usuarios.html";

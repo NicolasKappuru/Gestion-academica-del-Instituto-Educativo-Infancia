@@ -1,11 +1,11 @@
 // ================================
 // 🔒 Protección de acceso por rol
 // ================================
-const role = localStorage.getItem("role");
+//const role = localStorage.getItem("role");
 
-if (role !== "administrador_usuarios") {
-    window.location.href = "../login/login.html"; 
-}
+//if (role !== "administrador_usuarios") {
+//    window.location.href = "../login/login.html"; 
+//}
 
 // USUARIOS DE PRUEBA (luego esto vendrá de tu backend)
 const usuariosDemo = [

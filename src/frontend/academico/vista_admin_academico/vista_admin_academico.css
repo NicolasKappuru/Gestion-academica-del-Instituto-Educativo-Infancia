@@ -1,0 +1,92 @@
+.admin-academico-container {
+    display: flex;
+    gap: 40px;
+    padding: 30px 40px;
+    font-family: Arial, sans-serif;
+}
+
+/* Panel izquierdo: tabla */
+.panel-grupos {
+    width: 65%;
+}
+
+.titulo-seccion {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.contenedor-tabla {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.tabla-grupos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-grupos th {
+    background: #e6e6e6;
+    padding: 12px;
+    border-bottom: 2px solid #ccc;
+    text-align: left;
+}
+
+.tabla-grupos td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Botones dentro de la tabla */
+.btn-tabla {
+    background: #3ea8ff;
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-tabla:hover {
+    background: #2196f3;
+}
+
+/* Panel derecho */
+.panel-opciones {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Tarjetas de opciones */
+.opcion-card {
+    background: #f2f2f2;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.opcion-card h3 {
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Botón de cada tarjeta */
+.btn-opcion {
+    background: #3ea8ff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-opcion:hover {
+    background: #2196f3;
+}
