@@ -1,0 +1,104 @@
+/* ============================== */
+/* CONTENEDOR GENERAL CENTRADO   */
+/* ============================== */
+.crear-usuario-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+/* ============================== */
+/* BOTÓN VOLVER                  */
+/* ============================== */
+.btn-volver {
+    align-self: center;
+    margin-left: 60px;
+    margin-bottom: 20px;
+    background-color: #42a5f5;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+.btn-volver:hover {
+    background-color: #1e88e5;
+}
+
+/* ============================== */
+/* TARJETA DEL FORMULARIO        */
+/* ============================== */
+.crear-card {
+    width: 380px;
+    padding: 25px;
+    border: 1px solid #bdbdbd;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+/* Título */
+.titulo-seccion {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 18px;
+}
+
+/* Label */
+.label-input {
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Inputs y select */
+.input-text {
+    width: 100%;
+    padding: 9px;
+    font-size: 15px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background: white;
+}
+
+/* Botón crear */
+.btn-crear {
+    width: 100%;
+    padding: 10px;
+    background-color: #42a5f5;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.btn-crear:hover {
+    background-color: #1e88e5;
+}
+
+
+/* Barra superior */
+.top-bar-crear {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 0 20px;   /* 🔥 ESTE ES EL CAMBIO QUE NECESITAS */
+}
+
+
+.titulo-top {
+    font-size: 22px;
+    font-weight: bold;
+}

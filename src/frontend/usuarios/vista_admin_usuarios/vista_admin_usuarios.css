@@ -89,3 +89,29 @@
     background: #d9534f;
     color: white;
 }
+
+
+.paginacion {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-pagina {
+    padding: 7px 14px;
+    background: #3ea8ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-pagina:hover {
+    background: #2196f3;
+}
+
+#pageInfo {
+    font-weight: bold;
+}

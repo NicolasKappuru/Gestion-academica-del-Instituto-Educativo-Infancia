@@ -1,23 +1,64 @@
 // ================================
-// 🔒 Protección de acceso por rol
+// Variables globales
 // ================================
-//const role = localStorage.getItem("role");
-
-//if (role !== "administrador_usuarios") {
-//    window.location.href = "../login/login.html"; 
-//}
-
-// USUARIOS DE PRUEBA (luego esto vendrá de tu backend)
-const usuariosDemo = [
-    { nombre: "Pepito Perez", estado: "Deshabilitado" },
-    { nombre: "Juan Carlos", estado: "Habilitado" }
-];
-
 const tabla = document.getElementById("tablaBody");
 const rolSelect = document.getElementById("rolSelect");
 const btnCrear = document.getElementById("btnCrearUsuario");
 
-// Render dinámico de usuarios
+// Paginación
+let paginaActual = 1;
+let totalPaginas = 1;
+const pageSize = 10;
+let rolActual = "";
+
+// Controles de paginación
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
+const pageInfo = document.getElementById("pageInfo");
+
+
+// ================================
+// Cargar usuarios (fetch al backend)
+// ================================
+async function cargarUsuarios() {
+    if (!rolActual) return;
+
+    try {
+        const token = localStorage.getItem("access_token");
+
+        const response = await fetch("http://localhost:8000/api/listarUsuarios/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                role: rolActual,
+                page: paginaActual,
+                page_size: pageSize
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            renderUsuarios(data.usuarios);
+
+            totalPaginas = data.total_pages;
+            actualizarControles();
+        } else {
+            console.error("ERROR:", data.error);
+        }
+
+    } catch (error) {
+        console.error("Error en fetch:", error);
+    }
+}
+
+
+// ================================
+// Renderizar tabla
+// ================================
 function renderUsuarios(lista) {
     tabla.innerHTML = "";
 
@@ -28,7 +69,9 @@ function renderUsuarios(lista) {
             <td>${u.nombre}</td>
             <td>${u.estado}</td>
             <td>
-                <button class="btn-accion ${u.estado === "Habilitado" ? "btn-deshabilitar" : "btn-habilitar"}">
+                <button 
+                    class="btn-accion ${u.estado === "Habilitado" ? "btn-deshabilitar" : "btn-habilitar"}"
+                    data-user="${u.id_user}">
                     ${u.estado === "Habilitado" ? "Deshabilitar" : "Habilitar"}
                 </button>
             </td>
@@ -36,18 +79,94 @@ function renderUsuarios(lista) {
 
         tabla.appendChild(fila);
     });
+
+    activarBotonesAccion();
 }
 
-// Evento de cambio de ROL
+
+// ================================
+// Habilitar / Deshabilitar Usuario
+// ================================
+function activarBotonesAccion() {
+    document.querySelectorAll(".btn-accion").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const userId = btn.getAttribute("data-user");
+            await cambiarEstado(userId);
+            cargarUsuarios();
+        });
+    });
+}
+
+async function cambiarEstado(idUser) {
+    try {
+        const token = localStorage.getItem("access_token");
+
+        await fetch("http://localhost:8000/api/toggleEstadoUsuario/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ id_user: idUser })
+        });
+
+    } catch (error) {
+        console.error("Error al cambiar estado:", error);
+    }
+}
+
+
+// ================================
+// Controles de paginación
+// ================================
+function actualizarControles() {
+    pageInfo.textContent = `Página ${paginaActual} de ${totalPaginas}`;
+
+    btnPrev.disabled = paginaActual === 1;
+    btnNext.disabled = paginaActual === totalPaginas;
+}
+
+btnPrev.addEventListener("click", () => {
+    if (paginaActual > 1) {
+        paginaActual--;
+        cargarUsuarios();
+    }
+});
+
+btnNext.addEventListener("click", () => {
+    if (paginaActual < totalPaginas) {
+        paginaActual++;
+        cargarUsuarios();
+    }
+});
+
+
+// ================================
+// Evento para seleccionar rol
+// ================================
 rolSelect.addEventListener("change", () => {
-    // Aquí luego harás fetch al backend
-    renderUsuarios(usuariosDemo);
+    const value = rolSelect.value;
+
+    if (value === "") return;
+
+    // Mapeo del select → roles reales del modelo
+    const mapaRoles = {
+        "acudiente": "acudiente",
+        "profesor": "profesor",
+        "directivo": "administrador_academico",
+        "administrador": "administrador_usuarios"
+    };
+
+    rolActual = mapaRoles[value];
+    paginaActual = 1;
+
+    cargarUsuarios();
 });
 
-// Event crear usuario
+
+// ================================
+// Botón Crear Usuario
+// ================================
 btnCrear.addEventListener("click", () => {
-    window.location.href = "../crear_usuario/crear.html"; // Ajusta ruta
+    window.location.href = "../creacion_usuario/creacion_usuario.html";
 });
-
-// Render inicial vacío
-renderUsuarios([]);
