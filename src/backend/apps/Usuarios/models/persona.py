@@ -1,4 +1,3 @@
-# apps/usuarios/models/persona.py
 from django.db import models
 
 class Persona(models.Model):

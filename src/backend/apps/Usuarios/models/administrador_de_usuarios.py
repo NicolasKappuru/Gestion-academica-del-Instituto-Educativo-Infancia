@@ -1,8 +1,7 @@
-# apps/usuarios/models/administrador.py
 from django.db import models
 from .persona import Persona
 
-class Administrador_de_Usuarios(models.Model):
+class Administrador_de_usuarios(models.Model):
     id_persona = models.OneToOneField(
         Persona,
         on_delete=models.CASCADE,

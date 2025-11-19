@@ -8,6 +8,8 @@ class Infante_aspirante(models.Model):
         primary_key=True,   
         db_column='id_persona',  
     )
+
+    
     fecha_nacimiento = models.DateField()
     
     class Meta:

@@ -1,37 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Botón crear usuario
-    document.getElementById("btnCrear").addEventListener("click", () => {
-        const rol = document.getElementById("inputRol").value;
-        const correo = document.getElementById("inputCorreo").value;
+    const btnCrear = document.getElementById("btnCrear");
+    const btnVolver = document.getElementById("btnVolver");
+
+    // Mapa para convertir el texto del select al rol de la BD
+    const ROLES_MAP = {
+        "Acudiente": "acudiente",
+        "Profesor": "profesor",
+        "Administrador académico": "administrador_academico",
+        "Administrador de usuarios": "administrador_usuarios"
+    };
+
+    btnVolver.addEventListener("click", () => {
+        window.location.href = "../interfaz_admin_usuarios/vista_admin_usuarios.html";
+    });
+
+    btnCrear.addEventListener("click", async () => {
+        const rolTexto = document.getElementById("inputRol").value;
+        const email = document.getElementById("inputCorreo").value;
         const nit = document.getElementById("inputNIT").value;
 
-        if (!rol || !correo || !nit) {
-            alert("Por favor complete todos los campos.");
+        if (!rolTexto || !email || !nit) {
+            alert("Debe llenar todos los campos.");
             return;
         }
 
-        // Aquí luego conectarás tu API real
-        console.log("Creando usuario con:", {
-            rol,
-            correo,
-            nit
-        });
+        const role = ROLES_MAP[rolTexto];
 
-        alert("Usuario creado (lógica backend pendiente).");
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/crearUsuario/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("access_token")
+                },
+                body: JSON.stringify({
+                    role: role,
+                    email: email,
+                    nit: nit
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert("Error: " + (data.error || "No se pudo crear el usuario"));
+                return;
+            }
+
+            alert("Usuario creado correctamente");
+
+            // Limpiar inputs
+            document.getElementById("inputRol").value = "";
+            document.getElementById("inputCorreo").value = "";
+            document.getElementById("inputNIT").value = "";
+
+        } catch (error) {
+            alert("Error en la conexión con el servidor.");
+            console.log(error);
+        }
     });
 
-    // Botón volver ya funciona desde el HTML con window.location.href
 });
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const btnVolver = document.getElementById("btnVolver");
-
-    btnVolver.addEventListener("click", () => {
-        window.location.href = "../vista_admin_usuarios/vista_admin_usuarios.html";
-    });
-
-});
-

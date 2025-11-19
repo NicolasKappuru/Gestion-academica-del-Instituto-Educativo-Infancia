@@ -1,0 +1,94 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+from django.contrib.auth.models import User
+from django.db import transaction
+
+from apps.usuarios.models.persona import Persona
+from apps.usuarios.models.usuario import Usuario
+
+from apps.usuarios.models.acudiente import Acudiente
+from apps.usuarios.models.profesor import Profesor
+from apps.usuarios.models.administrador_academico import Administrador_academico
+from apps.usuarios.models.administrador_de_usuarios import Administrador_de_usuarios
+
+
+class CrearUsuario(APIView):
+
+    def post(self, request):
+        role = request.data.get("role")
+        email = request.data.get("email")
+        nit = request.data.get("nit")
+
+        # Validar campos obligatorios
+        if not role or not email or not nit:
+            return Response(
+                {"error": "Debe enviar role, email y nit"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Validar rol existente
+        roles_validos = [r[0] for r in Usuario.ROLES]
+        if role not in roles_validos:
+            return Response(
+                {"error": "El rol enviado no es válido"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            with transaction.atomic():
+
+                # Crear persona
+                persona = Persona.objects.create(
+                    primer_nombre="Asignar",
+                    segundo_nombre="Asignar",
+                    primer_apellido="Asignar",
+                    segundo_apellido="Asignar",
+                    NIT=nit
+                )
+
+                # Crear usuario Django
+                django_user = User.objects.create_user(
+                    username=email,
+                    email=email,
+                    password=str(nit)
+                )
+                django_user.is_active = True
+                django_user.save()
+
+                # Crear usuario del sistema
+                usuario = Usuario.objects.create(
+                    user=django_user,
+                    persona=persona,
+                    role=role
+                )
+
+                # Crear el objeto especializado según el rol
+                if role == "acudiente":
+                    Acudiente.objects.create(id_persona=persona)
+
+                elif role == "profesor":
+                    Profesor.objects.create(id_persona=persona)
+
+                elif role == "administrador_academico":
+                    Administrador_academico.objects.create(id_persona=persona)
+
+                elif role == "administrador_usuarios":
+                    Administrador_de_Usuarios.objects.create(id_persona=persona)
+
+                return Response(
+                    {
+                        "message": "Usuario creado correctamente",
+                        "usuario_id": usuario.id,
+                        "persona_id": persona.id_persona,
+                        "user_id": django_user.id
+                    },
+                    status=status.HTTP_201_CREATED
+                )
+
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
