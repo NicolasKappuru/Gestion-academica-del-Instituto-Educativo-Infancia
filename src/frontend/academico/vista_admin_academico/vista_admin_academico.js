@@ -53,3 +53,14 @@ function consultarGrupo(nombre) {
 function realizarGrupo(nombre) {
     alert("Realizando acciones para grupo: " + nombre);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const btnAdminSolicitudes = document.querySelector(".btn-opcion");
+
+    btnAdminSolicitudes.addEventListener("click", function () {
+        window.location.href = "../../solicitudes/vista_solicitudes.html"; 
+        // Aquí pones el HTML al que quieres redirigir.
+    });
+
+});
