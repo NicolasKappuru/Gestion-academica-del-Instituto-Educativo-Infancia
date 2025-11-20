@@ -39,14 +39,26 @@ class CrearUsuario(APIView):
         try:
             with transaction.atomic():
 
-                # Crear persona
-                persona = Persona.objects.create(
-                    primer_nombre="Asignar",
-                    segundo_nombre="Asignar",
-                    primer_apellido="Asignar",
-                    segundo_apellido="Asignar",
-                    NIT=nit
-                )
+                # Verificar si el NIT ya tiene un usuario con el mismo rol
+                persona = Persona.objects.filter(NIT=nit).first()
+                    
+                if persona:
+                    # Ya existe una persona con ese NIT, revisar si ya tiene el rol
+                    if Usuario.objects.filter(persona=persona, role=role).exists():
+                        return Response(
+                            {"error": "Ya existe una persona con usuario de ese rol"},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+                else:
+                    # No existe → crear persona nueva
+                    persona = Persona(
+                        primer_nombre="Asignar",
+                        segundo_nombre="Asignar",
+                        primer_apellido="Asignar",
+                        segundo_apellido="Asignar",
+                        NIT=nit
+                    )
+                    persona.save()
 
                 # Crear usuario Django
                 django_user = User.objects.create_user(
@@ -63,24 +75,29 @@ class CrearUsuario(APIView):
                     persona=persona,
                     role=role
                 )
+                usuario.save()
 
-                # Crear el objeto especializado según el rol
+                # Crear el objeto especializado segun el rol
                 if role == "acudiente":
-                    Acudiente.objects.create(id_persona=persona)
+                    acudiente = Acudiente.objects.create(id_persona=persona)
+                    acudiente.save()
 
                 elif role == "profesor":
-                    Profesor.objects.create(id_persona=persona)
+                    profesor = Profesor.objects.create(id_persona=persona)
+                    profesor.save()
 
                 elif role == "administrador_academico":
-                    Administrador_academico.objects.create(id_persona=persona)
+                    administrador_academico =Administrador_academico.objects.create(id_persona=persona)
+                    administrador_academico.save() 
 
                 elif role == "administrador_usuarios":
-                    Administrador_de_Usuarios.objects.create(id_persona=persona)
+                    administrador_de_usuarios = Administrador_de_usuarios.objects.create(id_persona=persona)
+                    administrador_de_usuarios.save()
 
                 return Response(
                     {
                         "message": "Usuario creado correctamente",
-                        "usuario_id": usuario.id,
+                        "usuario_id": usuario.codigo_usuario,
                         "persona_id": persona.id_persona,
                         "user_id": django_user.id
                     },

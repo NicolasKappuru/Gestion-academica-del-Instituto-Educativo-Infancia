@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     btnVolver.addEventListener("click", () => {
-        window.location.href = "../interfaz_admin_usuarios/vista_admin_usuarios.html";
+        window.location.href = "../vista_admin_usuarios/vista_admin_usuarios.html";
     });
 
     btnCrear.addEventListener("click", async () => {
