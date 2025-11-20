@@ -1,3 +1,6 @@
+import { cambiarEstado } from "./habilitar_deshabilitar.js";
+
+
 // ================================
 // Variables globales
 // ================================
@@ -83,10 +86,6 @@ function renderUsuarios(lista) {
     activarBotonesAccion();
 }
 
-
-// ================================
-// Habilitar / Deshabilitar Usuario
-// ================================
 function activarBotonesAccion() {
     document.querySelectorAll(".btn-accion").forEach(btn => {
         btn.addEventListener("click", async () => {
@@ -96,25 +95,6 @@ function activarBotonesAccion() {
         });
     });
 }
-
-async function cambiarEstado(idUser) {
-    try {
-        const token = localStorage.getItem("access_token");
-
-        await fetch("http://localhost:8000/api/toggleEstadoUsuario/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({ id_user: idUser })
-        });
-
-    } catch (error) {
-        console.error("Error al cambiar estado:", error);
-    }
-}
-
 
 // ================================
 // Controles de paginación
