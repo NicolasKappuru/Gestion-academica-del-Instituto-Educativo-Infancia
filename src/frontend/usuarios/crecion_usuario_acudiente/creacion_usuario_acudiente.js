@@ -1,73 +1,107 @@
-const lista = document.getElementById("listaCodigos");
+document.addEventListener("DOMContentLoaded", () => {
 
-// ------------------------------
-// 1. Botón Volver
-// ------------------------------
-document.getElementById("btnVolver").addEventListener("click", () => {
-    window.location.href = "../interfaz_admin_usuarios/vista_admin_usuarios.html";
-});
+    const lista = document.getElementById("listaCodigos");
 
-// ------------------------------
-// 2. Cargar listado desde el backend
-// ------------------------------
-async function cargarListado(page = 1, page_size = 10) {
-    try {
-        const response = await fetch("http://127.0.0.1:8000/api/listarCreacionAcudientes/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ page, page_size })
+    // ------------------------------
+    // Botón Volver
+    // ------------------------------
+    document.getElementById("btnVolver").addEventListener("click", () => {
+        window.location.href = "../interfaz_admin_usuarios/vista_admin_usuarios.html";
+    });
+
+    // ------------------------------
+    // Cargar listado
+    // ------------------------------
+    async function cargarListado(page = 1, page_size = 10) {
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/listarCreacionAcudientes/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ page, page_size })
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                console.error("Error al obtener datos:", data);
+                return;
+            }
+
+            renderTabla(data.solicitudes);
+
+        } catch (err) {
+            console.error("Error:", err);
+        }
+    }
+
+    // ------------------------------
+    // Render tabla con botones
+    // ------------------------------
+    function renderTabla(solicitudes) {
+        lista.innerHTML = "";
+
+        solicitudes.forEach(item => {
+            const fila = document.createElement("tr");
+
+            fila.innerHTML = `
+                <td>${item.codigo_creacion}</td>
+                <td>
+                    <button class="btn-crear" data-id="${item.id_solicitud}">
+                        Crear usuario
+                    </button>
+                </td>
+            `;
+
+            lista.appendChild(fila);
         });
 
-        const data = await response.json();
+        document.querySelectorAll(".btn-crear").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const idSolicitud = btn.getAttribute("data-id");
+                crearUsuarioDesdeSolicitud(idSolicitud);
+            });
+        });
+    }
 
-        if (!response.ok) {
-            console.error("Error al obtener datos:", data);
+    // ------------------------------
+    // Crear usuario Acudiente usando la solicitud
+    // ------------------------------
+    async function crearUsuarioDesdeSolicitud(idSolicitud) {
+        if (!idSolicitud) {
+            alert("ID de solicitud inválido");
             return;
         }
 
-        renderTabla(data.solicitudes);
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/crearUsuarioAcudiente/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("access_token")
+                },
+                body: JSON.stringify({ id_solicitud: idSolicitud })
+            });
 
-    } catch (err) {
-        console.error("Error en fetch:", err);
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert("Error: " + (data.error || "No se pudo crear el usuario"));
+                return;
+            }
+
+            alert("Usuario creado correctamente para el acudiente");
+
+            // recargar listado sin la solicitud
+            cargarListado();
+
+        } catch (error) {
+            alert("Error al conectar con el servidor");
+            console.log(error);
+        }
     }
-}
 
-// ------------------------------
-// 3. Llenar tabla
-// ------------------------------
-function renderTabla(solicitudes) {
-    lista.innerHTML = "";
+    // ------------------------------
+    // Carga inicial
+    // ------------------------------
+    cargarListado();
 
-    solicitudes.forEach(item => {
-        const fila = document.createElement("tr");
-
-        fila.innerHTML = `
-            <td>${item.codigo_creacion}</td>
-            <td>
-                <button class="btn-crear" data-id="${item.id_solicitud}">
-                    Crear usuario
-                </button>
-            </td>
-        `;
-
-        lista.appendChild(fila);
-    });
-
-    // Eventos de botones "Crear usuario"
-    document.querySelectorAll(".btn-crear").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const idSolicitud = btn.getAttribute("data-id");
-
-            // Lógica provisional
-            alert("Crear usuario para el código: " + idSolicitud);
-
-            // Luego cambiarás esta ruta para la pantalla real:
-            // window.location.href = `crear_usuario.html?id=${idSolicitud}`;
-        });
-    });
-}
-
-// ------------------------------
-// 4. Ejecutar carga inicial
-// ------------------------------
-cargarListado();
+});
