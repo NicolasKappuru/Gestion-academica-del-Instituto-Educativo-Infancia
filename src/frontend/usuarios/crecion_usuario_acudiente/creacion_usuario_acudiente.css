@@ -1,0 +1,78 @@
+/* Contenedor principal */
+.crear-acudiente-container {
+    width: 100%;
+    padding: 30px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header superior */
+.header-acudiente {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* Botón volver */
+.btn-volver {
+    padding: 8px 16px;
+    background-color: #3da5ff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.btn-volver:hover {
+    background-color: #1a8be6;
+}
+
+/* Tabla */
+.tabla-container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+}
+
+.tabla-acudiente {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f2f2f2;
+}
+
+.tabla-acudiente th {
+    background-color: #d9d9d9;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+.tabla-acudiente td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #000;
+    font-size: 16px;
+}
+
+/* Botón crear */
+.btn-crear {
+    padding: 6px 14px;
+    background-color: #3da5ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-crear:hover {
+    background-color: #1a8be6;
+}

@@ -150,3 +150,12 @@ rolSelect.addEventListener("change", () => {
 btnCrear.addEventListener("click", () => {
     window.location.href = "../creacion_usuario/creacion_usuario.html";
 });
+
+// ================================
+// Botón Crear Usuario Acudiente
+// ================================
+const btnCrearAcudiente = document.getElementById("btnCrearUsuarioAcudinte");
+
+btnCrearAcudiente.addEventListener("click", () => {
+    window.location.href = "../crecion_usuario_acudiente/creacion_usuario_acudiente.html";
+});

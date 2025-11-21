@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Administrador de usuarios</title>
+  <!-- Estilos separados -->
+  <link rel="stylesheet" href="./creacion_usuario_acudiente.css">
+  <link rel="stylesheet" href="../../header/header.css">
+  <link rel="stylesheet" href="../../footer/footer.css">
+</head>
+
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="main-header">
+      <div class="header-logo">
+        <div class="logo-circle"></div>
+        <div class="logo-text">
+          <h1>Instituto educativo</h1>
+          <h2>Infancia</h2>
+        </div>
+      </div>
+
+      <nav class="header-nav">
+        <a href="../interfaz inicial/main.html" class="nav-link">Inicio</a>
+        <span class="nav-link">Contacto</span>
+        <div class="nav-box">
+          <span class="nav-icon">📅</span>
+        </div>
+        <a href="./login.html" class="nav-link login-link">
+          Iniciar sesión
+        </a>
+      </nav>
+
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="crear-acudiente-container">
+
+        <div class="header-acudiente">
+            <h2>Creación de usuario acudiente</h2>
+
+            <button id="btnVolver" class="btn-volver">
+                Volver
+            </button>
+        </div>
+
+        <div class="tabla-container">
+            <table class="tabla-acudiente">
+                <thead>
+                    <tr>
+                        <th>Código de creación</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody id="listaCodigos">
+                    <!-- Estos los llenarás tú después con JS -->
+                    <tr>
+                        <td>1</td>
+                        <td><button class="btn-crear">Crear usuario</button></td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td><button class="btn-crear">Crear usuario</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="main-footer">
+      <div class="footer-section">Somos una institución sobre...</div>
+      <div class="footer-section">Redes...</div>
+      <div class="footer-section">Cosas...</div>
+    </footer>
+
+    <script src="./creacion_usuario_acudiente.js" defer></script>
+</body>
+</html>
