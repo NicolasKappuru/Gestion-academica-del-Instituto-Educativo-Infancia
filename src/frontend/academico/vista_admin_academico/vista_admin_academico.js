@@ -30,17 +30,28 @@ function cargarGrupos(lista) {
 
         fila.innerHTML = `
             <td>${g.nombre}</td>
+
+            <td>
+                ${
+                    g.profesor_director
+                    ? `${g.profesor_director.nombre} ${g.profesor_director.apellido}`
+                    : `<button class="btn-asignar" onclick="abrirAsignarProfesor('${g.id}')">Asignar</button>`
+                }
+            </td>
+
             <td>
                 <button class="btn-tabla" onclick="consultarGrupo('${g.nombre}')">
                     Consultar
                 </button>
             </td>
+
             <td>
                 <button class="btn-tabla" onclick="realizarGrupo('${g.nombre}')">
                     Realizar
                 </button>
             </td>
         `;
+
 
         tabla.appendChild(fila);
     });
@@ -64,3 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+function abrirAsignarProfesor(idGrupo) {
+    localStorage.setItem("grupo_a_asignar", idGrupo);
+    window.location.href = "../asignar_profesor/asignar_profesor.html";
+}

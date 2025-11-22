@@ -1,0 +1,19 @@
+.prof-card {
+    border: 1px solid #aaa;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.prof-card button {
+    padding: 6px 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.prof-card button:hover {
+    background-color: #1d7f34;
+}

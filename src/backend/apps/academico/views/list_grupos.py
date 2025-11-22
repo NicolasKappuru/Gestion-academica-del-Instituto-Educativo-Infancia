@@ -25,13 +25,27 @@ class ListadoGruposPorPeriodo(APIView):
 
             grupos = Grupo.objects.filter(grado__in=grados)
 
-            data = [
-                {
+            data = []
+            for g in grupos:
+                profesor = g.profesor_director
+
+                if profesor:
+                    persona = profesor.id_persona
+                    profesor_data = {
+                        "nombre": f"{getattr(persona, 'primer_nombre', '')} {getattr(persona, 'segundo_nombre', '')}".strip(),
+                        "apellido": f"{getattr(persona, 'primer_apellido', '')} {getattr(persona, 'segundo_apellido', '')}".strip()
+                    }
+                else:
+                    profesor_data = None
+
+                data.append({
+                    "id": g.id_grupo,
                     "nombre": g.nombre_grupo,
-                    "grado": g.grado.nombre_grado if g.grado else None
-                }
-                for g in grupos
-            ]
+                    "grado": g.grado.nombre_grado if g.grado else None,
+                    "profesor_director": profesor_data
+                })
+
+
 
             return Response({"grupos": data}, status=status.HTTP_200_OK)
 

@@ -90,3 +90,16 @@
 .btn-opcion:hover {
     background: #2196f3;
 }
+
+.btn-asignar {
+    padding: 5px 10px;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-asignar:hover {
+    background-color: #0c6cd4;
+}
