@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'apps.boletines',
     'apps.solicitudes',
     'apps.citaciones',
+    'apps.evaluacion',
 
 ]
 

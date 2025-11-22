@@ -32,7 +32,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         window.location.href = "../boletines/vista_boletines/boletines.html";
 
       } else if (data.role === "profesor") {
-        window.location.href = "../vista_profesor.html";
+        window.location.href = "../evaluacion/vista_profesor/vista_profesor.html";
 
       } else if (data.role === "administrador_academico") {
         window.location.href = "../academico/vista_admin_academico/vista_admin_academico.html";

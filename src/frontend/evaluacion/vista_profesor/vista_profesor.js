@@ -1,23 +1,50 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-    // Datos de prueba — luego los reemplazas por tu fetch()
-    const estudiantes = [
-        { nombre: "Pepito Perez" },
-        { nombre: "Juan Carlos" },
-        { nombre: "Maria Gomez" }
-    ];
+    const username = localStorage.getItem("username");
 
-    const tabla = document.getElementById("tablaEstudiantes");
+    if (!username) {
+        alert("No hay usuario en sesión");
+        return;
+    }
 
-    estudiantes.forEach(est => {
-        const fila = document.createElement("tr");
+    try {
+        const resp = await fetch("http://127.0.0.1:8000/api/listadoEstudiantesGrupo/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username })
+        });
 
-        fila.innerHTML = `
-            <td>${est.nombre}</td>
-            <td><button class="btn-evaluar">Evaluar</button></td>
+        const data = await resp.json();
+
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+
+        // Cambiar el título del grupo
+        document.querySelector(".titulo-seccion").innerHTML = `
+            Lista de estudiantes<br>
+            grupo ${data.grupo}
         `;
 
-        tabla.appendChild(fila);
-    });
+        // Llenar la tabla
+        const tabla = document.getElementById("tablaEstudiantes");
+        tabla.innerHTML = "";
+
+        data.estudiantes.forEach(est => {
+            const fila = document.createElement("tr");
+
+            fila.innerHTML = `
+                <td>${est.nombre}</td>
+                <td><button class="btn-evaluar">Evaluar</button></td>
+            `;
+
+            tabla.appendChild(fila);
+        });
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error de conexión");
+    }
 
 });
