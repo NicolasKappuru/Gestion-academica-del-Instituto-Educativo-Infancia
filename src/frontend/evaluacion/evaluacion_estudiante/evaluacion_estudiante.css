@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #fafafa;
+    margin: 0;
+    padding: 20px;
+}
+
+.titulo {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.tabla-contenedor {
+    width: 95%;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.tabla-evaluacion {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-evaluacion th {
+    background: #e8e8e8;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tabla-evaluacion td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.asistencia-btn {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #ececec;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+
+.asistencia-btn:hover {
+    background: #dcdcdc;
+}

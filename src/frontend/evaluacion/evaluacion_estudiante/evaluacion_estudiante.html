@@ -1,0 +1,99 @@
+ <!DOCTYPE html>
+<HTML>
+<head>
+  <meta charset="UTF-8">
+  <title>Pagína inicial</title>
+  <link rel="stylesheet" href="./evaluacion_estudiante.css">
+  <link rel="stylesheet" href="../../header/header.css">
+  <link rel="stylesheet" href="../../footer/footer.css">
+</head>
+
+<!-- ===== HEADER ===== -->
+    <header class="main-header">
+        <div class="header-logo">
+        <div class="logo-circle"></div>
+        <div class="logo-text">
+            <h1>Instituto educativo</h1>
+            <h2>Infancia</h2>
+        </div>
+        </div>
+
+        <nav class="header-nav">
+        <a href="../interfaz inicial/main.html" class="nav-link">Inicio</a>
+        <span class="nav-link">Contacto</span>
+        <div class="nav-box">
+            <span class="nav-icon">📅</span>
+        </div>
+        <a href="../login/login.html" class="nav-link login-link">
+            Iniciar sesión
+        </a>
+        </nav>
+
+    </header>
+
+
+  <!-- ===== MAIN ===== -->
+ <main>
+
+    <h2 class="titulo">Evaluación de nombre_estudiante</h2>
+
+    <div class="tabla-contenedor">
+        <table id="tablaAsistencias" class="tabla-evaluacion">
+
+            <thead>
+                <tr>
+                    <th>Categoría logro</th>
+                    <th>Descripción</th>
+                    <th>Corte 1</th>
+                    <th>Corte 2</th>
+                    <th>Corte 3</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Logro 1</td>
+                    <td>Descripción 1</td>
+
+                    <td data-estado="Por asignar"><button class="asistencia-btn">Por asignar</button></td>
+                    <td data-estado="Realizado"><button class="asistencia-btn">Realizado</button></td>
+                    <td data-estado="En progreso"><button class="asistencia-btn">En progreso</button></td>
+                </tr>
+
+                <tr>
+                    <td>Logro 2</td>
+                    <td>Descripción 2</td>
+
+                    <td data-estado="No realizado"><button class="asistencia-btn">No realizado</button></td>
+                    <td data-estado="Por calificar"><button class="asistencia-btn">Por calificar</button></td>
+                    <td data-estado="Por asignar"><button class="asistencia-btn">Por asignar</button></td>
+                </tr>
+
+                <tr>
+                    <td>Logro 3</td>
+                    <td>Descripción 3</td>
+
+                    <td data-estado="Por asignar"><button class="asistencia-btn">Por asignar</button></td>
+                    <td data-estado="En progreso"><button class="asistencia-btn">En progreso</button></td>
+                    <td data-estado="Realizado"><button class="asistencia-btn">Realizado</button></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+</main>
+
+
+
+
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="main-footer">
+        <div class="footer-section">Somos una institución sobre...</div>
+        <div class="footer-section">Redes...</div>
+        <div class="footer-section">Cosas...</div>
+    </footer>
+
+    <script src="./formulario_inscripcion.js"></script>
+</HTML>
