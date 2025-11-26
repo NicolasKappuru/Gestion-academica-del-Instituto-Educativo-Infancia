@@ -11,3 +11,8 @@ class Profesor(models.Model):
 
     class Meta:
         db_table = 'Profesor'
+
+    #GETTERS
+
+    def get_id_persona(self):
+        return self.id_persona

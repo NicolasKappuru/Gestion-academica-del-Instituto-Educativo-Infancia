@@ -14,3 +14,17 @@ class Infante_aspirante(models.Model):
     
     class Meta:
             db_table = 'Infante_aspirante'
+
+    #GETTERS
+
+    def get_id_persona(self):
+        return self.id_persona
+    
+    def get_fecha_nacimiento(self):
+        return self.fecha_nacimiento
+    
+    #SETTERS
+
+    def set_fecha_nacimiento(self, fecha_nacimiento):
+        self.fecha_nacimiento = fecha_nacimiento
+        

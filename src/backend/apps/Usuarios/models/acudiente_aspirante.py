@@ -12,3 +12,16 @@ class Acudiente_aspirante(models.Model):
 
     class Meta:
             db_table = 'Acudiente_aspirante'
+
+    #GETTERS
+
+    def get_id_persona(self):
+        return self.id_persona
+    
+    def get_correo_electronico_aspirante(self):
+        return self.correo_electronico_aspirante
+    
+    #SETTERS
+
+    def set_correo_electronico_aspirante(self, value):
+        self.correo_electronico_aspirante = value

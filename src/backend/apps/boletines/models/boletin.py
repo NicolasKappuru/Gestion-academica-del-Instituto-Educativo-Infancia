@@ -23,4 +23,33 @@ class Boletin(models.Model):
     class Meta:
         db_table = 'Boletin'
 
-   
+    #GETTERS
+
+    def get_id_boletin(self):
+        return self.id_boletin
+
+    def get_nombre_grupo(self):
+        return self.nombre_grupo
+
+    def get_profesor_director(self):
+        return self.profesor_director
+
+    def get_estudiante(self):
+        return self.estudiante
+
+    def get_periodo_academico(self):
+        return self.periodo_academico
+
+    #SETTERS
+    
+    def set_nombre_grupo(self, value):
+        self.nombre_grupo = value
+
+    def set_profesor_director(self, value):
+        self.profesor_director = value
+
+    def set_estudiante(self, value):
+        self.estudiante = value
+
+    def set_periodo_academico(self, value):
+        self.periodo_academico = value

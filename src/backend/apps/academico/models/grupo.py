@@ -32,3 +32,36 @@ class Grupo(models.Model):
         
         estudiante.grupo = self
         estudiante.save()
+
+
+    #GETTERS
+    
+    def get_id_grupo(self):
+        return self.id_grupo
+
+    def get_nombre_grupo(self):
+        return self.nombre_grupo
+
+    def get_cupos_grupo(self):
+        return self.cupos_grupo
+
+    def get_grado(self):
+        return self.grado
+
+    def get_profesor_director(self):
+        return self.profesor_director
+
+    # ===========================
+    #          SETTERS
+    # ===========================
+    def set_nombre_grupo(self, value):
+        self.nombre_grupo = value
+
+    def set_cupos_grupo(self, value):
+        self.cupos_grupo = value
+
+    def set_grado(self, value):
+        self.grado = value
+
+    def set_profesor_director(self, value):
+        self.profesor_director = value

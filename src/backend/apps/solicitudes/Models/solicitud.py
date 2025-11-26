@@ -24,5 +24,36 @@ class Solicitud(models.Model):
     class Meta:
         db_table = 'Solicitud'
 
-    def __str__(self):
-        return f"Solicitud de {self.acudiente_aspirante.id_persona.primer_nombre} - {self.estado_solicitud}"
+    #GETTERS
+    
+    def get_id_solicitud(self):
+        return self.id_solicitud
+
+    def get_acudiente_aspirante(self):
+        return self.acudiente_aspirante
+
+    def get_infante_aspirante(self):
+        return self.infante_aspirante
+
+    def get_grado_aplicar(self):
+        return self.grado_aplicar
+
+    def get_fecha_solicitud(self):
+        return self.fecha_solicitud
+
+    def get_estado_solicitud(self):
+        return self.estado_solicitud
+
+    #SETTERS
+    
+    def set_acudiente_aspirante(self, value):
+        self.acudiente_aspirante = value
+
+    def set_infante_aspirante(self, value):
+        self.infante_aspirante = value
+
+    def set_grado_aplicar(self, value):
+        self.grado_aplicar = value
+
+    def set_estado_solicitud(self, value):
+        self.estado_solicitud = value

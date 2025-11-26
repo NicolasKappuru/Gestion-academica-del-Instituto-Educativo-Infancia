@@ -12,7 +12,43 @@ class Persona(models.Model):
         db_table = 'Persona'
         abstract = False
 
-    def __str__(self):
-        return f"{self.primer_nombre} {self.primer_apellido}"
+    #GETTERS
+
+    def get_id_persona(self):
+        return self.id_persona
+
+    def get_primer_nombre(self):
+        return self.primer_nombre
+
+    def get_segundo_nombre(self):
+        return self.segundo_nombre
+
+    def get_primer_apellido(self):
+        return self.primer_apellido
+
+    def get_segundo_apellido(self):
+        return self.segundo_apellido
+
+    def get_nit(self):
+        return self.NIT
+
+    #SETTERS
+
+    def set_id_persona(self, value):
+        self.id_persona = value 
     
-   
+    def set_primer_nombre(self, value):
+        self.primer_nombre = value
+
+    def set_segundo_nombre(self, value):
+        self.segundo_nombre = value
+
+    def set_primer_apellido(self, value):
+        self.primer_apellido = value
+
+    def set_segundo_apellido(self, value):
+        self.segundo_apellido = value
+
+    def set_nit(self, value):
+        self.NIT = value
+

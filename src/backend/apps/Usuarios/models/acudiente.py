@@ -15,3 +15,8 @@ class Acudiente(models.Model):
     def agregar_estudiante(self, estudiante):
             estudiante.acudiente = self
             estudiante.save()
+
+    #GETTERS
+    def get_id_persona(self):
+        return self.id_persona
+    

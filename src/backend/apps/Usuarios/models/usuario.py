@@ -31,9 +31,6 @@ class Usuario(models.Model):
     class Meta:
         db_table = 'Usuario'
 
-    def __str__(self):
-        return f"{self.codigo_usuario} ({self.persona.primer_nombre})"
-
     def save(self, *args, **kwargs):
         # Generar solo si no existe
         if not self.codigo_usuario:
@@ -54,3 +51,29 @@ class Usuario(models.Model):
             self.user.save()
 
         super().save(*args, **kwargs)
+
+
+    #GETTERS
+
+    def get_codigo_usuario(self):
+        return self.codigo_usuario
+
+    def get_user(self):
+        return self.user
+
+    def get_persona(self):
+        return self.persona
+
+    def get_role(self):
+        return self.role
+
+    #SETTERS
+
+    def set_user(self, value):
+        self.user = value
+
+    def set_persona(self, value):
+        self.persona = value
+
+    def set_role(self, value):
+        self.role = value

@@ -29,6 +29,29 @@ class Estudiante(models.Model):
         db_column='id_grupo'
     )
 
-    
     class Meta:
         db_table = 'Estudiante'
+
+    #GETTERS
+    def get_id_persona(self):
+        return self.id_persona
+
+    def get_fecha_nacimiento(self):
+        return self.fecha_nacimiento
+
+    def get_acudiente(self):
+        return self.acudiente
+
+    def get_grupo(self):
+        return self.grupo
+
+    #SETTERS
+    
+    def set_fecha_nacimiento(self, value):
+        self.fecha_nacimiento = value
+
+    def set_acudiente(self, value):
+        self.acudiente = value
+
+    def set_grupo(self, value):
+        self.grupo = value

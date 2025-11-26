@@ -10,3 +10,8 @@ class Administrador_de_usuarios(models.Model):
     )
     class Meta:
         db_table = 'Administrador_de_usuarios'
+
+    #GETTERS
+
+    def get_id_persona(self):
+        return self.id_persona

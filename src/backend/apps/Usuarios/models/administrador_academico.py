@@ -12,4 +12,7 @@ class Administrador_academico(models.Model):
     class Meta:
         db_table = 'Administrador_academico'
 
+    #GETTERS
 
+    def get_id_persona(self):
+        return self.id_persona
