@@ -164,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
 
 
-    // === SI TODO ESTÁ CORRECTO ===
     console.log("=== Datos del acudiente ===");
     console.log(acudiente);
     console.log("=== Datos del infante ===");

@@ -12,11 +12,9 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     });
 
     const data = await response.json();
-    const msg = document.getElementById("message");
 
     if (response.ok) {
-      msg.textContent = "Inicio de sesión exitoso.";
-      msg.style.color = "green";
+      showMessage("Inicio de sesión exitoso.", "success");
 
       // ✅ Guardamos los tokens y el usuario
       localStorage.setItem("access_token", data.access);
@@ -48,10 +46,10 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     }, 500);
 
     } else {
-      msg.textContent = data.error || "Error en el inicio de sesión.";
-      msg.style.color = "red";
+        showMessage(data.error || "Error en el inicio de sesión.");
     }
   } catch (error) {
     console.error("Error:", error);
+    showMessage("Error al conectar con el servidor.");
   }
 });
