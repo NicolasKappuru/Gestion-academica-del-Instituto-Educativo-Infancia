@@ -1,9 +1,8 @@
 import { cambiarEstado } from "./habilitar_deshabilitar.js";
 
+validarAcceso("administrador_usuarios");
 
-// ================================
 // Variables globales
-// ================================
 const tabla = document.getElementById("tablaBody");
 const rolSelect = document.getElementById("rolSelect");
 const btnCrear = document.getElementById("btnCrearUsuario");
@@ -20,9 +19,7 @@ const btnNext = document.getElementById("btnNext");
 const pageInfo = document.getElementById("pageInfo");
 
 
-// ================================
-// Cargar usuarios (fetch al backend)
-// ================================
+// Cargar usuarios 
 async function cargarUsuarios() {
     if (!rolActual) return;
 
@@ -50,18 +47,16 @@ async function cargarUsuarios() {
             totalPaginas = data.total_pages;
             actualizarControles();
         } else {
-            console.error("ERROR:", data.error);
+            showMessage(data.error || "Ocurrió un error inesperado", "error");
         }
 
     } catch (error) {
-        console.error("Error en fetch:", error);
+        showMessage("Error al conectar con el servidor. Verifica tu conexión o intenta más tarde.", "error");
     }
 }
 
 
-// ================================
 // Renderizar tabla
-// ================================
 function renderUsuarios(lista) {
     tabla.innerHTML = "";
 
@@ -96,9 +91,7 @@ function activarBotonesAccion() {
     });
 }
 
-// ================================
 // Controles de paginación
-// ================================
 function actualizarControles() {
     pageInfo.textContent = `Página ${paginaActual} de ${totalPaginas}`;
 
@@ -120,10 +113,7 @@ btnNext.addEventListener("click", () => {
     }
 });
 
-
-// ================================
 // Evento para seleccionar rol
-// ================================
 rolSelect.addEventListener("change", () => {
     const value = rolSelect.value;
 
@@ -144,16 +134,12 @@ rolSelect.addEventListener("change", () => {
 });
 
 
-// ================================
 // Botón Crear Usuario
-// ================================
 btnCrear.addEventListener("click", () => {
     window.location.href = "../creacion_usuario/creacion_usuario.html";
 });
 
-// ================================
 // Botón Crear Usuario Acudiente
-// ================================
 const btnCrearAcudiente = document.getElementById("btnCrearUsuarioAcudinte");
 
 btnCrearAcudiente.addEventListener("click", () => {

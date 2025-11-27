@@ -1,19 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const btnEnviar = document.getElementById("btnEnviar");
 
-  // Crear contenedor para mensajes
-  const msgBox = document.createElement("div");
-  msgBox.className = "msg-box";
-  document.body.appendChild(msgBox);
-
-  // Función para mostrar mensajes en pantalla
-  const showMessage = (texto, tipo = "error") => {
-    msgBox.textContent = texto;
-    msgBox.className = `msg-box ${tipo}`;
-    msgBox.style.display = "block";
-    setTimeout(() => (msgBox.style.display = "none"), 3000);
-  };
-
   // Función para capitalizar texto (primera letra mayúscula)
   const capitalize = (str) =>
     str

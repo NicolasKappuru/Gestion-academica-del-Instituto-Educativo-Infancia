@@ -1,4 +1,3 @@
-// aceptar_solicitud.js
 export async function aceptarSolicitud(id_solicitud) {
     try {
         const token = localStorage.getItem("access_token");
