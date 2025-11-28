@@ -33,10 +33,10 @@ class ListadoUsuarios(APIView):
             data = []
             for u in usuarios_pagina:
                 data.append({
-                    "nombre": f"{u.persona.primer_nombre} {u.persona.primer_apellido}",
-                    "estado": "Habilitado" if u.user.is_active else "Deshabilitado",
-                    "id": u.codigo_usuario,
-                    "id_user": u.user.id,
+                    "nombre": f"{u.get_persona().get_primer_nombre()} {u.get_persona().get_primer_apellido()}",
+                    "estado": "Habilitado" if u.get_user().is_active else "Deshabilitado",
+                    "id": u.get_codigo_usuario(),
+                    "id_user": u.get_user().id,
                 })
 
             return Response({

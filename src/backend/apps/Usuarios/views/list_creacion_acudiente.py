@@ -29,8 +29,8 @@ class ListadoCreacionAcudiente(APIView):
             data = []
             for sol in solicitudes_page:
                 data.append({
-                    "codigo_creacion": sol.id_solicitud,  # El código visible en la tabla
-                    "id_solicitud": sol.id_solicitud,     # Igual, por si necesitas ID interno
+                    "codigo_creacion": sol.get_id_solicitud(),  
+                    "id_solicitud": sol.get_id_solicitud(),  
                 })
 
             return Response({

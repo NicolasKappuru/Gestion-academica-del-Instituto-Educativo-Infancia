@@ -62,7 +62,7 @@ class CrearUsuario(APIView):
 
                 # Crear usuario Django
                 django_user = User.objects.create_user(
-                    username=email,
+                    username=email, # Clase Usuario se encarga de asignarlo
                     email=email,
                     password=str(nit)
                 )
@@ -78,11 +78,7 @@ class CrearUsuario(APIView):
                 usuario.save()
 
                 # Crear el objeto especializado segun el rol
-                if role == "acudiente":
-                    acudiente = Acudiente.objects.create(id_persona=persona)
-                    acudiente.save()
-
-                elif role == "profesor":
+                if role == "profesor":
                     profesor = Profesor.objects.create(id_persona=persona)
                     profesor.save()
 
@@ -97,8 +93,8 @@ class CrearUsuario(APIView):
                 return Response(
                     {
                         "message": "Usuario creado correctamente",
-                        "usuario_id": usuario.codigo_usuario,
-                        "persona_id": persona.id_persona,
+                        "usuario_id": usuario.get_codigo_usuario(),
+                        "persona_id": persona.get_id_persona(),
                         "user_id": django_user.id
                     },
                     status=status.HTTP_201_CREATED

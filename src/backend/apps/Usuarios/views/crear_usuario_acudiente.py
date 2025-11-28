@@ -32,9 +32,9 @@ class CrearUsuarioAcudiente(APIView):
                     "acudiente_aspirante__id_persona"
                 ).get(id_solicitud=solicitud_id)
 
-                acudiente_asp = solicitud.acudiente_aspirante
-                persona = acudiente_asp.id_persona
-                email = acudiente_asp.correo_electronico_aspirante
+                acudiente_asp = solicitud.get_acudiente_aspirante()
+                persona = acudiente_asp.get_id_persona()
+                email = acudiente_asp.get_correo_electronico_aspirante()
 
                 # -------------------------------
                 # 2. Validar si la persona ya tiene usuario acudiente
@@ -49,9 +49,9 @@ class CrearUsuarioAcudiente(APIView):
                 # 3. Crear usuario Django
                 # -------------------------------
                 django_user = User.objects.create_user(
-                    username=email,
+                    username=email,  # Clase Usuario se encarga de asignarlo
                     email=email,
-                    password=str(persona.NIT)
+                    password=str(persona.get_nit())
                 )
                 django_user.is_active = True
                 django_user.save()
@@ -67,12 +67,7 @@ class CrearUsuarioAcudiente(APIView):
                 usuario.save()
 
                 # -------------------------------
-                # 5. TERMINAR — NO crear Acudiente
-                #    (ya existe esa persona como acudiente)
-                # -------------------------------
-
-                # -------------------------------
-                # 6. Finalizar solicitud
+                # 5. Finalizar solicitud
                 # -------------------------------
                 solicitud.estado_solicitud = "Finalizada"
                 solicitud.save()
