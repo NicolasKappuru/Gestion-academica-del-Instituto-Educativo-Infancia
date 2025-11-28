@@ -8,12 +8,7 @@ from apps.solicitudes.models.solicitud import Solicitud
 from apps.academico.models.grado import Grado
 
 class ListadoSolicitudes(APIView):
-    """
-    POST:
-     - page (int, opcional)
-     - page_size (int, opcional)
-    Devuelve solicitudes ordenadas por id_solicitud asc (antiguedad).
-    """
+  
     def post(self, request):
         try:
             page = int(request.data.get("page", 1))
@@ -33,9 +28,9 @@ class ListadoSolicitudes(APIView):
             data = []
             for s in pagina:
                 # Nombre aspirante tomado desde la persona vinculada al acudiente
-                persona = getattr(s.acudiente_aspirante, "id_persona", None)
+                persona = getattr(s.get_acudiente_aspirante(), "id_persona", None)
                 if persona:
-                    aspirante_nombre = f"{persona.primer_nombre} {persona.primer_apellido}"
+                    aspirante_nombre = f"{persona.get_primer_nombre()} {persona.get_primer_apellido()}"
                 else:
                     aspirante_nombre = "Sin nombre"
 
@@ -44,16 +39,16 @@ class ListadoSolicitudes(APIView):
                 try:
                     grado_obj = Grado.objects.filter(nombre_grado=s.grado_aplicar).first()
                     if grado_obj:
-                        cupos = int(grado_obj.cupos_grado)
+                        cupos = int(grado_obj.get_cupos_grado())
                 except Exception:
                     cupos = None
 
                 data.append({
-                    "id": s.id_solicitud,
+                    "id": s.get_id_solicitud(),
                     "aspirante": aspirante_nombre,
-                    "grado": s.grado_aplicar,
+                    "grado": s.get_grado_aplicar(),
                     "cupos": cupos,
-                    "estado": s.estado_solicitud
+                    "estado": s.get_estado_solicitud()
                 })
 
             return Response({

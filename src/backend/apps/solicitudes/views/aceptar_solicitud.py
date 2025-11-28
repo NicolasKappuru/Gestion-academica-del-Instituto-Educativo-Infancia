@@ -31,7 +31,7 @@ class AceptarSolicitud(APIView):
                 "acudiente_aspirante__id_persona"
             ).get(id_solicitud=solicitud_id)
 
-            grado_nombre = solicitud.grado_aplicar
+            grado_nombre = solicitud.get_grado_aplicar()
 
             # ----------------------------------------------------
             # 2. Buscar grado
@@ -41,7 +41,7 @@ class AceptarSolicitud(APIView):
             # ----------------------------------------------------
             # 3. Validar cupos grado
             # ----------------------------------------------------
-            if grado.cupos_grado <= 0:
+            if grado.get_cupos_grado() <= 0:
                 return Response(
                     {"error": "No hay cupos disponibles en el grado"},
                     status=status.HTTP_400_BAD_REQUEST
@@ -64,18 +64,18 @@ class AceptarSolicitud(APIView):
             # ----------------------------------------------------
             # 5. CREAR ACUDIENTE REAL
             # ----------------------------------------------------
-            acudiente_asp = solicitud.acudiente_aspirante
+            acudiente_asp = solicitud.get_acudiente_aspirante()
 
             # Verificar si ya existe
             acudiente_real, creado = Acudiente.objects.get_or_create(
-                id_persona=acudiente_asp.id_persona
+                id_persona=acudiente_asp.get_id_persona()
             )
 
             # ----------------------------------------------------
             # 6. Crear Estudiante desde Infante_aspirante
             # ----------------------------------------------------
-            infante = solicitud.infante_aspirante
-            persona_infante = infante.id_persona
+            infante = solicitud.get_infante_aspirante()
+            persona_infante = infante.get_id_persona()
 
             # Validar si ya existe estudiante
             if Estudiante.objects.filter(id_persona=persona_infante).exists():
@@ -86,7 +86,7 @@ class AceptarSolicitud(APIView):
 
             estudiante = Estudiante.objects.create(
                 id_persona=persona_infante,
-                fecha_nacimiento=infante.fecha_nacimiento,
+                fecha_nacimiento=infante.get_fecha_nacimiento(),
                 acudiente=acudiente_real,
                 grupo=grupo
             )
@@ -94,24 +94,24 @@ class AceptarSolicitud(APIView):
             # ----------------------------------------------------
             # 7. Restar cupos a grado y grupo
             # ----------------------------------------------------
-            grado.cupos_grado -= 1
+            grado.set_cupos_grado(grado.get_cupos_grado()-1)
             grado.save()
 
-            grupo.cupos_grupo -= 1
+            grupo.set_cupos_grupo(grupo.get_cupos_grupo()-1)
             grupo.save()
 
             # ----------------------------------------------------
             # 8. Cambiar estado de solicitud
             # ----------------------------------------------------
-            solicitud.estado_solicitud = "Aceptada"
+            solicitud.set_estado_solicitud("Aceptada")
             solicitud.save()
 
             return Response({
                 "ok": True,
                 "estado": "Aceptada",
-                "id_estudiante": estudiante.id_persona.id_persona,
-                "id_acudiente": acudiente_real.id_persona.id_persona,
-                "grupo_asignado": grupo.nombre_grupo
+                "id_estudiante": estudiante.get_id_persona().get_id_persona(),
+                "id_acudiente": acudiente_real.get_id_persona().get_id_persona(),
+                "grupo_asignado": grupo.get_nombre_grupo()
             })
 
         except Solicitud.DoesNotExist:
