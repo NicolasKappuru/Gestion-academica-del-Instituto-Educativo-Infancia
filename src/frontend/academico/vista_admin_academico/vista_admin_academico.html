@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Administrador académico </title>
-  <!-- Estilos separados -->
+  <title>Administrador académico</title>
   <link rel="stylesheet" href="./vista_admin_academico.css">
   <link rel="stylesheet" href="../../header/header.css">
   <link rel="stylesheet" href="../../footer/footer.css">
+  <link rel="stylesheet" href="../../globales/msg/mensaje.css">
 </head>
 
 <body>
@@ -30,47 +30,56 @@
           Iniciar sesión
         </a>
       </nav>
-
     </header>
 
     <!-- ===== MAIN ===== -->
     <main class="admin-academico-container">
 
-    <section class="panel-grupos">
+      <section class="panel-grupos">
 
         <h2 class="titulo-seccion">Lista de grupos</h2>
 
         <div class="contenedor-tabla">
-        <table class="tabla-grupos">
+          <table class="tabla-grupos">
             <thead>
-            <tr>
+              <tr>
                 <th>Grupo</th>
                 <th>Profesor director</th>
-                <th>Consultar boletines</th>
                 <th>Citación</th>
-
-            </tr>
+              </tr>
             </thead>
 
             <tbody id="tablaGrupos">
-            <!-- Se llena dinámicamente -->
+              <!-- Se llena dinámicamente -->
             </tbody>
-        </table>
+          </table>
         </div>
 
-    </section>
+        <!-- ================================
+             TEMPLATE PARA FILA DE GRUPO
+        ================================= -->
+        <template id="filaGrupoTemplate">
+            <tr>
+                <td class="td-nombre"></td>
 
-    <section class="panel-opciones">
+                <td class="td-profesor"></td>
 
+                <td>
+                    <button class="btn-tabla btn-realizar">Realizar</button>
+                </td>
+            </tr>
+        </template>
+
+      </section>
+
+      <section class="panel-opciones">
         <div class="opcion-card">
             <h3>Solicitudes de inscripción</h3>
             <button class="btn-opcion">
                 Administrar solicitudes
             </button>
         </div>
-
-    </section>
-
+      </section>
 
     </main>
 
@@ -81,6 +90,8 @@
       <div class="footer-section">Cosas...</div>
     </footer>
 
+    <script src="../../globales/validacion/validacion.js" defer></script>
     <script src="./vista_admin_academico.js" defer></script>
+    <script src="../../globales/msg/mensaje.js" defer></script>
 </body>
 </html>

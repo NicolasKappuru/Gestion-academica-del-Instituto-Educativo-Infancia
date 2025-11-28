@@ -1,9 +1,12 @@
-const anio = new Date().getFullYear(); // Año actual
+validarAcceso("administrador_academico");
+
+const anio = new Date().getFullYear(); 
 
 fetch("http://127.0.0.1:8000/api/listadoGruposPeriodo/", {
     method: "POST",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`
     },
     body: JSON.stringify({ anio })
 })
@@ -11,55 +14,54 @@ fetch("http://127.0.0.1:8000/api/listadoGruposPeriodo/", {
 .then(data => {
 
     if (data.error) {
-        alert("Error: " + data.error);
+        showMessage(data.error || "Ocurrió un error inesperado", "error");
         return;
     }
 
     cargarGrupos(data.grupos);
 })
 .catch(err => {
-    console.error("Error de conexión:", err);
+    showMessage(err || "Error de conexión intentelo mas tarde", "error");
 });
+
 
 function cargarGrupos(lista) {
     const tabla = document.getElementById("tablaGrupos");
+    const template = document.getElementById("filaGrupoTemplate");
+
     tabla.innerHTML = "";
 
     lista.forEach(g => {
-        const fila = document.createElement("tr");
+        const clone = template.content.cloneNode(true);
 
-        fila.innerHTML = `
-            <td>${g.nombre}</td>
+        clone.querySelector(".td-nombre").textContent = g.nombre;
 
-            <td>
-                ${
-                    g.profesor_director
-                    ? `${g.profesor_director.nombre} ${g.profesor_director.apellido}`
-                    : `<button class="btn-asignar" onclick="abrirAsignarProfesor('${g.id}')">Asignar</button>`
-                }
-            </td>
+        // Profesor asignado o botón
+        const tdProfesor = clone.querySelector(".td-profesor");
+        if (g.profesor_director) {
+            tdProfesor.textContent = 
+                `${g.profesor_director.nombre} ${g.profesor_director.apellido}`;
+        } else {
+            tdProfesor.innerHTML = 
+                `<button class="btn-asignar" data-id="${g.id}">Asignar</button>`;
+        }
+        
+        // Evento realizar
+        clone.querySelector(".btn-realizar").addEventListener("click", () => {
+            realizarGrupo(g.nombre);
+        });
 
-            <td>
-                <button class="btn-tabla" onclick="consultarGrupo('${g.nombre}')">
-                    Consultar
-                </button>
-            </td>
+        // Evento asignar
+        if (!g.profesor_director) {
+            tdProfesor.querySelector(".btn-asignar").addEventListener("click", () => {
+                abrirAsignarProfesor(g.id);
+            });
+        }
 
-            <td>
-                <button class="btn-tabla" onclick="realizarGrupo('${g.nombre}')">
-                    Realizar
-                </button>
-            </td>
-        `;
-
-
-        tabla.appendChild(fila);
+        tabla.appendChild(clone);
     });
 }
 
-function consultarGrupo(nombre) {
-    alert("Consultando grupo: " + nombre);
-}
 
 function realizarGrupo(nombre) {
     alert("Realizando acciones para grupo: " + nombre);

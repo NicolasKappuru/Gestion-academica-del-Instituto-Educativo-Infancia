@@ -10,7 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         const resp = await fetch("http://127.0.0.1:8000/api/listadoEstudiantesGrupo/", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`
+            },
             body: JSON.stringify({ username })
         });
 

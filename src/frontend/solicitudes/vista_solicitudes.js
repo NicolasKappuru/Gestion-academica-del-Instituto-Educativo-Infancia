@@ -1,4 +1,3 @@
-// vista_solicitudes.js
 import { aceptarSolicitud } from "./aceptar_solicitud.js";
 import { rechazarSolicitud } from "./rechazar_solicitud.js";
 

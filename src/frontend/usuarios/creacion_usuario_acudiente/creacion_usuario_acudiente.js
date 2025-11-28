@@ -9,16 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "../vista_admin_usuarios/vista_admin_usuarios.html";
     });
 
-    // Cargar listado
     async function cargarListado(page = 1, page_size = 10) {
         try {
+            const token = localStorage.getItem("access_token");
+
             const response = await fetch("http://127.0.0.1:8000/api/listarCreacionAcudientes/", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify({ page, page_size })
             });
 
             const data = await response.json();
+            
             if (!response.ok) {
                 showMessage("Error al obtener datos, intente mas tarde", "error");
                 console.error("Error al obtener datos:", data);
@@ -32,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error:", err);
         }
     }
+
 
     // Render tabla con botones
     function renderTabla(solicitudes) {

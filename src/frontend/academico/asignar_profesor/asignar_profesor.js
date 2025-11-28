@@ -1,3 +1,5 @@
+validacionarAcceso("administrador_academico");
+
 const idGrupo = localStorage.getItem("grupo_a_asignar");
 
 // 1. Obtener lista de profesores
@@ -27,7 +29,10 @@ fetch("http://127.0.0.1:8000/api/listarProfesores/", {
 function asignar(idProfesor) {
     fetch("http://127.0.0.1:8000/api/asignarProfesor/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("access_token")}`
+        },
         body: JSON.stringify({
             grupo: idGrupo,
             profesor: idProfesor
