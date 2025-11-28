@@ -9,7 +9,6 @@ from apps.usuarios.models.usuario import Usuario
 from apps.usuarios.models.acudiente import Acudiente
 from apps.usuarios.models.estudiante import Estudiante
 
-@method_decorator(csrf_exempt, name='dispatch')
 class ListadoEstudiantesBoletines(APIView):
 
     def post(self, request):
@@ -22,13 +21,13 @@ class ListadoEstudiantesBoletines(APIView):
         try:
             user = User.objects.get(username=username)
             usuario = Usuario.objects.get(user=user)
-            persona = usuario.persona
+            persona = usuario.get_persona()
             acudiente = Acudiente.objects.get(id_persona=persona)
             estudiantes = Estudiante.objects.filter(acudiente=acudiente)
 
             data = [
                 {
-                    "nombre": f"{est.id_persona.primer_nombre} {est.id_persona.primer_apellido}"
+                    "nombre": f"{est.get_id_persona().get_primer_nombre()} {est.get_id_persona().get_primer_apellido()}"
                 }
                 for est in estudiantes
             ]

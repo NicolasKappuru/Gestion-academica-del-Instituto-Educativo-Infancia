@@ -1,3 +1,5 @@
+validarAcceso("acudiente");
+
 const username = localStorage.getItem("username");
 
 fetch("http://127.0.0.1:8000/api/listadoEstudiantesBoletines/", {
