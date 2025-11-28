@@ -14,14 +14,14 @@ fetch("http://127.0.0.1:8000/api/listadoEstudiantesBoletines/", {
 .then(data => {
 
     if (data.error) {
-        alert("Error: " + data.error);
+        showMessage(data.error || "Ocurrió un error inesperado", "error");
         return;
     }
 
     cargarBoletines(data.estudiantes);
 })
 .catch(err => {
-    console.error("Error de conexión:", err);
+    showMessage(err || "Ocurrió un error inesperado", "error");
 });
 
 function cargarBoletines(lista) {
