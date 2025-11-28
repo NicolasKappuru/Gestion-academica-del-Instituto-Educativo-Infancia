@@ -34,15 +34,15 @@ class Command(BaseCommand):
             #   LISTAS BASE DE NOMBRES
             # ───────────────────────────────
             nombres = [
-                "Laura", "Camila", "Sara", "Mariana", "Ana", "Diana", "Paula",
-                "Mateo", "Samuel", "Juan", "Santiago", "Daniel", "Felipe",
-                "Lucía", "Isabella", "Sofía", "Valentina", "Gabriela",
-                "Tomás", "Nicolás", "Emilio", "Bruno"
+                "Diego", "Luke", "Marta", "Bruce", "Jason", "Byran", "Luz",
+                "Rosa", "Gloria", "Pedro", "Curt", "Juan", "Joaquin",
+                "Jorge", "Alejandro", "Sara", "Valentino", "Gabriel",
+                "Tim", "Pablo", "Jhoon", "Bruno"
             ]
 
             apellidos = [
-                "Gómez", "Ramírez", "Rodríguez", "Martínez", "López", "Hernández",
-                "Fernández", "Rojas", "Castro", "Pérez", "Torres"
+                "Ramirez", "Palomino", "Jimenez", "Sotelo", "Rivera", "Castro",
+                "Arevallo", "Rojas", "Jansen", "Pérez", "Torca"
             ]
 
             # ───────────────────────────────

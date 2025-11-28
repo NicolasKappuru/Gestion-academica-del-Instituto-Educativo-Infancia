@@ -1,5 +1,7 @@
-import { aceptarSolicitud } from "./aceptar_solicitud.js";
-import { rechazarSolicitud } from "./rechazar_solicitud.js";
+import { aceptarSolicitud } from "../aceptar_solicitud.js";
+import { rechazarSolicitud } from "../rechazar_solicitud.js";
+
+validarAcceso("administrador_academico");
 
 const tabla = document.getElementById("tablaSolicitudes");
 const btnPrev = document.getElementById("btnPrev");
@@ -11,7 +13,7 @@ let totalPaginas = 1;
 const pageSize = 10;
 
 document.getElementById("btnVolver").addEventListener("click", () => {
-    window.location.href = "../academico/vista_admin_academico/vista_admin_academico.html";
+    window.location.href = "../../academico/vista_admin_academico/vista_admin_academico.html";
 });
 
 async function cargarSolicitudes() {
@@ -31,7 +33,7 @@ async function cargarSolicitudes() {
 
         const data = await resp.json();
         if (!resp.ok) {
-            console.error("Error listarSolicitudes:", data);
+            showMessage(data.error || "Error al obtener solicitudes", "error");
             return;
         }
 
@@ -39,7 +41,7 @@ async function cargarSolicitudes() {
         renderSolicitudes(data.solicitudes || []);
         actualizarControles();
     } catch (err) {
-        console.error("Fetch error:", err);
+        showMessage("Error de conexión. Intente más tarde.", "error");
     }
 }
 
@@ -81,9 +83,10 @@ function activarEventos() {
             const res = await aceptarSolicitud(id);
             if (res && res.ok) {
                 await cargarSolicitudes();
+                showMessage("Solicitud aceptada correctamente", "success");
             } else {
                 btn.disabled = false;
-                alert("Error al aceptar solicitud");
+                showMessage("No se pudo aceptar la solicitud", "error");
             }
         });
     });
@@ -96,9 +99,11 @@ function activarEventos() {
             const res = await rechazarSolicitud(id);
             if (res && res.ok) {
                 await cargarSolicitudes();
+                showMessage("Solicitud rechazada", "success");
+
             } else {
                 btn.disabled = false;
-                alert("Error al rechazar solicitud");
+                showMessage("No se pudo rechazar la solicitud", "error");
             }
         });
     });

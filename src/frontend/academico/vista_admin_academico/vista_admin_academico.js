@@ -1,7 +1,5 @@
 // Primero validar acceso, igual que en usuarios
-console.log("INICIO DEL ARCHIVO vista_admin_academico.js");
 validarAcceso("administrador_academico");
-console.log("SE LLAMÓ A validarAcceso()");
 
 const tabla = document.getElementById("tablaGrupos");
 const template = document.getElementById("filaGrupoTemplate");
@@ -85,7 +83,7 @@ function abrirAsignarProfesor(idGrupo) {
 
 // Botón de "Solicitudes"
 document.querySelector(".btn-opcion").addEventListener("click", () => {
-    window.location.href = "../../solicitudes/vista_solicitudes.html";
+    window.location.href = "../../solicitudes/vista_solicitudes/vista_solicitudes.html";
 });
 
 
