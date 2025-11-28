@@ -1,11 +1,16 @@
+validarAcceso("administrador_usuarios");
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const btnCrear = document.getElementById("btnCrear");
     const btnVolver = document.getElementById("btnVolver");
 
+
+    const isOnlyNumbers = (str) => /^[0-9]+$/.test(str);
+    const isValidEmail = (str) => /^[\w.-]+@[A-Za-z]+\.[A-Za-z]{2,}$/.test(str);
+    
     // Mapa para convertir el texto del select al rol de la BD
     const ROLES_MAP = {
-        "Acudiente": "acudiente",
         "Profesor": "profesor",
         "Administrador académico": "administrador_academico",
         "Administrador de usuarios": "administrador_usuarios"
@@ -21,8 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const nit = document.getElementById("inputNIT").value;
 
         if (!rolTexto || !email || !nit) {
-            alert("Debe llenar todos los campos.");
+            showMessage("Debe llenar todos los campos.", "error");
             return;
+        }
+
+        if (!isValidEmail(email)) {
+        showMessage("Ingrese un correo electrónico válido.", "error");
+        return;
+        }
+
+        if (!isOnlyNumbers(nit)) {
+        showMessage("La cédula solo debe contener números.", "error");
+        return;
         }
 
         const role = ROLES_MAP[rolTexto];
@@ -44,11 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (!response.ok) {
-                alert("Error: " + (data.error || "No se pudo crear el usuario"));
+                showMessage(data.error || "No se pudo crear el usuario", "error");
                 return;
             }
 
-            alert("Usuario creado correctamente");
+            showMessage("Usuario creado correctamente", "success");
 
             // Limpiar inputs
             document.getElementById("inputRol").value = "";
@@ -56,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("inputNIT").value = "";
 
         } catch (error) {
-            alert("Error en la conexión con el servidor.");
+            showMessage("Error en la conexión con el servidor.", "error");
             console.log(error);
         }
     });

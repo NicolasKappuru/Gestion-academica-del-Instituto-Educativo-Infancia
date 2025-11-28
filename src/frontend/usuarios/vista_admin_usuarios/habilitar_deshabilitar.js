@@ -1,7 +1,4 @@
-// ================================
 // Habilitar / Deshabilitar Usuario
-// ================================
-
 export async function cambiarEstado(idUser) {
     try {
         const token = localStorage.getItem("access_token");

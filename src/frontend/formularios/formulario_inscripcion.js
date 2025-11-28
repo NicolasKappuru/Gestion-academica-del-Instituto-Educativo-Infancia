@@ -49,13 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
       !infante.fechaNacimiento ||
       !infante.grado
     ) {
-      showMessage("Por favor, completa todos los campos obligatorios.");
+      showMessage("Por favor, completa todos los campos obligatorios." , "error");
       return;
     }
 
     // 2. Autorización
     if (!acudiente.autorizo) {
-      showMessage("Debes autorizar el uso de datos personales.");
+      showMessage("Debes autorizar el uso de datos personales." , "error");
       return;
     }
 
@@ -72,19 +72,19 @@ document.addEventListener("DOMContentLoaded", () => {
     ].filter(Boolean);
 
     if (!nombresYApellidos.every(isOnlyLetters)) {
-      showMessage("Solo se permiten letras en los campos de nombre y apellido.");
+      showMessage("Solo se permiten letras en los campos de nombre y apellido.", "error");
       return;
     }
 
     // 4. Validar correo electrónico
     if (!isValidEmail(acudiente.correo)) {
-      showMessage("Ingrese un correo electrónico válido.");
+      showMessage("Ingrese un correo electrónico válido.", "error");
       return;
     }
 
     // 5. Validar cédula (solo números)
     if (!isOnlyNumbers(acudiente.cedula)) {
-      showMessage("La cédula solo debe contener números.");
+      showMessage("La cédula solo debe contener números.", "error");
       return;
     }
 
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Validar rango entre 2 y 4 años
     if (edad < 2 || edad > 4) {
-    showMessage("El infante debe tener entre 2 y 4 años de edad.");
+    showMessage("El infante debe tener entre 2 y 4 años de edad.", "error");
     return;
     }
 

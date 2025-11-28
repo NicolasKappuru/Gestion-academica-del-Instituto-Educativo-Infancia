@@ -1,17 +1,15 @@
+validarAcceso("administrador_usuarios");
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const lista = document.getElementById("listaCodigos");
 
-    // ------------------------------
     // Botón Volver
-    // ------------------------------
     document.getElementById("btnVolver").addEventListener("click", () => {
-        window.location.href = "../interfaz_admin_usuarios/vista_admin_usuarios.html";
+        window.location.href = "../vista_admin_usuarios/vista_admin_usuarios.html";
     });
 
-    // ------------------------------
     // Cargar listado
-    // ------------------------------
     async function cargarListado(page = 1, page_size = 10) {
         try {
             const response = await fetch("http://127.0.0.1:8000/api/listarCreacionAcudientes/", {
@@ -22,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await response.json();
             if (!response.ok) {
+                showMessage("Error al obtener datos, intente mas tarde", "error");
                 console.error("Error al obtener datos:", data);
                 return;
             }
@@ -29,13 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
             renderTabla(data.solicitudes);
 
         } catch (err) {
+            showMessage("Error al obtener datos, intente mas tarde", "error");
             console.error("Error:", err);
         }
     }
 
-    // ------------------------------
     // Render tabla con botones
-    // ------------------------------
     function renderTabla(solicitudes) {
         lista.innerHTML = "";
 
@@ -62,12 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ------------------------------
     // Crear usuario Acudiente usando la solicitud
-    // ------------------------------
     async function crearUsuarioDesdeSolicitud(idSolicitud) {
         if (!idSolicitud) {
-            alert("ID de solicitud inválido");
+            showMessage("ID de solicitud inválido", "error");
             return;
         }
 
@@ -84,17 +80,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (!response.ok) {
-                alert("Error: " + (data.error || "No se pudo crear el usuario"));
+                showMessage("Error: " + (data.error || "No se pudo crear el usuario") , "error");
                 return;
             }
-
-            alert("Usuario creado correctamente para el acudiente");
+            showMessage("Usuario creado correctamente para el acudiente" , "success");
 
             // recargar listado sin la solicitud
             cargarListado();
 
         } catch (error) {
-            alert("Error al conectar con el servidor");
+            showMessage("Error al conectar con el servidor" , "error");
             console.log(error);
         }
     }

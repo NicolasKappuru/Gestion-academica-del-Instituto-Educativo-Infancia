@@ -143,5 +143,5 @@ btnCrear.addEventListener("click", () => {
 const btnCrearAcudiente = document.getElementById("btnCrearUsuarioAcudinte");
 
 btnCrearAcudiente.addEventListener("click", () => {
-    window.location.href = "../crecion_usuario_acudiente/creacion_usuario_acudiente.html";
+    window.location.href = "../creacion_usuario_acudiente/creacion_usuario_acudiente.html";
 });
