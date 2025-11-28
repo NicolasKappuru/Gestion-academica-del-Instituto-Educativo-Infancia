@@ -2,7 +2,7 @@
 export async function rechazarSolicitud(id_solicitud) {
     try {
         const token = localStorage.getItem("access_token");
-        const resp = await fetch("http://localhost:8000/api/solicitud/rechazar/", {
+        const resp = await fetch("http://localhost:8000/api/rechazarSolicitud/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
