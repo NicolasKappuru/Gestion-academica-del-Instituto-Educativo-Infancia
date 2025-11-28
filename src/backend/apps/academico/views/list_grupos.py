@@ -8,7 +8,6 @@ from apps.academico.models.periodo_academico import Periodo_academico
 from apps.academico.models.grado import Grado
 from apps.academico.models.grupo import Grupo
 
-@method_decorator(csrf_exempt, name='dispatch')
 class ListadoGruposPorPeriodo(APIView):
 
     def post(self, request):
@@ -27,21 +26,22 @@ class ListadoGruposPorPeriodo(APIView):
 
             data = []
             for g in grupos:
-                profesor = g.profesor_director
+                profesor = g.get_profesor_director()
 
-                if profesor:
-                    persona = profesor.id_persona
+                if profesor and profesor.get_id_persona():
+                    persona = profesor.get_id_persona()
                     profesor_data = {
-                        "nombre": f"{getattr(persona, 'primer_nombre', '')} {getattr(persona, 'segundo_nombre', '')}".strip(),
-                        "apellido": f"{getattr(persona, 'primer_apellido', '')} {getattr(persona, 'segundo_apellido', '')}".strip()
+                        "nombre": persona.get_primer_nombre(),
+                        "apellido": persona.get_primer_apellido()
                     }
                 else:
                     profesor_data = None
 
+
                 data.append({
-                    "id": g.id_grupo,
-                    "nombre": g.nombre_grupo,
-                    "grado": g.grado.nombre_grado if g.grado else None,
+                    "id": g.get_id_grupo(),
+                    "nombre": g.get_nombre_grupo(),
+                    "grado": g.get_grado().get_nombre_grado() if g.get_grado() else None,
                     "profesor_director": profesor_data
                 })
 

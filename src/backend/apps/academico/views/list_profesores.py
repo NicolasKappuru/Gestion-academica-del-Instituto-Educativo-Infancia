@@ -6,7 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from apps.usuarios.models.profesor import Profesor
 
-@method_decorator(csrf_exempt, name='dispatch')
 class ListarProfesores(APIView):
 
     def get(self, request):
@@ -16,12 +15,12 @@ class ListarProfesores(APIView):
 
             data = []
             for p in profesores:
-                persona = p.id_persona
+                persona = p.get_id_persona()
 
                 data.append({
-                    "id_persona": persona.id_persona,
-                    "nombre": f"{persona.primer_nombre} {persona.segundo_nombre}",
-                    "apellido": f"{persona.primer_apellido} {persona.segundo_apellido or ''}"
+                    "id_persona": persona.get_id_persona(),
+                    "nombre": f"{persona.get_primer_nombre()} {persona.get_segundo_nombre()}",
+                    "apellido": f"{persona.get_primer_apellido()} {persona.get_segundo_apellido()}"
                 })
 
             return Response({"profesores": data}, status=status.HTTP_200_OK)

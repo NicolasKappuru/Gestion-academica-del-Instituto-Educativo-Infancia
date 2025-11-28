@@ -1,4 +1,4 @@
-validacionarAcceso("administrador_academico");
+validarAcceso("administrador_academico");
 
 const idGrupo = localStorage.getItem("grupo_a_asignar");
 

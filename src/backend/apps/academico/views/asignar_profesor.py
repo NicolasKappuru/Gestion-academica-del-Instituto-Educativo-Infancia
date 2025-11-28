@@ -7,7 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 from apps.academico.models.grupo import Grupo
 from apps.usuarios.models.profesor import Profesor
 
-@method_decorator(csrf_exempt, name='dispatch')
 class AsignarProfesor(APIView):
 
     def post(self, request):
