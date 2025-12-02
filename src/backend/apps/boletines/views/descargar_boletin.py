@@ -173,7 +173,7 @@ class DescargarBoletin(APIView):
             story.append(Paragraph(f"<b>{cat_name}</b>", style_bold))
             story.append(Spacer(1, 6))
 
-            data = [["Logro (concepto)", "Corte 1", "Corte 2", "Corte 3"]]
+            data = [["Logro", "Corte 1", "Corte 2", "Corte 3"]]
 
             for it in items:
                 data.append([
