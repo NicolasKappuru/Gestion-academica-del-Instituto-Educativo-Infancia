@@ -46,6 +46,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const tr = document.createElement("tr");
 
+            // === Agregar id_evaluacion y id_logro como atributos y clase ===
+            tr.classList.add("fila-evaluacion");
+            tr.dataset.evaluacionId = ev.id_evaluacion;
+            tr.dataset.logroId = ev.id_logro;
+
             tr.innerHTML = `
                 <td>${ev.logro}</td>
                 <td class="descripcion">${ev.descripcion}</td>

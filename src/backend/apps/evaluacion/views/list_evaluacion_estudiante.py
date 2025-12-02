@@ -57,6 +57,8 @@ class ListEvaluacionEstudiante(APIView):
 
             for ev in evaluaciones:
                 data.append({
+                    "id_evaluacion": ev.id_evaluacion,
+                    "id_logro": ev.logro.id_logro,
                     "logro": ev.logro.concepto_logro,
                     "descripcion": ev.logro.descripcion_logro,
                     "corte1": ev.evaluacion_corte1,
