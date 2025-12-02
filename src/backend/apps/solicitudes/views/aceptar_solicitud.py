@@ -2,12 +2,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import transaction
+from datetime import datetime
 
 from apps.solicitudes.models.solicitud import Solicitud
 from apps.academico.models.grado import Grado
 from apps.academico.models.grupo import Grupo
 from apps.usuarios.models.estudiante import Estudiante
 from apps.usuarios.models.acudiente import Acudiente
+from apps.boletines.models.boletin import Boletin
+from apps.academico.models.evaluacion import Evaluacion
+from apps.academico.models.periodo_academico import Periodo_academico
 
 
 class AceptarSolicitud(APIView):
@@ -101,7 +105,45 @@ class AceptarSolicitud(APIView):
             grupo.save()
 
             # ----------------------------------------------------
-            # 8. Cambiar estado de solicitud
+            # 8. Generar boletin vacio al estudiante
+            # ----------------------------------------------------
+            anio_actual = datetime.now().year
+
+            periodo = Periodo_academico.objects.filter(anio=anio_actual).first()
+
+            if not periodo:
+                return Response(
+                    {"error": f"No existe periodo académico registrado para el año {anio_actual}"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+                
+            profesor = grupo.get_profesor_director()
+            if profesor:
+                nombre_profesor = f"{profesor.get_id_persona().get_primer_nombre()} {profesor.get_id_persona().get_primer_apellido()}"
+            else:
+                nombre_profesor = "Por asignar"
+
+            boletin = Boletin.objects.create(
+                nombre_grupo = grupo.get_nombre_grupo(),
+                profesor_director = nombre_profesor,
+                estudiante = estudiante,          
+                periodo_academico = periodo       
+            )
+
+            logros = grado.logros.all()
+
+            for logro in logros:
+                evaluacion = Evaluacion(
+                    evaluacion_corte1 = "Por evaluar",
+                    evaluacion_corte2 = "Por evaluar",
+                    evaluacion_corte3 = "Por evaluar",
+                    logro = logro,
+                    boletin = boletin
+                )
+                evaluacion.save()
+
+            # ----------------------------------------------------
+            # 9. Cambiar estado de solicitud
             # ----------------------------------------------------
             solicitud.set_estado_solicitud("Aceptada")
             solicitud.save()

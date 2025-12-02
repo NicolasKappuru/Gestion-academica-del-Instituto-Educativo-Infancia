@@ -33,56 +33,36 @@
 
 
   <!-- ===== MAIN ===== -->
- <main>
+    <main class="evaluacion-container">
 
-    <h2 class="titulo">Evaluación de nombre_estudiante</h2>
+    <h2 class="evaluacion-titulo">Evaluación de nombre_estudiante</h2>
 
-    <div class="tabla-contenedor">
-        <table id="tablaAsistencias" class="tabla-evaluacion">
+    <form id="formEvaluacionEstudiante">
 
-            <thead>
-                <tr>
-                    <th>Categoría logro</th>
-                    <th>Descripción</th>
-                    <th>Corte 1</th>
-                    <th>Corte 2</th>
-                    <th>Corte 3</th>
-                </tr>
-            </thead>
+        <table class="evaluacion-tabla">
 
-            <tbody>
-                <tr>
-                    <td>Logro 1</td>
-                    <td>Descripción 1</td>
+        <thead>
+            <tr>
+            <th>Categoría logro</th>
+            <th>Descripción</th>
+            <th>Corte 1</th>
+            <th>Corte 2</th>
+            <th>Corte 3</th>
+            </tr>
+        </thead>
 
-                    <td data-estado="Por asignar"><button class="asistencia-btn">Por asignar</button></td>
-                    <td data-estado="Realizado"><button class="asistencia-btn">Realizado</button></td>
-                    <td data-estado="En progreso"><button class="asistencia-btn">En progreso</button></td>
-                </tr>
-
-                <tr>
-                    <td>Logro 2</td>
-                    <td>Descripción 2</td>
-
-                    <td data-estado="No realizado"><button class="asistencia-btn">No realizado</button></td>
-                    <td data-estado="Por calificar"><button class="asistencia-btn">Por calificar</button></td>
-                    <td data-estado="Por asignar"><button class="asistencia-btn">Por asignar</button></td>
-                </tr>
-
-                <tr>
-                    <td>Logro 3</td>
-                    <td>Descripción 3</td>
-
-                    <td data-estado="Por asignar"><button class="asistencia-btn">Por asignar</button></td>
-                    <td data-estado="En progreso"><button class="asistencia-btn">En progreso</button></td>
-                    <td data-estado="Realizado"><button class="asistencia-btn">Realizado</button></td>
-                </tr>
-            </tbody>
+        <tbody id="tablaEvaluaciones">
+        </tbody>
 
         </table>
-    </div>
 
-</main>
+        <div class="botones-acciones">
+        <button type="submit" class="btn-guardar">Guardar cambios</button>
+        </div>
+
+    </form>
+
+    </main>
 
 
 
@@ -95,5 +75,5 @@
         <div class="footer-section">Cosas...</div>
     </footer>
 
-    <script src="./formulario_inscripcion.js"></script>
+    <script src="./evaluacion_estudiante.js"></script>
 </HTML>
