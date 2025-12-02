@@ -34,14 +34,18 @@ function cargarBoletines(lista) {
         fila.innerHTML = `
             <td>${est.nombre}</td>
             <td>
-                <button class="btn-ver" onclick="verBoletin('${est.nombre}')">Ver</button>
+                <button class="btn-ver" onclick="verBoletin(${est.id_persona}, '${est.nombre}')">Ver</button>
             </td>
         `;
+
 
         tabla.appendChild(fila);
     });
 }
 
-function verBoletin(nombre) {
-    alert("Mostrando boletín de: " + nombre);
+function verBoletin(id_persona, nombre) {
+    localStorage.setItem("id_estudiante_boletin", id_persona);
+    localStorage.setItem("nombre_estudiante_boletin", nombre);
+
+    window.location.href = "../boletin_particular/boletin_particular.html";
 }

@@ -1,12 +1,38 @@
-// Datos de prueba (luego vendrá del backend)
-const periodosDemo = [
-    { periodo: "2025-1" },
-    { periodo: "2024-3" },
-    { periodo: "2024-2" }
-];
-
 const tabla = document.getElementById("tablaPeriodos");
 const btnVolver = document.getElementById("btnVolver");
+
+const id_est = localStorage.getItem("id_estudiante_boletin");
+console.log("ID estudiante recibido:", id_est);
+const nombre_est = localStorage.getItem("nombre_estudiante_boletin");
+
+document.getElementById("nombreEstudiante").innerText = nombre_est;
+
+
+// Cargar boletines reales
+fetch("http://127.0.0.1:8000/api/listadoBoletinesEstudiante/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`
+    },
+    body: JSON.stringify({ id_persona: id_est })
+})
+.then(resp => resp.json())
+.then(data => {
+    if (data.boletines.length === 0) {
+        tabla.innerHTML = `
+            <tr><td colspan="2">El estudiante no tiene boletines disponibles</td></tr>
+        `;
+        return;
+    }
+
+    cargarPeriodos(data.boletines);
+})
+.catch(err => {
+    tabla.innerHTML = `
+        <tr><td colspan="2">Error cargando boletines</td></tr>
+    `;
+});
 
 // Render dinámico de periodos
 function cargarPeriodos(lista) {
@@ -18,7 +44,7 @@ function cargarPeriodos(lista) {
         fila.innerHTML = `
             <td>${p.periodo}</td>
             <td>
-                <button class="btn-ver-boletin" onclick="verBoletinPeriodo('${p.periodo}')">Ver</button>
+                <button class="btn-ver-boletin" onclick="descargarBoletin(${p.id_boletin})">Descargar</button>
             </td>
         `;
 
@@ -26,16 +52,6 @@ function cargarPeriodos(lista) {
     });
 }
 
-// Acción al pulsar "Ver"
-function verBoletinPeriodo(periodo) {
-    alert("Abrir boletín del periodo: " + periodo);
-    // Aquí luego cargarás PDF o vista detallada
-}
-
-// Acción volver
 btnVolver.addEventListener("click", () => {
-    window.history.back();
+    window.location.href = "boletines.html";
 });
-
-// Render inicial
-cargarPeriodos(periodosDemo);

@@ -27,10 +27,12 @@ class ListadoEstudiantesBoletines(APIView):
 
             data = [
                 {
+                    "id_persona": est.get_id_persona().id_persona,
                     "nombre": f"{est.get_id_persona().get_primer_nombre()} {est.get_id_persona().get_primer_apellido()}"
                 }
                 for est in estudiantes
             ]
+
 
             return Response({"estudiantes": data}, status=status.HTTP_200_OK)
 
