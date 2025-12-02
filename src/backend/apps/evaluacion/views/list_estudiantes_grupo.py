@@ -38,6 +38,7 @@ class ListEstudiantesGrupo(APIView):
 
             lista_estudiantes = [
                 {
+                    "id": e.id_persona.pk,
                     "nombre": f"{e.id_persona.primer_nombre} {e.id_persona.primer_apellido}"
                 }
                 for e in estudiantes

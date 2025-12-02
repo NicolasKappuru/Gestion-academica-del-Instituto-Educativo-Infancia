@@ -1,92 +1,74 @@
-/***************************************************
- *  SIMULACIÓN DE DATOS (luego lo reemplazas)
- ***************************************************/
-const dataEvaluaciones = [
-  {
-    categoria: "Logro 1",
-    descripcion: "Descripción 1",
-    corte1: "Por evaluar",
-    corte2: "Realizado",
-    corte3: "En progreso",
-  },
-  {
-    categoria: "Logro 2",
-    descripcion: "Descripción 2",
-    corte1: "No realizado",
-    corte2: "Por calificar",
-    corte3: "Por asignar",
-  },
-  {
-    categoria: "Logro 3",
-    descripcion: "Descripción 3",
-    corte1: "Por asignar",
-    corte2: "En progreso",
-    corte3: "Realizado",
-  },
-];
+document.addEventListener("DOMContentLoaded", async () => {
 
-/***************************************************
- *  OPCIONES DE EVALUACIÓN
- ***************************************************/
-const opciones = [
-  "Por evaluar",
-  "Realizado",
-  "En progreso",
-  "No realizado",
-];
+    // === 1. Tomar id del estudiante pasado desde la pantalla anterior ===
+    const idEstudiante = localStorage.getItem("id_estudiante");
 
-/***************************************************
- *  CARGAR TABLA
- ***************************************************/
-const tbody = document.getElementById("tablaEvaluaciones");
+    if (!idEstudiante) {
+        alert("Falta id_estudiante");
+        return;
+    }
 
-dataEvaluaciones.forEach((item, index) => {
-  const tr = document.createElement("tr");
+    try {
+        console.log("ID", idEstudiante)
 
-  tr.innerHTML = `
-    <td>${item.categoria}</td>
-    <td>${item.descripcion}</td>
-    ${[item.corte1, item.corte2, item.corte3]
-      .map(
-        (valor, corteIndex) => `
-      <td>
-        <select name="corte${corteIndex + 1}_${index}" class="select-evaluacion">
-          ${opciones
-            .map(
-              (opt) => `
-              <option value="${opt}" ${opt === valor ? "selected" : ""}>
-                ${opt}
-              </option>
-            `
-            )
-            .join("")}
-        </select>
-      </td>
-    `
-      )
-      .join("")}
-  `;
+        const resp = await fetch("http://127.0.0.1:8000/api/listEvaluacionEstudiante/", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`
+            },
+            body: JSON.stringify({ id_estudiante: idEstudiante })
+        });
 
-  tbody.appendChild(tr);
-});
+        const data = await resp.json();
 
-/***************************************************
- *  SUBMIT
- ***************************************************/
-const form = document.getElementById("formEvaluacionEstudiante");
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+        // === 2. Título ===
+        document.querySelector(".evaluacion-titulo").innerHTML =
+            `Evaluación de ${data.estudiante}`;
 
-  // Ejemplo de cómo tomar los datos
-  const formData = new FormData(form);
+        // === 3. Llenar tabla ===
+        const tabla = document.getElementById("tablaEvaluaciones");
+        tabla.innerHTML = "";
 
-  // Aquí haces tu POST a Django
-  console.log("DATOS A ENVIAR:");
-  for (let [key, value] of formData.entries()) {
-    console.log(key, value);
-  }
+        const opciones = [
+            "Por evaluar",
+            "Realizado",
+            "En progreso",
+            "No realizado"
+        ];
 
-  // TODO:
-  // fetch("/api/guardarEvaluaciones/...", { method:"POST", body:formData })
+        data.evaluaciones.forEach((ev, index) => {
+
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${ev.logro}</td>
+                <td class="descripcion">${ev.descripcion}</td>
+
+                ${["corte1","corte2","corte3"].map(c => `
+                    <td>
+                        <select name="${c}_${index}" class="select-evaluacion">
+                            ${opciones.map(opt => `
+                                <option ${opt === ev[c] ? "selected" : ""}>
+                                    ${opt}
+                                </option>
+                            `).join("")}
+                        </select>
+                    </td>
+                `).join("")}
+            `;
+
+            tabla.appendChild(tr);
+        });
+
+    } catch (err) {
+        console.error(err);
+        alert("Error al cargar evaluaciones");
+    }
+
 });

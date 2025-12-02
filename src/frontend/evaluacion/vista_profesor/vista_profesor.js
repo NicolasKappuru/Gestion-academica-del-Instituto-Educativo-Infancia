@@ -39,10 +39,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             fila.innerHTML = `
                 <td>${est.nombre}</td>
-                <td><button class="btn-evaluar">Evaluar</button></td>
+                <td><button class="btn-evaluar" data-id="${est.id}">Evaluar</button></td>
             `;
+            console.log("enviando id_estudiante:", est.id);
 
             tabla.appendChild(fila);
+        });
+
+        document.querySelectorAll(".btn-evaluar").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const idEstudiante = btn.getAttribute("data-id");
+                
+                // Guardamos el id en localStorage
+                localStorage.setItem("id_estudiante", idEstudiante);
+
+                // Redirigimos a la página de evaluación
+                window.location.href = "../evaluacion_estudiante/evaluacion_estudiante.html";
+            });
         });
 
     } catch (error) {
