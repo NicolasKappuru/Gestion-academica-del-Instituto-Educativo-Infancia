@@ -71,3 +71,19 @@
 .btn-guardar:hover {
   background: #218838;
 }
+
+
+/* Botón volver */
+.btn-volver {
+    background: #3ea8ff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-volver:hover {
+    background: #2196f3;
+}

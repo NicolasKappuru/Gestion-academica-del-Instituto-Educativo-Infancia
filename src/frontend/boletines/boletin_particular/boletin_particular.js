@@ -1,14 +1,13 @@
+validarAcceso("acudiente");
+
 const tabla = document.getElementById("tablaPeriodos");
 const btnVolver = document.getElementById("btnVolver");
 
 const id_est = localStorage.getItem("id_estudiante_boletin");
-console.log("ID estudiante recibido:", id_est);
 const nombre_est = localStorage.getItem("nombre_estudiante_boletin");
 
 document.getElementById("nombreEstudiante").innerText = nombre_est;
 
-
-// Cargar boletines reales
 fetch("http://127.0.0.1:8000/api/listadoBoletinesEstudiante/", {
     method: "POST",
     headers: {
@@ -34,7 +33,6 @@ fetch("http://127.0.0.1:8000/api/listadoBoletinesEstudiante/", {
     `;
 });
 
-// Render dinámico de periodos
 function cargarPeriodos(lista) {
     tabla.innerHTML = "";
 

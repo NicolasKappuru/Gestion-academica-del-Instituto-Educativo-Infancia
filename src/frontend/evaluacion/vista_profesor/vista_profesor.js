@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
+    validarAcceso("profesor"); 
+
     const username = localStorage.getItem("username");
 
     if (!username) {
-        alert("No hay usuario en sesión");
+        showMessage("No hay usuario en sesión", "error");
         return;
     }
 
@@ -20,17 +22,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         const data = await resp.json();
 
         if (data.error) {
-            alert(data.error);
+            showMessage("Error: " + data.error, "error");
             return;
         }
 
-        // Cambiar el título del grupo
+        // === Cambiar título del grupo ===
         document.querySelector(".titulo-seccion").innerHTML = `
             Lista de estudiantes<br>
             grupo ${data.grupo}
         `;
 
-        // Llenar la tabla
+        // === Llenar tabla ===
         const tabla = document.getElementById("tablaEstudiantes");
         tabla.innerHTML = "";
 
@@ -41,26 +43,28 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <td>${est.nombre}</td>
                 <td><button class="btn-evaluar" data-id="${est.id}">Evaluar</button></td>
             `;
+
             console.log("enviando id_estudiante:", est.id);
 
             tabla.appendChild(fila);
         });
 
+        // === Listener de botones ===
         document.querySelectorAll(".btn-evaluar").forEach(btn => {
             btn.addEventListener("click", () => {
                 const idEstudiante = btn.getAttribute("data-id");
-                
-                // Guardamos el id en localStorage
+
+                // Guardar id en localStorage
                 localStorage.setItem("id_estudiante", idEstudiante);
 
-                // Redirigimos a la página de evaluación
+                // Redirigir
                 window.location.href = "../evaluacion_estudiante/evaluacion_estudiante.html";
             });
         });
 
     } catch (error) {
         console.error("Error:", error);
-        alert("Error de conexión");
+        showMessage("Error de conexión con el servidor", "error");
     }
 
 });

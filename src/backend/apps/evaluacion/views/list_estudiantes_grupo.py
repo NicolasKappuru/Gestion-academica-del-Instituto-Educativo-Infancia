@@ -9,7 +9,6 @@ from apps.academico.models.grupo import Grupo
 from apps.usuarios.models.estudiante import Estudiante  # ajusta si está en otra app
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class ListEstudiantesGrupo(APIView):
 
     def post(self, request):
