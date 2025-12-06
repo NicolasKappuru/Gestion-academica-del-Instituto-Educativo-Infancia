@@ -25,5 +25,5 @@ function handleLogout() {
   localStorage.removeItem("role");
 
   // Redirigir al login
-  window.location.href = "../login/login.html";
+  window.location.href = "../../login/login.html";
 }

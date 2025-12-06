@@ -53,5 +53,5 @@ function cargarPeriodos(lista) {
 }
 
 btnVolver.addEventListener("click", () => {
-    window.location.href = "boletines.html";
+    window.location.href = "../vista_boletines/boletines.html";
 });
