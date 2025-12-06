@@ -24,18 +24,10 @@ class DescargarBoletin(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        """
-        Espera:
-        {
-            "id_boletin": 10,
-            "id_persona": 5
-        }
-        """
-
+   
         id_boletin = request.data.get("id_boletin")
         id_persona = request.data.get("id_persona")
 
-        # VALIDACIÓN BÁSICA
         if not id_boletin:
             return HttpResponse(
                 b"Falta id_boletin",
@@ -48,7 +40,6 @@ class DescargarBoletin(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # VALIDAR QUE EXISTE EL BOLETÍN
         try:
             boletin = Boletin.objects.select_related(
                 "estudiante__id_persona",

@@ -23,14 +23,14 @@ class ListadoEstudiantesBoletines(APIView):
             usuario = Usuario.objects.get(user=user)
             persona = usuario.get_persona()
             acudiente = Acudiente.objects.get(id_persona=persona)
-            acudiente.consultar_lista()
+            listado = acudiente.consultar_lista()
 
             data = [
                 {
                     "id_persona": estudiante.get_id_persona().get_id_persona(),
                     "nombre": f"{estudiante.get_id_persona().get_primer_nombre()} {estudiante.get_id_persona().get_primer_apellido()}"
                 }
-                for estudiante in acudiente.estudiantes_acudidos
+                for estudiante in listado
             ]
 
 

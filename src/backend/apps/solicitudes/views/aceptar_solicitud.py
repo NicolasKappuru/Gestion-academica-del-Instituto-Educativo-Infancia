@@ -133,15 +133,15 @@ class AceptarSolicitud(APIView):
                 periodo_academico = periodo       
             )
 
-            logros = grado.logros.all()
+            lista_logros = grado.consultar_lista()
 
-            for logro in logros:
+            for logro in lista_logros:
                 evaluacion = Evaluacion(
-                    evaluacion_corte1 = "Por evaluar",
-                    evaluacion_corte2 = "Por evaluar",
-                    evaluacion_corte3 = "Por evaluar",
-                    logro = logro,
-                    boletin = boletin
+                    evaluacion_corte1="Por evaluar",
+                    evaluacion_corte2="Por evaluar",
+                    evaluacion_corte3="Por evaluar",
+                    logro=logro,
+                    boletin=boletin
                 )
                 evaluacion.save()
 

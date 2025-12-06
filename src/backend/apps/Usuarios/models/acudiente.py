@@ -19,6 +19,8 @@ class Acudiente(models.Model):
 
     def consultar_lista(self):
         self.estudiantes_acudidos = list(self.estudiantes.all())
+        return self.estudiantes_acudidos
+
 
     def agregar_estudiante(self, acudido):
         acudido.set_acudiente(self)
