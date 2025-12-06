@@ -14,7 +14,7 @@ class Estudiante(models.Model):
     fecha_nacimiento = models.DateField()
     
     acudiente = models.ForeignKey(
-        Acudiente,
+        'Acudiente',
         on_delete=models.SET_NULL,  
         null=True,
         related_name='estudiantes', 

@@ -66,6 +66,7 @@ class CrearUsuarioAcudiente(APIView):
                 )
                 usuario.save()
 
+
                 # -------------------------------
                 # 5. Finalizar solicitud
                 # -------------------------------
@@ -76,6 +77,8 @@ class CrearUsuarioAcudiente(APIView):
                     {"message": "Usuario acudiente creado correctamente"},
                     status=status.HTTP_201_CREATED
                 )
+            
+                
 
         except Solicitud.DoesNotExist:
             return Response(
