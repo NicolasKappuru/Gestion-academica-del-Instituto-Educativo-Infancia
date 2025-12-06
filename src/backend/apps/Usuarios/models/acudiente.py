@@ -35,3 +35,11 @@ class Acudiente(models.Model):
         ]
 
         return True
+
+    #GETTERS
+    def get_id_persona(self):
+        return self.id_persona
+    
+    #SETTERS
+    def set_id_persona(self, value):
+        self.id_persona = value 

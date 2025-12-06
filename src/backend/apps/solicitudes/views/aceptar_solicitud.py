@@ -91,9 +91,12 @@ class AceptarSolicitud(APIView):
             estudiante = Estudiante.objects.create(
                 id_persona=persona_infante,
                 fecha_nacimiento=infante.get_fecha_nacimiento(),
-                acudiente=acudiente_real,
+                acudiente=None,
                 grupo=grupo
             )
+
+            acudiente_real.agregar_estudiante(estudiante)
+            acudiente_real.consultar_lista()
 
             # ----------------------------------------------------
             # 7. Restar cupos a grado y grupo
