@@ -46,16 +46,16 @@ function renderGrupos(lista) {
         const tdProfesor = clone.querySelector(".td-profesor");
 
         if (g.profesor_director) {
-            tdProfesor.textContent = 
+            tdProfesor.textContent =
                 `${g.profesor_director.nombre} ${g.profesor_director.apellido}`;
         } else {
             tdProfesor.innerHTML =
                 `<button class="btn-asignar" data-id="${g.id}">Asignar</button>`;
         }
 
-        // Botón realizar
+        // Botón realizar citación para grupo
         clone.querySelector(".btn-realizar").addEventListener("click", () => {
-            realizarGrupo(g.nombre);
+            realizarCitacionGrupo(g.id);
         });
 
         // Botón asignar
@@ -70,9 +70,10 @@ function renderGrupos(lista) {
 }
 
 
-// Acciones auxiliares
-function realizarGrupo(nombre) {
-    alert("Realizando acciones para grupo: " + nombre);
+// Navegar a gestionar citaciones con el grupo seleccionado
+function realizarCitacionGrupo(idGrupo) {
+    localStorage.setItem("grupo_citar_id", idGrupo);
+    window.location.href = "../../citaciones/gestionar_citaciones/gestionar_citaciones.html";
 }
 
 function abrirAsignarProfesor(idGrupo) {

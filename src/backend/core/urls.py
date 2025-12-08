@@ -10,4 +10,7 @@ urlpatterns = [
     path('api/', include('apps.usuarios.urls')),
     path('api/', include('apps.solicitudes.urls')),
     path('api/', include('apps.evaluacion.urls')),
+    path('api/citaciones/', include('apps.citaciones.urls')),
+    path('api/restablecer/', include('apps.restablecer_contrasena.urls')),
 ]
+

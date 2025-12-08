@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'apps.solicitudes',
     'apps.citaciones',
     'apps.evaluacion',
+    'apps.restablecer_contrasena',
 
 ]
 
@@ -97,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'primeraInfancia',
         'USER': 'postgres',
-        'PASSWORD': 'angrybirds',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -144,3 +145,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'GestionCitaciones@InstitutoPrimeraInfancia.onmicrosoft.com'
+EMAIL_HOST_PASSWORD = 'Djangocitas2025'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Password Reset Email Configuration (Secondary)
+# Please update these with the correct credentials
+PASSWORD_RESET_EMAIL_HOST_USER = 'GestionCitaciones@InstitutoPrimeraInfancia.onmicrosoft.com'
+PASSWORD_RESET_EMAIL_HOST_PASSWORD = 'Djangocitas2025'

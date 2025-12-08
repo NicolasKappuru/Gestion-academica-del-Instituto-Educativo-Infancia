@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Citaciones</title>
+    <link rel="stylesheet" href="gestionar_citaciones.css">
+    <link rel="stylesheet" href="../../header/header.css">
+    <link rel="stylesheet" href="../../footer/footer.css">
+    <link rel="stylesheet" href="../../globales/msg/mensaje.css">
+</head>
+
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="main-header">
+        <div class="header-logo">
+            <div class="logo-circle"></div>
+            <div class="logo-text">
+                <h1>Instituto educativo</h1>
+                <h2>Infancia</h2>
+            </div>
+        </div>
+
+        <nav class="header-nav">
+            <a href="../../academico/interfaz inicial/main.html" class="nav-link" id="btn-inicio">Inicio</a>
+            <span class="nav-link">Contacto</span>
+            <div class="nav-box">
+                <span class="nav-icon">📅</span>
+            </div>
+            <a href="./login.html" class="nav-link login-link">
+                Iniciar sesión
+            </a>
+        </nav>
+    </header>
+
+    <main class="citaciones-container">
+        <div class="top-bar">
+            <h2>Citar acudientes</h2>
+            <div class="btn-volver-container">
+                <button class="btn-volver" onclick="window.history.back()">Volver</button>
+            </div>
+        </div>
+
+        <section class="selection-section">
+            <label for="grupo-select">Seleccionar Grupo:</label>
+            <select id="grupo-select">
+                <option value="">-- Seleccione un grupo --</option>
+            </select>
+            <button id="consultar-btn" class="btn-consultar">Consultar</button>
+        </section>
+
+        <section class="students-section" id="students-section" style="display: none;">
+            <div class="students-header">
+                <h3>Seleccionar Estudiantes</h3>
+                <button type="button" id="btn-select-all" class="btn-select-all">Seleccionar todos</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Seleccionar</th>
+                            <th>Estudiante</th>
+                            <th>Acudiente</th>
+                            <th>Correo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-table-body">
+                        <!-- Rows will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="form-section" id="form-section" style="display: none;">
+            <form id="citacion-form" class="citacion-card">
+                <div class="form-group full-width">
+                    <label for="motivo" class="label-box">Comentario</label>
+                    <textarea id="motivo" rows="5" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="fecha" class="label-box">Fecha</label>
+                    <input type="date" id="fecha" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="hora" class="label-box">Hora</label>
+                    <input type="time" id="hora" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="lugar" class="label-text">Lugar</label>
+                    <input type="text" id="lugar" required>
+                </div>
+
+                <button type="submit" id="citar-btn" class="btn-citar">Citar</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="main-footer">
+        <div class="footer-section">Somos una institución sobre...</div>
+        <div class="footer-section">Redes...</div>
+        <div class="footer-section">Cosas...</div>
+    </footer>
+
+    <script src="../../globales/validacion/validacion.js"></script>
+    <script src="../../globales/msg/mensaje.js"></script>
+    <script src="gestionar_citaciones.js"></script>
+    <script src="../../header/finalizar_sesion.js"></script>
+    <script src="../../header/pagina_inicio.js"></script>
+</body>
+
+</html>

@@ -7,6 +7,7 @@
   color: white;
 }
 
+
 .header-logo {
   display: flex;
   align-items: center;
@@ -24,12 +25,14 @@
   font-size: 14px;
   margin: 0;
   font-weight: 600;
+  color: white;
 }
 
 .logo-text h2 {
   font-size: 16px;
   margin: 0;
   font-weight: 700;
+  color: white;
 }
 
 .header-nav {
@@ -51,7 +54,8 @@
 .nav-box {
   width: 35px;
   height: 35px;
-  background-color: transparent; /* 👈 fondo transparente */
+  background-color: transparent;
+  /* 👈 fondo transparente */
   display: flex;
   align-items: center;
   justify-content: center;

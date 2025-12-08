@@ -1,0 +1,100 @@
+/* Reusing Footer/Header logic from global styles, but defining body here for layout */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: white;
+    /* Login page seems to have white background for body, form has color */
+}
+
+/* Reuse .login-container style from login.css if we use that class,
+   but here we might use .reset-container to be specific or reuse .login-container
+   if we link login.css. Let's define it similar to login.css */
+
+.reset-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 60px 0;
+    flex: 1;
+    /* Pushes footer down */
+}
+
+h2 {
+    color: black;
+    /* Login doesn't specify h2 color, defaults to black */
+    margin-bottom: 1.5rem;
+}
+
+form {
+    background-color: #fceaea;
+    padding: 30px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    /* Box shadow removed to match login or keep if preferred? Login doesn't have it. */
+    box-shadow: none;
+}
+
+.form-group {
+    margin-bottom: 0;
+    /* Input margin handles spacing in login.css */
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: black;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #1976D2;
+}
+
+/* Message box styles - keep distinct but nice */
+.message {
+    margin-top: 1rem;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+    font-weight: bold;
+    text-align: center;
+    width: 300px;
+    /* Match form width */
+}
+
+.success {
+    background-color: #e6f4ea;
+    color: #137333;
+}
+
+.error {
+    background-color: #fce8e6;
+    color: #c5221f;
+}

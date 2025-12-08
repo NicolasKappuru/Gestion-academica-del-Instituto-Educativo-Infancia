@@ -113,7 +113,7 @@ function activarEventos() {
         btn.addEventListener("click", () => {
             const id = btn.dataset.id;
             // si quieres pasar id en querystring:
-            window.location.href = `./citar_solicitud.html?id=${id}`;
+            window.location.href = `../../citaciones/enviar_citacion_entrevista/enviar_citacion_entrevista.html?id=${id}`;
         });
     });
 }
