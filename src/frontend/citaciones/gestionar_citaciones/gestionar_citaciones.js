@@ -1,5 +1,5 @@
-// Validar acceso para profesores y administradores
-validarAcceso(["profesor", "administrador_academico"]);
+// Validar acceso para administradores academicos
+validarAcceso(["administrador_academico"]);
 
 document.addEventListener('DOMContentLoaded', () => {
     const grupoSelect = document.getElementById('grupo-select');
