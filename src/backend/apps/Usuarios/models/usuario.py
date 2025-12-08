@@ -66,7 +66,7 @@ class Usuario(models.Model):
 
     def get_role(self):
         return self.role
-
+    
     #SETTERS
 
     def set_user(self, value):
@@ -77,3 +77,4 @@ class Usuario(models.Model):
 
     def set_role(self, value):
         self.role = value
+

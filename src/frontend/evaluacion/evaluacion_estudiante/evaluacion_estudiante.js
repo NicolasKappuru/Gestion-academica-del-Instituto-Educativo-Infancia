@@ -77,3 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 });
+
+document.getElementById("btnVolver").addEventListener("click", () => {
+    window.location.href = "../vista_profesor/vista_profesor.html";
+});

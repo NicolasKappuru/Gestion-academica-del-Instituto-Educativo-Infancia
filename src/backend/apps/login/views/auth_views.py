@@ -7,8 +7,6 @@ from django.utils.decorators import method_decorator
 
 from apps.usuarios.models import Usuario
 
-
-@method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
     def post(self, request):
         username = request.data.get("username")
@@ -25,9 +23,10 @@ class LoginView(APIView):
             return Response({
                 "message": "Login correcto",
                 "username": user.username,
-                "role": usuario.role,        
+                "role": usuario.get_role(),        
                 "access": str(refresh.access_token),
-                "refresh": str(refresh)
+                "refresh": str(refresh),
+                "datos_personales": usuario.get_datos_personales()
             })
 
         return Response({"error": "Credenciales inválidas"}, status=401)
