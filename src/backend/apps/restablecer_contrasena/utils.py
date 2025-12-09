@@ -16,7 +16,7 @@ def enviar_correo_restablecimiento(usuario, enlace):
         )
 
         subject = 'Restablecimiento de Contraseña'
-        body = f'Hola {usuario.user.first_name},\n\n' \
+        body = f'Hola {usuario.get_user().first_name},\n\n' \
                f'Has solicitado restablecer tu contraseña. Ingresa al siguiente enlace para continuar:\n\n' \
                f'{enlace}\n\n' \
                f'Si no solicitaste esto, ignora este mensaje.'
@@ -25,7 +25,7 @@ def enviar_correo_restablecimiento(usuario, enlace):
             subject,
             body,
             settings.PASSWORD_RESET_EMAIL_HOST_USER,
-            [usuario.user.email],
+            [usuario.get_user().email],
             connection=connection
         )
         

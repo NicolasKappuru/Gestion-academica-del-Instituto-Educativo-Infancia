@@ -50,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Activity diagram: check if intentos > 4
                 if (intentosCarga > MAX_INTENTOS) {
-                    showMessage('por favor vuelva a intentarlo más tarde', 'error', 5000);
+                    showMessage('Por favor vuelva a intentarlo más tarde', 'error', 5000);
                 } else {
                     // Activity diagram: "Mostrar mensaje de error de conexión con la base de datos, por favor intente más tarde, durante 5 segundos"
-                    showMessage('error de conexión con la base de datos, por favor intente más tarde', 'error', 5000);
+                    showMessage('Error de conexión con la base de datos, por favor intente más tarde', 'error', 5000);
                 }
             });
     }
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Note: comentario is optional as per activity diagram
         if (!fecha || !hora || !lugar) {
             // Activity diagram: "Mostrar mensaje de por favor complete los campos correctamente, durante 5 segundos"
-            showMessage('por favor complete los campos correctamente', 'error', 5000);
+            showMessage('Por favor complete los campos correctamente', 'error', 5000);
             return;
         }
 
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Reset retry counter on success
                         intentosEnvio = 0;
                         // Activity diagram: "Mostrar mensaje de se ha enviado la citación de entrevista exitosamente, durante 5 segundos"
-                        showMessage('se ha enviado la citación de entrevista exitosamente', 'success', 5000);
+                        showMessage('Se ha enviado la citación de entrevista exitosamente', 'success', 5000);
                         // Redirect back to requests list after message
                         setTimeout(() => {
                             window.location.href = '../../solicitudes/vista_solicitudes/vista_solicitudes.html';
@@ -113,16 +113,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Activity diagram: check if intentos > 4
                 if (intentosEnvio > MAX_INTENTOS) {
-                    showMessage('por favor vuelva a intentarlo más tarde', 'error', 5000);
+                    showMessage('Por favor vuelva a intentarlo más tarde', 'error', 5000);
                 } else {
                     // Determine if it's a DB error or email error based on message
                     const errorMsg = error.message.toLowerCase();
                     if (errorMsg.includes('correo') || errorMsg.includes('mail') || errorMsg.includes('smtp')) {
                         // Activity diagram: "Mostrar mensaje de ha ocurrido un error al enviar el correo, por favor inténtelo más tarde, durante 5 segundos"
-                        showMessage('ha ocurrido un error al enviar el correo, por favor inténtelo más tarde', 'error', 5000);
+                        showMessage('Ha ocurrido un error al enviar el correo, por favor inténtelo más tarde', 'error', 5000);
                     } else {
                         // Activity diagram: "Error de conexión a la BD"
-                        showMessage('error de conexión con la base de datos, por favor intente más tarde', 'error', 5000);
+                        showMessage('Error de conexión con la base de datos, por favor intente más tarde', 'error', 5000);
                     }
                 }
             });

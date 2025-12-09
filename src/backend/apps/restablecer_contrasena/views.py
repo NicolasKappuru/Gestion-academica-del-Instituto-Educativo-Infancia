@@ -96,7 +96,7 @@ class ValidarContrasenaView(APIView):
                  return Response({'error': 'Intentar más tarde', 'finalizar': True}, status=status.HTTP_403_FORBIDDEN)
 
             # Actualizar Contraseña
-            user = usuario.user
+            user = usuario.get_user()
             user.set_password(password_1)
             user.save()
             

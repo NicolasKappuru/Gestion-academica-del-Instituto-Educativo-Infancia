@@ -107,9 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Activity diagram: check if intentos > 4
                 if (intentosConsulta > MAX_INTENTOS) {
-                    showMessage('por favor vuelva a intentarlo más tarde', 'error', 5000);
+                    showMessage('Por favor vuelva a intentarlo más tarde', 'error', 5000);
                 } else {
-                    showMessage('error de conexión con la base de datos, por favor intente mas tarde', 'error', 5000);
+                    showMessage('Error de conexión con la base de datos, por favor intente mas tarde', 'error', 5000);
                 }
             });
     }
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Activity diagram: "¿Se selecciono por lo menos un acudiente?"
         if (selectedCheckboxes.length === 0) {
-            showMessage('por favor seleccione almenos un estudiante', 'error', 5000);
+            showMessage('Por favor seleccione almenos un estudiante', 'error', 5000);
             return;
         }
 
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Activity diagram: "¿Todos los campos han sido llenados correctamente?"
         if (!motivo || !fecha || !hora || !lugar) {
-            showMessage('por favor complete los campos correctamente', 'error', 5000);
+            showMessage('Por favor complete los campos correctamente', 'error', 5000);
             return;
         }
 
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         intentosEnvio = 0;
 
                         // Activity diagram: "se han enviado las citaciones exitosamente, durante 5 segundos"
-                        showMessage('se han enviado las citaciones exitosamente', 'success', 5000);
+                        showMessage('Se han enviado las citaciones exitosamente', 'success', 5000);
 
                         // Reset form
                         citacionForm.reset();
@@ -195,10 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 intentosEnvio++;
                 // Activity diagram: check if intentos > 4
                 if (intentosEnvio > MAX_INTENTOS) {
-                    showMessage('por favor vuelva a intentarlo más tarde', 'error', 5000);
+                    showMessage('Por favor vuelva a intentarlo más tarde', 'error', 5000);
                 } else {
                     // Activity diagram: "ha ocurrido un error al enviar el correo, por favor inténtelo más tarde, durante 5 segundos"
-                    showMessage('ha ocurrido un error al enviar el correo, por favor inténtelo más tarde', 'error', 5000);
+                    showMessage('Ha ocurrido un error al enviar el correo, por favor inténtelo más tarde', 'error', 5000);
                 }
             });
     });

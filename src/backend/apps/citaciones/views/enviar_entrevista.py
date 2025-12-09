@@ -4,9 +4,11 @@ from rest_framework import status
 from django.core.mail import send_mail
 from django.conf import settings
 
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
 from apps.solicitudes.models.solicitud import Solicitud
 from ..models import Citacion
-
 
 class ListarSolicitudesPendientesView(APIView):
     """
@@ -21,14 +23,14 @@ class ListarSolicitudesPendientesView(APIView):
                 acu_asp = sol.get_acudiente_aspirante()
                 inf_asp = sol.get_infante_aspirante()
                 
-                nombre_acudiente = f"{acu_asp.id_persona.primer_nombre} {acu_asp.id_persona.primer_apellido}"
-                nombre_aspirante = f"{inf_asp.id_persona.primer_nombre} {inf_asp.id_persona.primer_apellido}"
+                nombre_acudiente = f"{acu_asp.get_id_persona().get_primer_nombre()} {acu_asp.get_id_persona().get_primer_apellido()}"
+                nombre_aspirante = f"{inf_asp.get_id_persona().get_primer_nombre()} {inf_asp.get_id_persona().get_primer_apellido()}"
                 
                 data.append({
                     'id_solicitud': sol.get_id_solicitud(),
                     'nombre_acudiente': nombre_acudiente,
                     'nombre_aspirante': nombre_aspirante,
-                    'correo_acudiente': acu_asp.correo_electronico_aspirante,
+                    'correo_acudiente': acu_asp.get_correo_electronico_aspirante(),
                     'fecha_solicitud': sol.get_fecha_solicitud()
                 })
             
@@ -57,12 +59,17 @@ class EnviarCitacionEntrevistaView(APIView):
             acu_asp = solicitud.get_acudiente_aspirante()
             inf_asp = solicitud.get_infante_aspirante()
             
+            correo_destinatario = acu_asp.get_correo_electronico_aspirante()
+
+            # Validate email before everything
+            validate_email(correo_destinatario)
+
             # Instantiate Citacion (Transient) 
             citacion = Citacion(
-                nombre_acudiente=f"{acu_asp.id_persona.primer_nombre} {acu_asp.id_persona.primer_apellido}",
+                nombre_acudiente=f"{acu_asp.get_id_persona().get_primer_nombre()} {acu_asp.get_id_persona().get_primer_apellido()}",
                 apellido_acudiente="",
-                correo_acudiente=acu_asp.correo_electronico_aspirante,
-                nombre_acudido=f"{inf_asp.id_persona.primer_nombre} {inf_asp.id_persona.primer_apellido}",
+                correo_acudiente=correo_destinatario,
+                nombre_acudido=f"{inf_asp.get_id_persona().get_primer_nombre()} {inf_asp.get_id_persona().get_primer_apellido()}",
                 apellido_acudido="",
                 fecha_cita=fecha,
                 hora_cita=hora,
@@ -88,15 +95,19 @@ class EnviarCitacionEntrevistaView(APIView):
             Instituto Educativo Infancia
             """
             
-            send_mail(
-                subject,
-                message,
-                settings.EMAIL_HOST_USER,
-                [citacion.get_correo_acudiente()],
-                fail_silently=False,
-            )
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    settings.EMAIL_HOST_USER,
+                    [citacion.get_correo_acudiente()],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                print(f"Error enviando correo (send_mail): {e}")
+                return Response({'error': 'No se ha podido enviar el correo, intente mas tarde'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             
-            # Update Solicitud Status using setter
+            # Update Solicitud Status using setter - ONLY executes if send_mail succeeded
             solicitud.set_estado_solicitud('Agendado')
             solicitud.save()
             
@@ -104,8 +115,10 @@ class EnviarCitacionEntrevistaView(APIView):
             
         except Solicitud.DoesNotExist:
             return Response({'error': 'Solicitud no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+        except ValidationError as e:
+            print(f"Error de validación de correo: {e}")
+            return Response({'error': 'No se ha podido enviar el correo, intente mas tarde'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            # Check if it's likely an email error
-            if 'mail' in str(e).lower() or 'smtp' in str(e).lower():
-                return Response({'error': 'Error al enviar el correo'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # Fallback for unexpected DB or code errors
+            print(f"Error general en EnviarCitacionEntrevistaView: {e}")
             return Response({'error': 'Error de conexión con la base de datos'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
