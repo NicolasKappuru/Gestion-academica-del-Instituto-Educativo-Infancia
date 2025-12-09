@@ -25,8 +25,7 @@ class LoginView(APIView):
                 "username": user.username,
                 "role": usuario.get_role(),        
                 "access": str(refresh.access_token),
-                "refresh": str(refresh),
-                "datos_personales": usuario.get_datos_personales()
+                "refresh": str(refresh)
             })
 
         return Response({"error": "Credenciales inválidas"}, status=401)

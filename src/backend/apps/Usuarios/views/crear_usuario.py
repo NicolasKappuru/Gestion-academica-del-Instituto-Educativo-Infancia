@@ -18,6 +18,11 @@ class CrearUsuario(APIView):
 
     def post(self, request):
         role = request.data.get("role")
+        primer_nombre = request.data.get("primer_nombre")
+        segundo_nombre = request.data.get("segundo_nombre")
+        primer_apellido = request.data.get("primer_apellido")
+        segundo_apellido = request.data.get("segundo_apellido")
+
         email = request.data.get("email")
         nit = request.data.get("nit")
 
@@ -52,13 +57,14 @@ class CrearUsuario(APIView):
                 else:
                     # No existe → crear persona nueva
                     persona = Persona(
-                        primer_nombre="Asignar",
-                        segundo_nombre="Asignar",
-                        primer_apellido="Asignar",
-                        segundo_apellido="Asignar",
-                        NIT=nit
+                    primer_nombre=primer_nombre,
+                    segundo_nombre=segundo_nombre,
+                    primer_apellido=primer_apellido,
+                    segundo_apellido=segundo_apellido,
+                    NIT=nit
                     )
                     persona.save()
+
 
                 # Crear usuario Django
                 django_user = User.objects.create_user(

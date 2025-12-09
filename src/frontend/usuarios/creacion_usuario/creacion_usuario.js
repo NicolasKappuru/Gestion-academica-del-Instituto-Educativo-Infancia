@@ -8,8 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const isOnlyNumbers = (str) => /^[0-9]+$/.test(str);
     const isValidEmail = (str) => /^[\w.-]+@[A-Za-z]+\.[A-Za-z]{2,}$/.test(str);
-    
-    // Mapa para convertir el texto del select al rol de la BD
+    const isOnlyLetters = (str) => /^[A-Za-z\s]+$/.test(str);
+    const capitalize = (str) =>
+    str
+        .toLowerCase()
+        .replace(/\b\w/g, (c) => c.toUpperCase())
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
     const ROLES_MAP = {
         "Profesor": "profesor",
         "Administrador académico": "administrador_academico",
@@ -22,6 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btnCrear.addEventListener("click", async () => {
         const rolTexto = document.getElementById("inputRol").value;
+        const primerNombre = document.getElementById("inputPrimerNombre").value.trim();
+        const segundoNombre = document.getElementById("inputSegundoNombre").value.trim();
+        const primerApellido = document.getElementById("inputPrimerApellido").value.trim();
+        const segundoApellido = document.getElementById("inputSegundoApellido").value.trim();
+
         const email = document.getElementById("inputCorreo").value;
         const nit = document.getElementById("inputNIT").value;
 
@@ -40,6 +51,29 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
         }
 
+        if (!primerNombre || !primerApellido) {
+        showMessage("Debe ingresar al menos primer nombre y primer apellido.", "error");
+        return;
+        }
+
+        const nombresYApellidos = [
+        primerNombre,
+        segundoNombre,
+        primerApellido,
+        segundoApellido
+        ].filter(Boolean);
+
+        if (!nombresYApellidos.every(isOnlyLetters)) {
+        showMessage("Solo se permiten letras en los campos de nombre y apellido.", "error");
+        return;
+        }
+
+        const pNombre = capitalize(primerNombre);
+        const sNombre = capitalize(segundoNombre);
+        const pApellido = capitalize(primerApellido);
+        const sApellido = capitalize(segundoApellido);
+
+
         const role = ROLES_MAP[rolTexto];
 
         try {
@@ -50,10 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Authorization": "Bearer " + localStorage.getItem("access_token")
                 },
                 body: JSON.stringify({
-                    role: role,
-                    email: email,
-                    nit: nit
-                })
+                role: role,
+                email: email,
+                nit: nit,
+                primer_nombre: primerNombre,
+                segundo_nombre: segundoNombre,
+                primer_apellido: primerApellido,
+                segundo_apellido: segundoApellido
+            })
             });
 
             const data = await response.json();
