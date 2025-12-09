@@ -1,18 +1,22 @@
 from pathlib import Path
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR.parent.parent / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gxhbd$)md-3l7+4)q5(esupdnvoe&3#4k91%_pk7kns7ko&p#z'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -97,11 +101,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'primeraInfancia',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
@@ -162,11 +166,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'GestionCitaciones@InstitutoPrimeraInfancia.onmicrosoft.com'
-EMAIL_HOST_PASSWORD = 'Djangocitas2025'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Password Reset Email Configuration (Secondary)
 # Please update these with the correct credentials
-PASSWORD_RESET_EMAIL_HOST_USER = 'GestionCitaciones@InstitutoPrimeraInfancia.onmicrosoft.com'
-PASSWORD_RESET_EMAIL_HOST_PASSWORD = 'Djangocitas2025'
+PASSWORD_RESET_EMAIL_HOST_USER = os.environ.get('PASSWORD_RESET_EMAIL_HOST_USER')
+PASSWORD_RESET_EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD_RESET_EMAIL_HOST_PASSWORD')

@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 studentsTableBody.innerHTML = '';
                 if (data.length === 0) {
-                    showMessage('No se encontraron estudiantes con acudientes para este grupo', 'error', 5000);
+                    showMessage('No hay estudiantes en este grupo', 'error', 5000);
                     studentsSection.style.display = 'none';
                     formSection.style.display = 'none';
                     return;
