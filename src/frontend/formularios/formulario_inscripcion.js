@@ -50,12 +50,15 @@ document.addEventListener("DOMContentLoaded", () => {
       !infante.grado
     ) {
       showMessage("Por favor, completa todos los campos obligatorios." , "error");
+      window.Intentos.fallo();
+
       return;
     }
 
     // 2. Autorización
     if (!acudiente.autorizo) {
       showMessage("Debes autorizar el uso de datos personales." , "error");
+      window.Intentos.fallo();
       return;
     }
 
@@ -73,18 +76,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!nombresYApellidos.every(isOnlyLetters)) {
       showMessage("Solo se permiten letras en los campos de nombre y apellido.", "error");
+      window.Intentos.fallo();
       return;
     }
 
     // 4. Validar correo electrónico
     if (!isValidEmail(acudiente.correo)) {
       showMessage("Ingrese un correo electrónico válido.", "error");
+      window.Intentos.fallo();
       return;
     }
 
     // 5. Validar cédula (solo números)
     if (!isOnlyNumbers(acudiente.cedula)) {
       showMessage("La cédula solo debe contener números.", "error");
+      window.Intentos.fallo();
       return;
     }
 
@@ -101,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Validar rango entre 2 y 4 años
     if (edad < 2 || edad > 4) {
     showMessage("El infante debe tener entre 2 y 4 años de edad.", "error");
+    window.Intentos.fallo();
     return;
     }
 
@@ -138,15 +145,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
 
         if (response.ok) {
+          window.Intentos.exito();
           showMessage("Formulario enviado correctamente ✅", "success");
           console.log("Respuesta del servidor:", data);
         } else {
           showMessage("Error al enviar el formulario. " + (data.error || ""), "error");
+          window.Intentos.fallo();
+
         }
 
       } catch (error) {
         showMessage("Error de conexión con el servidor.", "error");
         console.error(error);
+        window.Intentos.fallo();
+
       }
     })();
 
@@ -155,8 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(acudiente);
     console.log("=== Datos del infante ===");
     console.log(infante);
-
-    showMessage("Formulario enviado correctamente ✅", "success");
   });
 });
 

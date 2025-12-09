@@ -14,6 +14,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const data = await response.json();
 
     if (response.ok) {
+      window.Intentos.exito();
       showMessage("Inicio de sesión exitoso.", "success");
 
       // ✅ Guardamos los tokens y el usuario
@@ -39,16 +40,17 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         window.location.href = "../usuarios/vista_admin_usuarios/vista_admin_usuarios.html";
 
       } else {
-        // por si ocurre algo inesperado, enviarlo al index
-        window.location.href = "../index.html";
+        Intentos.registrarFallo();
       }
 
     }, 500);
 
     } else {
+        window.Intentos.fallo();
         showMessage(data.error || "Error en el inicio de sesión.");
     }
   } catch (error) {
+    window.Intentos.fallo();
     console.error("Error:", error);
     showMessage("Error al conectar con el servidor.");
   }

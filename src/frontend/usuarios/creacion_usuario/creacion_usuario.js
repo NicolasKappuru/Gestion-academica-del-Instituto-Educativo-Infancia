@@ -38,21 +38,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!rolTexto || !email || !nit) {
             showMessage("Debe llenar todos los campos.", "error");
+            window.Intentos.fallo();
             return;
         }
 
         if (!isValidEmail(email)) {
         showMessage("Ingrese un correo electrónico válido.", "error");
+        window.Intentos.fallo();
         return;
         }
 
         if (!isOnlyNumbers(nit)) {
         showMessage("La cédula solo debe contener números.", "error");
+        window.Intentos.fallo();
         return;
         }
 
         if (!primerNombre || !primerApellido) {
         showMessage("Debe ingresar al menos primer nombre y primer apellido.", "error");
+        window.Intentos.fallo();
         return;
         }
 
@@ -65,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!nombresYApellidos.every(isOnlyLetters)) {
         showMessage("Solo se permiten letras en los campos de nombre y apellido.", "error");
+        window.Intentos.fallo();
         return;
         }
 
@@ -98,10 +103,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!response.ok) {
                 showMessage(data.error || "No se pudo crear el usuario", "error");
+                window.Intentos.fallo();
                 return;
             }
 
             showMessage("Usuario creado correctamente", "success");
+            window.Intentos.exito();
+
 
             // Limpiar inputs
             document.getElementById("inputRol").value = "";
@@ -110,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
             showMessage("Error en la conexión con el servidor.", "error");
+            window.Intentos.fallo();
             console.log(error);
         }
     });
