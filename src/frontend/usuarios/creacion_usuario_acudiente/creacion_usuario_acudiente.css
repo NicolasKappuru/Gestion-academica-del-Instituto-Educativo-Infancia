@@ -12,12 +12,21 @@
     width: 100%;
     max-width: 900px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* <-- lo cambiamos a centered */
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    position: relative; /* para posicionar el botón sin romper el flujo */
 }
 
-/* Botón volver */
+/* Ajuste del título */
+.header-acudiente h2 {
+    margin: 0 auto;                     /* centra */
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Botón volver mejor alineado */
 .btn-volver {
     padding: 8px 16px;
     background-color: #3da5ff;
@@ -27,6 +36,8 @@
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
+    position: absolute;
+    right: 0;                           /* botón ubicado a la derecha sin tirar el título */
 }
 
 .btn-volver:hover {
@@ -34,45 +45,71 @@
 }
 
 /* Tabla */
-.tabla-container {
+.tabla-container,
+.tabla-usuarios {
     width: 100%;
     max-width: 900px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
 
-.tabla-acudiente {
+.tabla-acudiente,
+.tabla-usuarios table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #f2f2f2;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ccc;
 }
 
-.tabla-acudiente th {
-    background-color: #d9d9d9;
+/* Encabezados */
+.tabla-acudiente th,
+.tabla-usuarios th {
+    background-color: #e6e6e6;
     text-align: center;
     font-weight: bold;
-    padding: 10px;
-    border: 1px solid #000;
+    padding: 15px;
+    font-size: 16px;
+    border-bottom: 2px solid #bdbdbd;
 }
 
-.tabla-acudiente td {
-    padding: 12px;
+/* Celdas más amplias */
+.tabla-acudiente td,
+.tabla-usuarios td {
+    padding: 18px;          /* <-- más espacio */
     text-align: center;
-    border: 1px solid #000;
-    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+    font-size: 17px;
+}
+
+/* Hover */
+.tabla-acudiente tr:hover td,
+.tabla-usuarios tr:hover td {
+    background-color: #f5f5f5;
 }
 
 /* Botón crear */
 .btn-crear {
-    padding: 6px 14px;
+    padding: 8px 16px;
     background-color: #3da5ff;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
 }
 
 .btn-crear:hover {
     background-color: #1a8be6;
+}
+
+/* Paginación */
+.paginacion {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
 }

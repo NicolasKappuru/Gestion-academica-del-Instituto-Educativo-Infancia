@@ -35,41 +35,41 @@
     </header>
 
     <!-- ===== MAIN ===== -->
-    <main class="crear-acudiente-container">
+  <main class="crear-acudiente-container">
 
-        <div class="header-acudiente">
-            <h2>Creación de usuario acudiente</h2>
+    <div class="header-acudiente">
+      <h2>Creación de usuario acudiente</h2>
 
-            <button id="btnVolver" class="btn-volver">
-                Volver
-            </button>
-        </div>
+      <button id="btnVolver" class="btn-volver">
+        Volver
+      </button>
+    </div>
 
-        <div class="tabla-container">
-            <table class="tabla-acudiente">
-                <thead>
-                    <tr>
-                        <th>Código de creación</th>
-                        <th></th>
-                    </tr>
-                </thead>
+    <section class="tabla-usuarios contenedor-tabla">
+      <div class="tabla-wrapper">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
 
-                <tbody id="listaCodigos">
-                    <!-- Estos los llenarás tú después con JS -->
-                    <tr>
-                        <td>1</td>
-                        <td><button class="btn-crear">Crear usuario</button></td>
-                    </tr>
+          <tbody id="listaCodigos">
+            <!-- contenido dinámico -->
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-                    <tr>
-                        <td>2</td>
-                        <td><button class="btn-crear">Crear usuario</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="paginacion">
+      <button id="btnPrev" class="btn-pagina">Anterior</button>
+      <span id="pageInfo">Página 1 de 1</span>
+      <button id="btnNext" class="btn-pagina">Siguiente</button>
+    </div>
 
-    </main>
+  </main>
+
 
 
     <!-- ===== FOOTER ===== -->
@@ -81,7 +81,7 @@
 
     <script src="../../globales/validacion/validacion.js" defer></script>
     <script src="../../globales/msg/mensaje.js" defer></script>
-    <script src="./creacion_usuario_acudiente.js" defer></script>
+    <script type="module" src="./creacion_usuario_acudiente.js" defer></script>
 
     <script src="../../header/finalizar_sesion.js"></script>
     <script src="../../header/pagina_inicio.js"> </script>

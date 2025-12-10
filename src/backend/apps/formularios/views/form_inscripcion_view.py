@@ -28,13 +28,16 @@ class FormularioInscripcion(APIView):
 
         grado = request.data.get("grado_aplicado")
         
-        personaAcu = Persona(
-            primer_nombre = priNomAcu,
-            segundo_nombre = segNomAcu,
-            primer_apellido = priApeAcu,
-            segundo_apellido = segApeAcu,
-            NIT = cedulaAcu
-        )
+        personaAcu = Persona.objects.filter(NIT=cedulaAcu).first()
+
+        if not personaAcu:
+            personaAcu = Persona(
+                primer_nombre=priNomAcu,
+                segundo_nombre=segNomAcu,
+                primer_apellido=priApeAcu,
+                segundo_apellido=segApeAcu,
+                NIT=cedulaAcu
+            )
     
         personaInf = Persona(
             primer_nombre = priNomInf,
@@ -44,10 +47,14 @@ class FormularioInscripcion(APIView):
             NIT = None
         )
 
-        acudienteAspirante = Acudiente_aspirante(
-            id_persona = personaAcu,
-            correo_electronico_aspirante = correoAcu
-        )
+        acudienteAspirante = Acudiente_aspirante.objects.filter(id_persona=personaAcu).first()
+
+        if not acudienteAspirante:
+            acudienteAspirante = Acudiente_aspirante(
+                id_persona=personaAcu,
+                correo_electronico_aspirante=correoAcu
+            )
+
 
         infanteAspirante = Infante_aspirante(
             id_persona = personaInf,

@@ -5,18 +5,18 @@ from apps.usuarios.models.infante_aspirante import Infante_aspirante
 class Solicitud(models.Model):
     id_solicitud = models.AutoField(primary_key=True)
 
-    acudiente_aspirante = models.OneToOneField(
-        Acudiente_aspirante,
-        on_delete=models.CASCADE,
-        db_column='id_acudiente_aspirante'
+    acudiente_aspirante = models.ForeignKey(
+    Acudiente_aspirante,
+    on_delete=models.CASCADE,
+    db_column='id_acudiente_aspirante'
     )
 
-    infante_aspirante = models.OneToOneField(
+    infante_aspirante = models.ForeignKey(
         Infante_aspirante,
         on_delete=models.CASCADE,
         db_column='id_infante_aspirante'
     )
-    
+
     grado_aplicar = models.CharField(max_length=15, null=False, blank=False)
     fecha_solicitud = models.DateTimeField(auto_now_add=True)
     estado_solicitud = models.CharField(max_length=15, default='Pendiente')

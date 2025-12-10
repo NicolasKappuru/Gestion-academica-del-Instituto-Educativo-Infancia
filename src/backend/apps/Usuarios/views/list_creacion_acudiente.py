@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from apps.solicitudes.models import Solicitud   # Ajusta si está en otro path
+from apps.solicitudes.models.solicitud import Solicitud
 
 
 class ListadoCreacionAcudiente(APIView):
@@ -29,8 +29,8 @@ class ListadoCreacionAcudiente(APIView):
             data = []
             for sol in solicitudes_page:
                 data.append({
-                    "codigo_creacion": sol.get_id_solicitud(),  
-                    "id_solicitud": sol.get_id_solicitud(),  
+                    "codigo_creacion": getattr(sol, "codigo_creacion", sol.id_solicitud),
+                    "id_solicitud": sol.id_solicitud,
                 })
 
             return Response({

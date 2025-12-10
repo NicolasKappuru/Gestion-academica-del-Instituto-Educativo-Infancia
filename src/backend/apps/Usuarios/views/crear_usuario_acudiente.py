@@ -40,10 +40,16 @@ class CrearUsuarioAcudiente(APIView):
                 # 2. Validar si la persona ya tiene usuario acudiente
                 # -------------------------------
                 if Usuario.objects.filter(persona=persona, role="acudiente").exists():
+
+                    # Finalizar solicitud aunque el usuario ya exista
+                    solicitud.estado_solicitud = "Finalizada"
+                    solicitud.save()
+
                     return Response(
                         {"error": "Ya existe un usuario acudiente para esta persona"},
                         status=status.HTTP_400_BAD_REQUEST
                     )
+
 
                 # -------------------------------
                 # 3. Crear usuario Django
