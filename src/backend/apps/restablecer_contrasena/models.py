@@ -35,3 +35,15 @@ class IntentoRestablecimiento(models.Model):
     def registrar_fallo_contrasena(self):
         self.intentos_contrasena += 1
         self.save()
+
+    def limpiar_bloqueo_datos_si_expiro(self):
+        """
+        Si existe un bloqueo definido y el tiempo actual ya lo superó,
+        reseteamos el contador de intentos de datos y quitamos la fecha de bloqueo.
+        """
+        if self.bloqueado_hasta and timezone.now() > self.bloqueado_hasta:
+            self.intentos_datos = 0
+            self.bloqueado_hasta = None
+            self.save()
+            return True
+        return False

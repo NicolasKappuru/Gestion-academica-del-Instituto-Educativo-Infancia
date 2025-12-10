@@ -38,49 +38,55 @@ class FormularioInscripcion(APIView):
                 segundo_apellido=segApeAcu,
                 NIT=cedulaAcu
             )
-    
-        personaInf = Persona(
-            primer_nombre = priNomInf,
-            segundo_nombre = segNomInf,
-            primer_apellido = priApeInf,
-            segundo_apellido = segApeInf,
-            NIT = None
-        )
+            personaAcu.save()
 
+        # Crear infante
+        personaInf = Persona(
+            primer_nombre=priNomInf,
+            segundo_nombre=segNomInf,
+            primer_apellido=priApeInf,
+            segundo_apellido=segApeInf,
+            NIT=None
+        )
+        personaInf.save()
+
+        # Buscar o crear acudiente_aspirante
         acudienteAspirante = Acudiente_aspirante.objects.filter(id_persona=personaAcu).first()
+        acudiente_creado = False
 
         if not acudienteAspirante:
             acudienteAspirante = Acudiente_aspirante(
                 id_persona=personaAcu,
                 correo_electronico_aspirante=correoAcu
             )
+            acudiente_creado = True
 
-
+        # Crear infante aspirante
         infanteAspirante = Infante_aspirante(
-            id_persona = personaInf,
-            fecha_nacimiento = fechaInf
+            id_persona=personaInf,
+            fecha_nacimiento=fechaInf
         )
 
+        # Crear solicitud
         solicitud = Solicitud(
-            acudiente_aspirante = acudienteAspirante,
-            infante_aspirante = infanteAspirante,
-            grado_aplicar = grado,
-         )    
-    
+            acudiente_aspirante=acudienteAspirante,
+            infante_aspirante=infanteAspirante,
+            grado_aplicar=grado,
+        )
+
         try:
-            # Guardar los objetos en la BD
-            personaAcu.save()
-            personaInf.save()
-            acudienteAspirante.save()
+            # Guardar solo si es nuevo
+            if acudiente_creado:
+                acudienteAspirante.save()
+
             infanteAspirante.save()
             solicitud.save()
-            
+
             return Response({
                 "message": "Preinscripción registrada correctamente"
             }, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            # Si algo falla, devuelves error
             return Response({
                 "error": f"Error al guardar los datos: {str(e)}"
             }, status=status.HTTP_400_BAD_REQUEST)

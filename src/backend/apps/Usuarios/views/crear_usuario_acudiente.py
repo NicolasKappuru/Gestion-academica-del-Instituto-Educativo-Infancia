@@ -4,6 +4,11 @@ from rest_framework import status
 
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 from apps.solicitudes.models.solicitud import Solicitud
 from apps.usuarios.models.usuario import Usuario
@@ -55,10 +60,11 @@ class CrearUsuarioAcudiente(APIView):
                 # 3. Crear usuario Django
                 # -------------------------------
                 django_user = User.objects.create_user(
-                    username=email,  # Clase Usuario se encarga de asignarlo
+                    username=email,  # Clase Usuario se encarga de asignarlo logicamente despues, pero aqui inicializamos
                     email=email,
-                    password=str(persona.get_nit())
+                    # password=str(persona.get_nit()) <--- SIN CLAVE
                 )
+                django_user.set_unusable_password()
                 django_user.is_active = True
                 django_user.save()
 
@@ -79,8 +85,45 @@ class CrearUsuarioAcudiente(APIView):
                 solicitud.estado_solicitud = "Finalizada"
                 solicitud.save()
 
+                # -------------------------------
+                # 6. Generación de Token y Envío de Correo
+                # -------------------------------
+                
+                token = default_token_generator.make_token(django_user)
+                uid = urlsafe_base64_encode(force_bytes(django_user.pk))
+                
+                link = f"http://127.0.0.1:5500/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
+                
+                asunto = "Bienvenido al Sistema - Instituto Educativo Infancia"
+                mensaje = f"""
+                Hola {persona.get_primer_nombre()} {persona.get_primer_apellido()},
+                
+                Su solicitud ha sido aprobada y su cuenta de Acudiente ha sido creada.
+                
+                Su código de usuario es: {usuario.get_codigo_usuario()}
+                
+                IMPORTANTE: Para activar su cuenta, haga clic en el siguiente enlace y configure su contraseña:
+                
+                {link}
+                
+                Este enlace expirará pronto.
+                """
+                
+                remitente = settings.CREDENTIAL_EMAIL_HOST_USER
+                
+                send_mail(
+                    asunto,
+                    mensaje,
+                    remitente,
+                    [email],
+                    fail_silently=False, 
+                    auth_user=settings.CREDENTIAL_EMAIL_HOST_USER,
+                    auth_password=settings.CREDENTIAL_EMAIL_HOST_PASSWORD
+                )
+
+
                 return Response(
-                    {"message": "Usuario acudiente creado correctamente"},
+                    {"message": "Usuario acudiente creado y credenciales enviadas"},
                     status=status.HTTP_201_CREATED
                 )
             
@@ -93,7 +136,9 @@ class CrearUsuarioAcudiente(APIView):
             )
 
         except Exception as e:
+             # Atomic rollback happened
+            print(f"Error en crear_usuario_acudiente: {e}") # Debug log
             return Response(
-                {"error": str(e)},
+                {"error": "Ha ocurrido un error... intente más tarde"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

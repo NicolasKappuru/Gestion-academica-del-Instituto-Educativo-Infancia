@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nueva Contraseña</title>
     <link rel="stylesheet" href="../restablecer_contraseña.css">
+    <link rel="stylesheet" href="../../globales/msg/mensaje.css">
     <link rel="stylesheet" href="../../header/header.css">
     <link rel="stylesheet" href="../../footer/footer.css">
 </head>
@@ -37,18 +38,31 @@
     <!-- ===== MAIN ===== -->
     <main class="reset-container">
         <h2>Nueva Contraseña</h2>
-        <form id="newPasswordForm">
-            <div class="form-group">
-                <label for="password_1">Nueva Contraseña</label>
-                <input type="password" id="password_1" required>
-            </div>
-            <div class="form-group">
-                <label for="password_2">Confirmar Contraseña</label>
-                <input type="password" id="password_2" required>
-            </div>
-            <button type="submit">Aceptar</button>
-        </form>
-        <div id="messageBox" class="message"></div>
+
+        <!-- Contenedor del Formulario -->
+        <div id="formContainer">
+            <form id="newPasswordForm">
+                <div class="form-group">
+                    <label for="password_1">Nueva Contraseña</label>
+                    <input type="password" id="password_1" required>
+                </div>
+                <div class="form-group">
+                    <label for="password_2">Confirmar Contraseña</label>
+                    <input type="password" id="password_2" required>
+                </div>
+                <button type="submit">Aceptar</button>
+            </form>
+        </div>
+
+        <!-- Contenedor de Token Expirado (Oculto por defecto) -->
+        <div id="expiredContainer" style="display: none; text-align: center;">
+            <p>El enlace de activación ha caducado o es inválido.</p>
+            <a href="../../restablecer_contraseña/solicitud_restablecer_contraseña/solicitud_restablecer_contraseña.html"
+                class="btn-link">
+                Solicitar nuevo enlace
+            </a>
+        </div>
+
     </main>
 
     <!-- ===== FOOTER ===== -->
@@ -58,7 +72,8 @@
         <div class="footer-section">Cosas...</div>
     </footer>
 
-    <script src="ingresar_nueva_contraseña.js"></script>
+    <script src="../../globales/msg/mensaje.js" defer></script>
+    <script src="ingresar_nueva_contraseña.js" defer></script>
 </body>
 
 </html>

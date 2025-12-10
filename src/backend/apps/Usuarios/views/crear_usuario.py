@@ -4,6 +4,11 @@ from rest_framework import status
 
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 from apps.usuarios.models.persona import Persona
 from apps.usuarios.models.usuario import Usuario
@@ -42,6 +47,7 @@ class CrearUsuario(APIView):
             )
 
         try:
+            # Atomicidad y Manejo de Errores
             with transaction.atomic():
 
                 # Verificar si el NIT ya tiene un usuario con el mismo rol
@@ -68,10 +74,14 @@ class CrearUsuario(APIView):
 
                 # Crear usuario Django
                 django_user = User.objects.create_user(
-                    username=email, # Clase Usuario se encarga de asignarlo
+                    username=email, # Clase Usuario se encarga de asignarlo correctamente si es necesario un update
                     email=email,
-                    password=str(nit)
+                    # password=str(nit)  <-- NO ASIGNAR CONTRASEÑA
                 )
+                
+                # Encapsulamiento: NO usar atributos directos si hay métodos (aunque User es standard)
+                # Requerimiento: user.set_unusable_password()
+                django_user.set_unusable_password()
                 django_user.is_active = True
                 django_user.save()
 
@@ -96,9 +106,52 @@ class CrearUsuario(APIView):
                     administrador_de_usuarios = Administrador_de_usuarios.objects.create(id_persona=persona)
                     administrador_de_usuarios.save()
 
+                # -------------------------------
+                # Generación de Token y Envío de Correo
+                # -------------------------------
+                
+                # Generar token y uid
+                token = default_token_generator.make_token(django_user)
+                uid = urlsafe_base64_encode(force_bytes(django_user.pk))
+                
+                # Construir link (Ajustar dominio segun necesidad, aqui asumimos localhost frontend)
+                # El frontend debe estar en esa ruta
+                link = f"http://127.0.0.1:5500/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
+                
+                role_display = role.replace("_", " ").title()
+                
+                asunto = "Bienvenido al Sistema de Gestión Académica"
+                mensaje = f"""
+                Hola {primer_nombre} {primer_apellido},
+                
+                Bienvenido al Instituto Educativo Infancia.
+                Su cuenta ha sido creada con el rol: {role_display}.
+                
+                Su código de usuario es: {usuario.get_codigo_usuario()}
+                
+                IMPORTANTE: Para activar su cuenta, haga clic en el siguiente enlace y configure su contraseña:
+                
+                {link}
+                
+                Este enlace expirará pronto.
+                """
+                
+                remitente = settings.CREDENTIAL_EMAIL_HOST_USER
+                
+                # Enviar correo (Si falla, transaction.atomic hará rollback)
+                send_mail(
+                    asunto,
+                    mensaje,
+                    remitente,
+                    [email],
+                    fail_silently=False, # Importante: False para que lance excepción si falla
+                    auth_user=settings.CREDENTIAL_EMAIL_HOST_USER,
+                    auth_password=settings.CREDENTIAL_EMAIL_HOST_PASSWORD
+                )
+
                 return Response(
                     {
-                        "message": "Usuario creado correctamente",
+                        "message": "Usuario creado y credenciales enviadas",
                         "usuario_id": usuario.get_codigo_usuario(),
                         "persona_id": persona.get_id_persona(),
                         "user_id": django_user.id
@@ -107,7 +160,10 @@ class CrearUsuario(APIView):
                 )
 
         except Exception as e:
+            # Captura cualquier error (DB o Email)
+            # Como salimos del bloque atomic con excepcion, el rollback ya ocurrió automatico
+            print(f"Error en crear_usuario: {e}") # Debug log
             return Response(
-                {"error": str(e)},
+                {"error": "Ha ocurrido un error... intente más tarde"}, # Mensaje generico solicitado
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

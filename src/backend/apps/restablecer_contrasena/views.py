@@ -1,8 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.utils.crypto import get_random_string
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+
 from apps.usuarios.models.usuario import Usuario
 from .models import IntentoRestablecimiento
 from .utils import enviar_correo_restablecimiento
@@ -15,7 +19,10 @@ class ValidarDatosView(APIView):
         try:
             usuario = Usuario.objects.get(codigo_usuario=codigo_usuario)
             intento, created = IntentoRestablecimiento.objects.get_or_create(usuario=usuario)
-
+            
+            # Limpiar bloqueo si ya expiro para dar nueva oportunidad
+            intento.limpiar_bloqueo_datos_si_expiro()
+            
             # Verificar bloqueo
             if intento.esta_bloqueado():
                 return Response({'error': 'Bloqueo por 5 minutos', 'bloqueado': True}, status=status.HTTP_403_FORBIDDEN)
@@ -29,15 +36,20 @@ class ValidarDatosView(APIView):
                 
                 return Response({'error': mensaje, 'intentos': intento.intentos_datos, 'bloqueado': False}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Datos válidos - Resetear intentos y Generar Token
+            # Datos válidos
             intento.reiniciar_intentos_datos()
-            token = get_random_string(32)
-            intento.token_validacion = token
+            
+            # --- NUEVA LOGICA: Usar generador estándar ---
+            user = usuario.get_user()
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            
+            # (Opcional) Guardamos timestamp en intento para meras estadísticas, pero la validez la da el token mismo
             intento.fecha_token = timezone.now()
             intento.save()
 
             # Enviar correo
-            frontend_url = request.build_absolute_uri('/frontend/restablecer/nueva_contrasena.html') # Ajustar ruta segun frontend real
+            # frontend_url = request.build_absolute_uri('/frontend/restablecer/nueva_contrasena.html') # Ajustar ruta segun frontend real
             # Hack para desarrollo local si no está servido el frontend en el mismo puerto o estructura
             # Asumiremos una estructura relativa o que el frontend maneja el parametro ?token=...&uid=...
              # Mejor usamos una url relativa que el usuario pueda armar. 
@@ -48,7 +60,7 @@ class ValidarDatosView(APIView):
             # Vamos a asumir que el usuario corre esto localmente.
             # http://127.0.0.1:5500/src/frontend/restablecer/nueva_contrasena.html?token=...&id=...
             
-            link = f"http://127.0.0.1:5500/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&id={codigo_usuario}"
+            link = f"http://127.00.1:5500/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
             
             enviado = enviar_correo_restablecimiento(usuario, link)
             
@@ -65,49 +77,67 @@ class ValidarDatosView(APIView):
         except Exception as e:
             return Response({'error': 'Error de conexión a la BD'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class ValidarContrasenaView(APIView):
     def post(self, request):
-        codigo_usuario = request.data.get('codigo_usuario')
+        # Aceptamos uid y token (Estándar) O codigo_usuario y token (Legacy/Fallback si necesario, pero priorizamos uid)
+        uidb64 = request.data.get('uid')
         token = request.data.get('token')
+        
+        # Parametros legacy por si acaso front manda codigo_usuario en vez de uid (aunque actualizaremos front)
+        codigo_usuario = request.data.get('codigo_usuario') 
+
         password_1 = request.data.get('password_1')
         password_2 = request.data.get('password_2')
 
         try:
-            usuario = Usuario.objects.get(codigo_usuario=codigo_usuario)
-            intento = IntentoRestablecimiento.objects.get(usuario=usuario)
+            user = None
+            usuario = None
+            
+            if uidb64:
+                try:
+                    uid = force_str(urlsafe_base64_decode(uidb64))
+                    user = User.objects.get(pk=uid)
+                    usuario = Usuario.objects.get(user=user)
+                except (TypeError, ValueError, OverflowError, User.DoesNotExist, Usuario.DoesNotExist):
+                    user = None
+            
+            elif codigo_usuario:
+                 # Fallback busqueda por codigo
+                 usuario = Usuario.objects.get(codigo_usuario=codigo_usuario)
+                 user = usuario.get_user()
+            
+            if not user or not usuario:
+                 return Response({'error': 'Usuario no válido'}, status=status.HTTP_404_NOT_FOUND)
 
-            # Verificar token (seguridad simple)
-            if intento.token_validacion != token:
-                 return Response({'error': 'Token inválido o expirado'}, status=status.HTTP_400_BAD_REQUEST)
+            # Obtener intento para controlar flood/intentos fallidos de contraseña
+            intento, created = IntentoRestablecimiento.objects.get_or_create(usuario=usuario)
 
-            # Validar coincidencia
+            # 1. Verificar Token Estándar
+            if not default_token_generator.check_token(user, token):
+                 return Response({'error': 'El enlace de activación ha caducado'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # 2. Validar coincidencia de passwords
             if password_1 != password_2:
                 intento.registrar_fallo_contrasena()
                 if intento.intentos_contrasena > 3:
+                     # Aqui podriamos bloquear, o decir "finalizar"
                      return Response({'error': 'Intentar más tarde', 'finalizar': True}, status=status.HTTP_403_FORBIDDEN)
                 return Response({'error': 'Contraseña no coincide', 'intentos': intento.intentos_contrasena}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Validar intentos previos (si llegamos aqui coinciden, pero verificamos si no estaba ya bloqueado por intentos excesivos antes? 
-            # El diagrama dice "Si excedieron los intentos -> Intentar mas tarde". 
-            # Pero en mi logica arriba ya retorno error si excede.
-            # Aqui es "Coinciden" -> Si han sido 3 intentos o menos -> Actualizar BD.
-            
+             # 3. Validar si está bloqueado por muchos intentos previos (aunque el token sea valido)
             if intento.intentos_contrasena > 3:
                  return Response({'error': 'Intentar más tarde', 'finalizar': True}, status=status.HTTP_403_FORBIDDEN)
 
             # Actualizar Contraseña
-            user = usuario.get_user()
             user.set_password(password_1)
             user.save()
             
             # Limpiar estado
-            intento.reiniciar_intentos_contrasena() # O borrar token
-            intento.token_validacion = None # Invalidar token usado
-            intento.save()
-
+            intento.reiniciar_intentos_contrasena()
+            # El token se invalida automaticamente por Django al cambiar el password
+            
             return Response({'message': 'Contraseña actualizada'}, status=status.HTTP_200_OK)
 
-        except (Usuario.DoesNotExist, IntentoRestablecimiento.DoesNotExist):
-            return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-             return Response({'error': 'Error de conexión a la BD'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+             return Response({'error': 'Error interno'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
