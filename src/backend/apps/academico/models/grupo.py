@@ -26,14 +26,6 @@ class Grupo(models.Model):
     class Meta:
         db_table = 'Grupo'
 
-    def asignar_estudiante(self, estudiante):
-        if self.estudiantes.count() >= self.cupos_grupo:
-            raise ValueError("No hay cupos disponibles en este grupo")
-        
-        estudiante.grupo = self
-        estudiante.save()
-
-
     #GETTERS
     
     def get_id_grupo(self):
