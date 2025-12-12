@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.conf import settings
 from rest_framework import status
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -49,18 +50,12 @@ class ValidarDatosView(APIView):
             intento.save()
 
             # Enviar correo
-            # frontend_url = request.build_absolute_uri('/frontend/restablecer/nueva_contrasena.html') # Ajustar ruta segun frontend real
-            # Hack para desarrollo local si no está servido el frontend en el mismo puerto o estructura
-            # Asumiremos una estructura relativa o que el frontend maneja el parametro ?token=...&uid=...
-             # Mejor usamos una url relativa que el usuario pueda armar. 
-             # Suponiendo que el frontend está en ../frontend/restablecer... 
-             # El link debe llevar al archivo HTML que vamos a crear.
+            # En entorno real o local, usamos la variable de entorno para el dominio
+            frontend_url = settings.FRONTEND_URL.rstrip('/')
             
-            # En un entorno real, esto seria una URL completa del frontend.
-            # Vamos a asumir que el usuario corre esto localmente.
-            # http://127.0.0.1:5500/src/frontend/restablecer/nueva_contrasena.html?token=...&id=...
-            
-            link = f"http://127.00.1:5500/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
+            # Construimos el enlace apuntando al archivo HTML estático tal cual existe en la estructura
+            # Ruta relativa: src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html
+            link = f"{frontend_url}/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
             
             enviado = enviar_correo_restablecimiento(usuario, link)
             
