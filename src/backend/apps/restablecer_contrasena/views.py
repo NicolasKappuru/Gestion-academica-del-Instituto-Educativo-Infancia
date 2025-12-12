@@ -54,8 +54,8 @@ class ValidarDatosView(APIView):
             frontend_url = settings.FRONTEND_URL.rstrip('/')
             
             # Construimos el enlace apuntando al archivo HTML estático tal cual existe en la estructura
-            # Ruta relativa: src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html
-            link = f"{frontend_url}/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
+            # Ruta relativa: restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html
+            link = f"{frontend_url}/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
             
             enviado = enviar_correo_restablecimiento(usuario, link)
             

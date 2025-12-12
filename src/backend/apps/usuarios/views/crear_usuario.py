@@ -118,7 +118,7 @@ class CrearUsuario(APIView):
                 # El frontend debe estar en esa ruta
                 # link = f"http://127.0.0.1:5500/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
                 frontend_url = settings.FRONTEND_URL.rstrip('/')
-                link = f"{frontend_url}/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
+                link = f"{frontend_url}/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
                 
                 role_display = role.replace("_", " ").title()
                 

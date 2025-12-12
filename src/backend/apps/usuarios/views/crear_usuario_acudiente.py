@@ -93,7 +93,7 @@ class CrearUsuarioAcudiente(APIView):
                 uid = urlsafe_base64_encode(force_bytes(django_user.pk))
                 
                 frontend_url = settings.FRONTEND_URL.rstrip('/')
-                link = f"{frontend_url}/src/frontend/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
+                link = f"{frontend_url}/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
                 
                 asunto = "Bienvenido al Sistema - Instituto Educativo Infancia"
                 mensaje = f"""
