@@ -1,10 +1,11 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+import sys
+from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR.parent.parent / '.env')
@@ -28,6 +29,8 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 # Application definition
 
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,16 +44,15 @@ INSTALLED_APPS = [
     'corsheaders',
 
     #Apps de nuestra autoria
-    'apps.usuarios',
-    'apps.login',
-    'apps.formularios',
-    'apps.academico',
-    'apps.boletines',
-    'apps.solicitudes',
-    'apps.citaciones',
-    'apps.evaluacion',
-    'apps.restablecer_contrasena',
-
+    'usuarios',
+    'login',
+    'formularios',
+    'academico',
+    'boletines',
+    'solicitudes',
+    'citaciones',
+    'evaluacion',
+    'restablecer_contrasena',
 ]
 
 MIDDLEWARE = [
