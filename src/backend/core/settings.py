@@ -24,7 +24,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
-FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://127.0.0.1:5500/src/frontend')
+FRONTEND_URL = 'https://instituto-educativo-infancia.onrender.com'
 
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)

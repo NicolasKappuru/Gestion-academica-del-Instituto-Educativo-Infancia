@@ -9,7 +9,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 
 from apps.usuarios.models.usuario import Usuario
-from .models import IntentoRestablecimiento
 from .utils import enviar_correo_restablecimiento
 
 class ValidarDatosView(APIView):
@@ -19,35 +18,24 @@ class ValidarDatosView(APIView):
 
         try:
             usuario = Usuario.objects.get(codigo_usuario=codigo_usuario)
-            intento, created = IntentoRestablecimiento.objects.get_or_create(usuario=usuario)
+            # IntentoRestablecimiento logic removed to handle attempts on frontend
             
-            # Limpiar bloqueo si ya expiro para dar nueva oportunidad
-            intento.limpiar_bloqueo_datos_si_expiro()
-            
-            # Verificar bloqueo
-            if intento.esta_bloqueado():
-                return Response({'error': 'Bloqueo por 5 minutos', 'bloqueado': True}, status=status.HTTP_403_FORBIDDEN)
-
             # Validar email
             if usuario.get_user().email != email_ingresado:
-                intento.registrar_fallo_datos()
                 mensaje = "Datos incorrectos"
-                if intento.intentos_datos > 3:
-                     return Response({'error': 'Bloqueo por 5 minutos', 'bloqueado': True}, status=status.HTTP_403_FORBIDDEN)
-                
-                return Response({'error': mensaje, 'intentos': intento.intentos_datos, 'bloqueado': False}, status=status.HTTP_400_BAD_REQUEST)
+                # Simplemente retornamos error, el frontend contara los intentos
+                return Response({'error': mensaje, 'bloqueado': False}, status=status.HTTP_400_BAD_REQUEST)
 
             # Datos válidos
-            intento.reiniciar_intentos_datos()
             
-            # --- NUEVA LOGICA: Usar generador estándar ---
+            # Usar generador estándar
             user = usuario.get_user()
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             
             # (Opcional) Guardamos timestamp en intento para meras estadísticas, pero la validez la da el token mismo
-            intento.fecha_token = timezone.now()
-            intento.save()
+            # (Opcional) Guardamos timestamp en intento para meras estadísticas, pero la validez la da el token mismo
+            # intento.save() <- Removed
 
             # Enviar correo
             # En entorno real o local, usamos la variable de entorno para el dominio
@@ -55,7 +43,7 @@ class ValidarDatosView(APIView):
             
             # Construimos el enlace apuntando al archivo HTML estático tal cual existe en la estructura
             # Ruta relativa: restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html
-            link = f"{frontend_url}/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
+            link = f"https://instituto-educativo-infancia.onrender.com/restablecer_contraseña/ingresar_nueva_contraseña/ingresar_nueva_contraseña.html?token={token}&uid={uid}"
             
             enviado = enviar_correo_restablecimiento(usuario, link)
             
@@ -105,8 +93,8 @@ class ValidarContrasenaView(APIView):
             if not user or not usuario:
                  return Response({'error': 'Usuario no válido'}, status=status.HTTP_404_NOT_FOUND)
 
-            # Obtener intento para controlar flood/intentos fallidos de contraseña
-            intento, created = IntentoRestablecimiento.objects.get_or_create(usuario=usuario)
+            # IntentoRestablecimiento logic removed
+            # Obtener intento (solo si existiera logica adicional no bloqueante, pero eliminamos bloqueo)
 
             # 1. Verificar Token Estándar
             if not default_token_generator.check_token(user, token):
@@ -114,22 +102,13 @@ class ValidarContrasenaView(APIView):
 
             # 2. Validar coincidencia de passwords
             if password_1 != password_2:
-                intento.registrar_fallo_contrasena()
-                if intento.intentos_contrasena > 3:
-                     # Aqui podriamos bloquear, o decir "finalizar"
-                     return Response({'error': 'Intentar más tarde', 'finalizar': True}, status=status.HTTP_403_FORBIDDEN)
-                return Response({'error': 'Contraseña no coincide', 'intentos': intento.intentos_contrasena}, status=status.HTTP_400_BAD_REQUEST)
-
-             # 3. Validar si está bloqueado por muchos intentos previos (aunque el token sea valido)
-            if intento.intentos_contrasena > 3:
-                 return Response({'error': 'Intentar más tarde', 'finalizar': True}, status=status.HTTP_403_FORBIDDEN)
-
+                # El frontend maneja los intentos
+                return Response({'error': 'Contraseña no coincide'}, status=status.HTTP_400_BAD_REQUEST)
+ 
             # Actualizar Contraseña
             user.set_password(password_1)
             user.save()
             
-            # Limpiar estado
-            intento.reiniciar_intentos_contrasena()
             # El token se invalida automaticamente por Django al cambiar el password
             
             return Response({'message': 'Contraseña actualizada'}, status=status.HTTP_200_OK)
