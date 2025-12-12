@@ -3,7 +3,7 @@ export async function cambiarEstado(idUser) {
     try {
         const token = localStorage.getItem("access_token");
 
-        await fetch("http://localhost:8000/api/habilitarDeshabilitar/", {
+        await fetch(`${API_BASE_URL}/api/habilitarDeshabilitar/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

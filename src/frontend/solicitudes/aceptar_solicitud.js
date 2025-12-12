@@ -1,7 +1,7 @@
 export async function aceptarSolicitud(id_solicitud) {
     try {
         const token = localStorage.getItem("access_token");
-        const resp = await fetch("http://localhost:8000/api/aceptarSolicitud/", {
+        const resp = await fetch(`${API_BASE_URL}/api/aceptarSolicitud/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
