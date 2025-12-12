@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function cargarGrupos() {
-        fetch('http://127.0.0.1:8000/api/citaciones/grupos/')
+        fetch(`${API_BASE_URL}/api/citaciones/grupos/`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('DB Error');
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function consultarEstudiantes(idGrupo) {
-        fetch(`http://127.0.0.1:8000/api/citaciones/grupos/${idGrupo}/estudiantes/`)
+        fetch(`${API_BASE_URL}/api/citaciones/grupos/${idGrupo}/estudiantes/`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('DB Error');
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lugar: lugar
         };
 
-        fetch('http://127.0.0.1:8000/api/citaciones/enviar/', {
+        fetch(`${API_BASE_URL}/api/citaciones/enviar/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

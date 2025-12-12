@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Administrador de usuarios</title>
@@ -11,107 +12,109 @@
 </head>
 
 <body>
-    <!-- ===== HEADER ===== -->
-    <header class="main-header">
-      <div class="header-logo">
-        <div class="logo-circle"></div>
-        <div class="logo-text">
-          <h1>Instituto educativo</h1>
-          <h2>Infancia</h2>
-        </div>
+  <!-- ===== HEADER ===== -->
+  <header class="main-header">
+    <div class="header-logo">
+      <div class="logo-circle"></div>
+      <div class="logo-text">
+        <h1>Instituto educativo</h1>
+        <h2>Infancia</h2>
+      </div>
+    </div>
+
+    <nav class="header-nav">
+      <a href="../interfaz inicial/main.html" class="nav-link" id="btn-inicio">Inicio</a>
+      <span class="nav-link">Contacto</span>
+      <div class="nav-box">
+        <span class="nav-icon">📅</span>
+      </div>
+      <a href="./login.html" class="nav-link login-link">
+        Iniciar sesión
+      </a>
+    </nav>
+
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="crear-usuario-container">
+
+    <div class="top-bar-crear">
+      <h2 class="titulo-top">Creación de usuario</h2>
+
+      <button class="btn-volver" id="btnVolver">
+        Volver
+      </button>
+
+    </div>
+
+
+    <div class="crear-card">
+
+      <h2 class="titulo-seccion">Creación de usuario</h2>
+
+      <div class="form-group">
+        <label class="label-input">Rol</label>
+        <select id="inputRol" class="input-text">
+          <option value="">Seleccione...</option>
+          <option value="Profesor">Profesor</option>
+          <option value="Administrador académico">Administrador académico</option>
+          <option value="Administrador de usuarios">Administrador de usuarios</option>
+        </select>
       </div>
 
-      <nav class="header-nav">
-        <a href="../interfaz inicial/main.html" class="nav-link" id="btn-inicio">Inicio</a>
-        <span class="nav-link">Contacto</span>
-        <div class="nav-box">
-          <span class="nav-icon">📅</span>
-        </div>
-        <a href="./login.html" class="nav-link login-link">
-          Iniciar sesión
-        </a>
-      </nav>
+      <div class="form-group">
+        <label class="label-input">Primer nombre</label>
+        <input type="text" id="inputPrimerNombre" class="input-text">
+      </div>
 
-    </header>
+      <div class="form-group">
+        <label class="label-input">Segundo nombre</label>
+        <input type="text" id="inputSegundoNombre" class="input-text">
+      </div>
 
-    <!-- ===== MAIN ===== -->
-    <main class="crear-usuario-container">
+      <div class="form-group">
+        <label class="label-input">Primer apellido</label>
+        <input type="text" id="inputPrimerApellido" class="input-text">
+      </div>
 
-        <div class="top-bar-crear">
-            <h2 class="titulo-top">Creación de usuario</h2>
+      <div class="form-group">
+        <label class="label-input">Segundo apellido</label>
+        <input type="text" id="inputSegundoApellido" class="input-text">
+      </div>
 
-            <button class="btn-volver" id="btnVolver">
-                Volver
-            </button>
+      <div class="form-group">
+        <label class="label-input">Correo electrónico</label>
+        <input type="email" id="inputCorreo" class="input-text">
+      </div>
 
-        </div>
+      <div class="form-group">
+        <label class="label-input">NIT</label>
+        <input type="text" id="inputNIT" class="input-text">
+      </div>
 
+      <button class="btn-crear" id="btnCrear">Crear usuario</button>
 
-        <div class="crear-card">
+    </div>
 
-            <h2 class="titulo-seccion">Creación de usuario</h2>
-
-            <div class="form-group">
-              <label class="label-input">Rol</label>
-              <select id="inputRol" class="input-text">
-                  <option value="">Seleccione...</option>
-                  <option value="Profesor">Profesor</option>
-                  <option value="Administrador académico">Administrador académico</option>
-                  <option value="Administrador de usuarios">Administrador de usuarios</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="label-input">Primer nombre</label>
-              <input type="text" id="inputPrimerNombre" class="input-text">
-            </div>
-
-            <div class="form-group">
-              <label class="label-input">Segundo nombre</label>
-              <input type="text" id="inputSegundoNombre" class="input-text">
-            </div>
-
-            <div class="form-group">
-              <label class="label-input">Primer apellido</label>
-              <input type="text" id="inputPrimerApellido" class="input-text">
-            </div>
-
-            <div class="form-group">
-              <label class="label-input">Segundo apellido</label>
-              <input type="text" id="inputSegundoApellido" class="input-text">
-            </div>
-
-            <div class="form-group">
-                <label class="label-input">Correo electrónico</label>
-                <input type="email" id="inputCorreo" class="input-text">
-            </div>
-
-            <div class="form-group">
-                <label class="label-input">NIT</label>
-                <input type="text" id="inputNIT" class="input-text">
-            </div>
-
-            <button class="btn-crear" id="btnCrear">Crear usuario</button>
-
-        </div>
-
-    </main>
+  </main>
 
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="main-footer">
-      <div class="footer-section">Somos una institución sobre...</div>
-      <div class="footer-section">Redes...</div>
-      <div class="footer-section">Cosas...</div>
-    </footer>
+  <!-- ===== FOOTER ===== -->
+  <footer class="main-footer">
+    <div class="footer-section">Somos una institución sobre...</div>
+    <div class="footer-section">Redes...</div>
+    <div class="footer-section">Cosas...</div>
+  </footer>
 
-    <script src="../../globales/validacion/validacion.js" defer></script>
-    <script src="../../globales/msg/mensaje.js" defer></script>
-    <script src="../../globales/intentos/intentos.js" defer></script>
-    <script src="./creacion_usuario.js" defer></script>
+  <script src="../../globales/config.js"></script>
+  <script src="../../globales/validacion/validacion.js" defer></script>
+  <script src="../../globales/msg/mensaje.js" defer></script>
+  <script src="../../globales/intentos/intentos.js" defer></script>
+  <script src="./creacion_usuario.js" defer></script>
 
-    <script src="../../header/finalizar_sesion.js"></script>
-    <script src="../../header/pagina_inicio.js"> </script>
+  <script src="../../header/finalizar_sesion.js"></script>
+  <script src="../../header/pagina_inicio.js"> </script>
 
 </body>
+
 </html>

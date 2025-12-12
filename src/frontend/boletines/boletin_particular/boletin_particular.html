@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Boletines</title>
@@ -10,75 +11,77 @@
 </head>
 
 <body>
-    <!-- ===== HEADER ===== -->
-    <header class="main-header">
-      <div class="header-logo">
-        <div class="logo-circle"></div>
-        <div class="logo-text">
-          <h1>Instituto educativo</h1>
-          <h2>Infancia</h2>
-        </div>
+  <!-- ===== HEADER ===== -->
+  <header class="main-header">
+    <div class="header-logo">
+      <div class="logo-circle"></div>
+      <div class="logo-text">
+        <h1>Instituto educativo</h1>
+        <h2>Infancia</h2>
       </div>
+    </div>
 
-      <nav class="header-nav">
-        <a href="../interfaz inicial/main.html" class="nav-link">Inicio</a>
-        <span class="nav-link">Contacto</span>
-        <div class="nav-box">
-          <span class="nav-icon">📅</span>
-        </div>
-        <a href="./login.html" class="nav-link login-link">
-          Iniciar sesión
-        </a>
-      </nav>
+    <nav class="header-nav">
+      <a href="../interfaz inicial/main.html" class="nav-link">Inicio</a>
+      <span class="nav-link">Contacto</span>
+      <div class="nav-box">
+        <span class="nav-icon">📅</span>
+      </div>
+      <a href="./login.html" class="nav-link login-link">
+        Iniciar sesión
+      </a>
+    </nav>
 
-    </header>
+  </header>
 
-    <!-- ===== MAIN ===== -->
-    <main class="boletin-particular-container">
+  <!-- ===== MAIN ===== -->
+  <main class="boletin-particular-container">
 
-        <div class="encabezado-boletin">
-            <h2 class="titulo-boletin-particular">
-            Historia académica de <span id="nombreEstudiante">Estudiante_nombre</span>
-            </h2>
+    <div class="encabezado-boletin">
+      <h2 class="titulo-boletin-particular">
+        Historia académica de <span id="nombreEstudiante">Estudiante_nombre</span>
+      </h2>
 
-            <button id="btnVolver" class="btn-volver">Volver</button>
-        </div>
-  
-        <section class="tabla-periodos">
-            <table>
-            <thead>
-                <tr>
-                <th>Periodo académico</th>
-                <th>Boletín</th>
-                </tr>
-            </thead>
+      <button id="btnVolver" class="btn-volver">Volver</button>
+    </div>
 
-            <tbody id="tablaPeriodos">
-                <!-- Filas dinámicas -->
-            </tbody>
-            </table>
-        </section>
+    <section class="tabla-periodos">
+      <table>
+        <thead>
+          <tr>
+            <th>Periodo académico</th>
+            <th>Boletín</th>
+          </tr>
+        </thead>
 
-    </main>
+        <tbody id="tablaPeriodos">
+          <!-- Filas dinámicas -->
+        </tbody>
+      </table>
+    </section>
 
-
+  </main>
 
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="main-footer">
-      <div class="footer-section">Somos una institución sobre...</div>
-      <div class="footer-section">Redes...</div>
-      <div class="footer-section">Cosas...</div>
-    </footer>
 
-    <script src="../../globales/msg/mensaje.js"></script>
-    <script src="../../globales/validacion/validacion.js"></script>
-    
-    <script src="./boletin_particular.js" defer></script>
-    <script src="./descargar_boletin.js"></script>
 
-    <script src="../../header/finalizar_sesion.js"></script>
-    <script src="../../header/pagina_inicio.js"> </script>
+  <!-- ===== FOOTER ===== -->
+  <footer class="main-footer">
+    <div class="footer-section">Somos una institución sobre...</div>
+    <div class="footer-section">Redes...</div>
+    <div class="footer-section">Cosas...</div>
+  </footer>
+
+  <script src="../../globales/config.js"></script>
+  <script src="../../globales/msg/mensaje.js"></script>
+  <script src="../../globales/validacion/validacion.js"></script>
+
+  <script src="./boletin_particular.js" defer></script>
+  <script src="./descargar_boletin.js"></script>
+
+  <script src="../../header/finalizar_sesion.js"></script>
+  <script src="../../header/pagina_inicio.js"> </script>
 
 </body>
+
 </html>

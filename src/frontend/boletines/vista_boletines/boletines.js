@@ -2,27 +2,27 @@ validarAcceso("acudiente");
 
 const username = localStorage.getItem("username");
 
-fetch("http://127.0.0.1:8000/api/listadoEstudiantesBoletines/", {
+fetch(`${API_BASE_URL}/api/listadoEstudiantesBoletines/`, {
     method: "POST",
-    headers: { 
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem("access_token")}`
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`
     },
     body: JSON.stringify({ username })
 })
-.then(resp => resp.json())
-.then(data => {
+    .then(resp => resp.json())
+    .then(data => {
 
-    if (data.error) {
-        showMessage(data.error || "Ocurrió un error inesperado", "error");
-        return;
-    }
+        if (data.error) {
+            showMessage(data.error || "Ocurrió un error inesperado", "error");
+            return;
+        }
 
-    cargarBoletines(data.estudiantes);
-})
-.catch(err => {
-    showMessage(err || "Ocurrió un error inesperado", "error");
-});
+        cargarBoletines(data.estudiantes);
+    })
+    .catch(err => {
+        showMessage(err || "Ocurrió un error inesperado", "error");
+    });
 
 function cargarBoletines(lista) {
     const tabla = document.getElementById("tablaBoletines");

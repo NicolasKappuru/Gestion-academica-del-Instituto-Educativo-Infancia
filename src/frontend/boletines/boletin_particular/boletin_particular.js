@@ -8,7 +8,7 @@ const nombre_est = localStorage.getItem("nombre_estudiante_boletin");
 
 document.getElementById("nombreEstudiante").innerText = nombre_est;
 
-fetch("http://127.0.0.1:8000/api/listadoBoletinesEstudiante/", {
+fetch(`${API_BASE_URL}/api/listadoBoletinesEstudiante/`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -16,22 +16,22 @@ fetch("http://127.0.0.1:8000/api/listadoBoletinesEstudiante/", {
     },
     body: JSON.stringify({ id_persona: id_est })
 })
-.then(resp => resp.json())
-.then(data => {
-    if (data.boletines.length === 0) {
-        tabla.innerHTML = `
+    .then(resp => resp.json())
+    .then(data => {
+        if (data.boletines.length === 0) {
+            tabla.innerHTML = `
             <tr><td colspan="2">El estudiante no tiene boletines disponibles</td></tr>
         `;
-        return;
-    }
+            return;
+        }
 
-    cargarPeriodos(data.boletines);
-})
-.catch(err => {
-    tabla.innerHTML = `
+        cargarPeriodos(data.boletines);
+    })
+    .catch(err => {
+        tabla.innerHTML = `
         <tr><td colspan="2">Error cargando boletines</td></tr>
     `;
-});
+    });
 
 function cargarPeriodos(lista) {
     tabla.innerHTML = "";

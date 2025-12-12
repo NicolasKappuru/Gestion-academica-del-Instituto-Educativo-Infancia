@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
       !infante.fechaNacimiento ||
       !infante.grado
     ) {
-      showMessage("Por favor, completa todos los campos obligatorios." , "error");
+      showMessage("Por favor, completa todos los campos obligatorios.", "error");
       window.Intentos.fallo();
 
       return;
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. Autorización
     if (!acudiente.autorizo) {
-      showMessage("Debes autorizar el uso de datos personales." , "error");
+      showMessage("Debes autorizar el uso de datos personales.", "error");
       window.Intentos.fallo();
       return;
     }
@@ -106,9 +106,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Validar rango entre 2 y 4 años
     if (edad < 2 || edad > 4) {
-    showMessage("El infante debe tener entre 2 y 4 años de edad.", "error");
-    window.Intentos.fallo();
-    return;
+      showMessage("El infante debe tener entre 2 y 4 años de edad.", "error");
+      window.Intentos.fallo();
+      return;
     }
 
     // Transformar nombres a mayúsculas con formato capitalizado
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     (async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/formularioInscripcion/", {
+        const response = await fetch(`${API_BASE_URL}/api/formularioInscripcion/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

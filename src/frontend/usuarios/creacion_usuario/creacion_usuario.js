@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const isValidEmail = (str) => /^[\w.-]+@[A-Za-z]+\.[A-Za-z]{2,}$/.test(str);
     const isOnlyLetters = (str) => /^[A-Za-z\s]+$/.test(str);
     const capitalize = (str) =>
-    str
-        .toLowerCase()
-        .replace(/\b\w/g, (c) => c.toUpperCase())
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
+        str
+            .toLowerCase()
+            .replace(/\b\w/g, (c) => c.toUpperCase())
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
 
     const ROLES_MAP = {
         "Profesor": "profesor",
@@ -43,34 +43,34 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!isValidEmail(email)) {
-        showMessage("Ingrese un correo electrónico válido.", "error");
-        window.Intentos.fallo();
-        return;
+            showMessage("Ingrese un correo electrónico válido.", "error");
+            window.Intentos.fallo();
+            return;
         }
 
         if (!isOnlyNumbers(nit)) {
-        showMessage("La cédula solo debe contener números.", "error");
-        window.Intentos.fallo();
-        return;
+            showMessage("La cédula solo debe contener números.", "error");
+            window.Intentos.fallo();
+            return;
         }
 
         if (!primerNombre || !primerApellido) {
-        showMessage("Debe ingresar al menos primer nombre y primer apellido.", "error");
-        window.Intentos.fallo();
-        return;
+            showMessage("Debe ingresar al menos primer nombre y primer apellido.", "error");
+            window.Intentos.fallo();
+            return;
         }
 
         const nombresYApellidos = [
-        primerNombre,
-        segundoNombre,
-        primerApellido,
-        segundoApellido
+            primerNombre,
+            segundoNombre,
+            primerApellido,
+            segundoApellido
         ].filter(Boolean);
 
         if (!nombresYApellidos.every(isOnlyLetters)) {
-        showMessage("Solo se permiten letras en los campos de nombre y apellido.", "error");
-        window.Intentos.fallo();
-        return;
+            showMessage("Solo se permiten letras en los campos de nombre y apellido.", "error");
+            window.Intentos.fallo();
+            return;
         }
 
         const pNombre = capitalize(primerNombre);
@@ -82,21 +82,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const role = ROLES_MAP[rolTexto];
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/crearUsuario/", {
+            const response = await fetch(`${API_BASE_URL}/api/crearUsuario/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("access_token")
                 },
                 body: JSON.stringify({
-                role: role,
-                email: email,
-                nit: nit,
-                primer_nombre: primerNombre,
-                segundo_nombre: segundoNombre,
-                primer_apellido: primerApellido,
-                segundo_apellido: segundoApellido
-            })
+                    role: role,
+                    email: email,
+                    nit: nit,
+                    primer_nombre: primerNombre,
+                    segundo_nombre: segundoNombre,
+                    primer_apellido: primerApellido,
+                    segundo_apellido: segundoApellido
+                })
             });
 
             const data = await response.json();

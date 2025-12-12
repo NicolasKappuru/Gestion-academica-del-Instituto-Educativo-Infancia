@@ -3,19 +3,19 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // ===== Buscar botón =====
-    const botonesPosibles = ["btnGuardar","btnGuardarBoletin","btnGuardarBoletines","btn-guardar"];
+    const botonesPosibles = ["btnGuardar", "btnGuardarBoletin", "btnGuardarBoletines", "btn-guardar"];
     let btnGuardar = null;
 
     for (let id of botonesPosibles) {
         const el = document.getElementById(id);
-        if (el) { 
-            btnGuardar = el; 
-            break; 
+        if (el) {
+            btnGuardar = el;
+            break;
         }
     }
 
-    if (!btnGuardar) { 
-        btnGuardar = document.querySelector(".btn-guardar"); 
+    if (!btnGuardar) {
+        btnGuardar = document.querySelector(".btn-guardar");
     }
 
     if (!btnGuardar) {
@@ -66,16 +66,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // ===== Preparar payload =====
-        const payload = { 
-            username, 
-            id_estudiante: idEstudiante, 
-            evaluaciones 
+        const payload = {
+            username,
+            id_estudiante: idEstudiante,
+            evaluaciones
         };
         console.log("📤 Payload a enviar:", payload);
 
         // ===== Enviar al backend =====
         try {
-            const resp = await fetch("http://127.0.0.1:8000/api/generarBoletin/", {
+            const resp = await fetch(`${API_BASE_URL}/api/generarBoletin/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

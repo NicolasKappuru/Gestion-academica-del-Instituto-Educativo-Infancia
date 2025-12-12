@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarInfoSolicitud();
 
     function cargarInfoSolicitud() {
-        fetch('http://127.0.0.1:8000/api/citaciones/solicitudes/')
+        fetch(`${API_BASE_URL}/api/citaciones/solicitudes/`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('DB Error');
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lugar: lugar
         };
 
-        fetch('http://127.0.0.1:8000/api/citaciones/entrevista/', {
+        fetch(`${API_BASE_URL}/api/citaciones/entrevista/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Administrador académico</title>
@@ -10,92 +11,94 @@
 </head>
 
 <body>
-    <!-- ===== HEADER ===== -->
-    <header class="main-header">
-      <div class="header-logo">
-        <div class="logo-circle"></div>
-        <div class="logo-text">
-          <h1>Instituto educativo</h1>
-          <h2>Infancia</h2>
-        </div>
+  <!-- ===== HEADER ===== -->
+  <header class="main-header">
+    <div class="header-logo">
+      <div class="logo-circle"></div>
+      <div class="logo-text">
+        <h1>Instituto educativo</h1>
+        <h2>Infancia</h2>
+      </div>
+    </div>
+
+    <nav class="header-nav">
+      <a href="../interfaz inicial/main.html" class="nav-link" id="btn-inicio">Inicio</a>
+      <span class="nav-link">Contacto</span>
+      <div class="nav-box">
+        <span class="nav-icon">📅</span>
+      </div>
+      <a href="./login.html" class="nav-link login-link">
+        Iniciar sesión
+      </a>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="admin-academico-container">
+
+    <section class="panel-grupos">
+
+      <h2 class="titulo-seccion">Lista de grupos</h2>
+
+      <div class="contenedor-tabla">
+        <table class="tabla-grupos">
+          <thead>
+            <tr>
+              <th>Grupo</th>
+              <th>Profesor director</th>
+              <th>Citación</th>
+            </tr>
+          </thead>
+
+          <tbody id="tablaGrupos">
+            <!-- Se llena dinámicamente -->
+          </tbody>
+        </table>
       </div>
 
-      <nav class="header-nav">
-        <a href="../interfaz inicial/main.html" class="nav-link" id="btn-inicio">Inicio</a>
-        <span class="nav-link">Contacto</span>
-        <div class="nav-box">
-          <span class="nav-icon">📅</span>
-        </div>
-        <a href="./login.html" class="nav-link login-link">
-          Iniciar sesión
-        </a>
-      </nav>
-    </header>
-
-    <!-- ===== MAIN ===== -->
-    <main class="admin-academico-container">
-
-      <section class="panel-grupos">
-
-        <h2 class="titulo-seccion">Lista de grupos</h2>
-
-        <div class="contenedor-tabla">
-          <table class="tabla-grupos">
-            <thead>
-              <tr>
-                <th>Grupo</th>
-                <th>Profesor director</th>
-                <th>Citación</th>
-              </tr>
-            </thead>
-
-            <tbody id="tablaGrupos">
-              <!-- Se llena dinámicamente -->
-            </tbody>
-          </table>
-        </div>
-
-        <!-- ================================
+      <!-- ================================
              TEMPLATE PARA FILA DE GRUPO
         ================================= -->
-        <template id="filaGrupoTemplate">
-            <tr>
-                <td class="td-nombre"></td>
+      <template id="filaGrupoTemplate">
+        <tr>
+          <td class="td-nombre"></td>
 
-                <td class="td-profesor"></td>
+          <td class="td-profesor"></td>
 
-                <td>
-                    <button class="btn-tabla btn-realizar">Realizar</button>
-                </td>
-            </tr>
-        </template>
+          <td>
+            <button class="btn-tabla btn-realizar">Realizar</button>
+          </td>
+        </tr>
+      </template>
 
-      </section>
+    </section>
 
-      <section class="panel-opciones">
-        <div class="opcion-card">
-            <h3>Solicitudes de inscripción</h3>
-            <button class="btn-opcion">
-                Administrar solicitudes
-            </button>
-        </div>
-      </section>
+    <section class="panel-opciones">
+      <div class="opcion-card">
+        <h3>Solicitudes de inscripción</h3>
+        <button class="btn-opcion">
+          Administrar solicitudes
+        </button>
+      </div>
+    </section>
 
-    </main>
+  </main>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="main-footer">
-      <div class="footer-section">Somos una institución sobre...</div>
-      <div class="footer-section">Redes...</div>
-      <div class="footer-section">Cosas...</div>
-    </footer>
+  <!-- ===== FOOTER ===== -->
+  <footer class="main-footer">
+    <div class="footer-section">Somos una institución sobre...</div>
+    <div class="footer-section">Redes...</div>
+    <div class="footer-section">Cosas...</div>
+  </footer>
 
-    <script src="../../globales/validacion/validacion.js"></script>
-    <script src="../../globales/msg/mensaje.js"></script>
-    <script type="module" src="./vista_admin_academico.js"></script>
+  <script src="../../globales/config.js"></script>
+  <script src="../../globales/validacion/validacion.js"></script>
+  <script src="../../globales/msg/mensaje.js"></script>
+  <script type="module" src="./vista_admin_academico.js"></script>
 
-    <script src="../../header/finalizar_sesion.js"></script>
-    <script src="../../header/pagina_inicio.js"> </script>
+  <script src="../../header/finalizar_sesion.js"></script>
+  <script src="../../header/pagina_inicio.js"> </script>
 
 </body>
+
 </html>

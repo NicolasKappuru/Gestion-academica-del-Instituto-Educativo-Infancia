@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-    validarAcceso("profesor"); 
+    validarAcceso("profesor");
 
     const username = localStorage.getItem("username");
 
@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-        const resp = await fetch("http://127.0.0.1:8000/api/listadoEstudiantesGrupo/", {
+        const resp = await fetch(`${API_BASE_URL}/api/listadoEstudiantesGrupo/`, {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("access_token")}`
             },

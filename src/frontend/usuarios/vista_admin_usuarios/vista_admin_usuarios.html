@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Administrador de usuarios</title>
@@ -11,96 +12,98 @@
 </head>
 
 <body>
-    <!-- ===== HEADER ===== -->
-    <header class="main-header">
-      <div class="header-logo">
-        <div class="logo-circle"></div>
-        <div class="logo-text">
-          <h1>Instituto educativo</h1>
-          <h2>Infancia</h2>
-        </div>
+  <!-- ===== HEADER ===== -->
+  <header class="main-header">
+    <div class="header-logo">
+      <div class="logo-circle"></div>
+      <div class="logo-text">
+        <h1>Instituto educativo</h1>
+        <h2>Infancia</h2>
+      </div>
+    </div>
+
+    <nav class="header-nav">
+      <a href="../interfaz inicial/main.html" class="nav-link" id="btn-inicio">Inicio</a>
+      <span class="nav-link">Contacto</span>
+      <div class="nav-box">
+        <span class="nav-icon">📅</span>
+      </div>
+      <a href="./login.html" class="nav-link login-link">
+        Iniciar sesión
+      </a>
+    </nav>
+
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="admin-usuarios-container">
+
+    <div class="admin-header-box">
+
+      <h2 class="titulo-admin">Consultar usuarios</h2>
+
+      <div class="rol-selector">
+        <label for="rolSelect">ROL</label>
+        <select id="rolSelect">
+          <option value="">Seleccione...</option>
+          <option value="acudiente">Acudiente</option>
+          <option value="profesor">Profesor</option>
+          <option value="directivo">Administrador académico</option>
+          <option value="administrador">Administrador de usuarios</option>
+        </select>
       </div>
 
-      <nav class="header-nav">
-        <a href="../interfaz inicial/main.html" class="nav-link" id="btn-inicio">Inicio</a>
-        <span class="nav-link">Contacto</span>
-        <div class="nav-box">
-          <span class="nav-icon">📅</span>
-        </div>
-        <a href="./login.html" class="nav-link login-link">
-          Iniciar sesión
-        </a>
-      </nav>
+      <button id="btnCrearUsuarioAcudinte" class="btn-crear-usuario-acudiente">
+        Crear usuario acudiente
+      </button>
 
-    </header>
+      <button id="btnCrearUsuario" class="btn-crear-usuario">
+        Crear usuario
+      </button>
 
-    <!-- ===== MAIN ===== -->
-    <main class="admin-usuarios-container">
+    </div>
 
-        <div class="admin-header-box">
+    <!-- Tabla -->
+    <section class="tabla-usuarios">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
 
-            <h2 class="titulo-admin">Consultar usuarios</h2>
-
-            <div class="rol-selector">
-            <label for="rolSelect">ROL</label>
-            <select id="rolSelect">
-                <option value="">Seleccione...</option>
-                <option value="acudiente">Acudiente</option>
-                <option value="profesor">Profesor</option>
-                <option value="directivo">Administrador académico</option>
-                <option value="administrador">Administrador de usuarios</option>
-            </select>
-            </div>
-
-            <button id="btnCrearUsuarioAcudinte" class="btn-crear-usuario-acudiente">
-            Crear usuario acudiente
-            </button>
-
-            <button id="btnCrearUsuario" class="btn-crear-usuario">
-            Crear usuario
-            </button>
-
-        </div>
-
-        <!-- Tabla -->
-        <section class="tabla-usuarios">
-            <table>
-            <thead>
-                <tr>
-                <th>Nombre</th>
-                <th>Estado</th>
-                <th>Acción</th>
-                </tr>
-            </thead>
-
-            <tbody id="tablaBody">
-                <!-- Se llenará dinámicamente -->
-            </tbody>
-            </table>
-        </section>
-        <div class="paginacion">
-            <button id="btnPrev" class="btn-pagina">Anterior</button>
-            <span id="pageInfo"></span>
-            <button id="btnNext" class="btn-pagina">Siguiente</button>
-        </div>
-    </main>
+        <tbody id="tablaBody">
+          <!-- Se llenará dinámicamente -->
+        </tbody>
+      </table>
+    </section>
+    <div class="paginacion">
+      <button id="btnPrev" class="btn-pagina">Anterior</button>
+      <span id="pageInfo"></span>
+      <button id="btnNext" class="btn-pagina">Siguiente</button>
+    </div>
+  </main>
 
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="main-footer">
-      <div class="footer-section">Somos una institución sobre...</div>
-      <div class="footer-section">Redes...</div>
-      <div class="footer-section">Cosas...</div>
-    </footer>
+  <!-- ===== FOOTER ===== -->
+  <footer class="main-footer">
+    <div class="footer-section">Somos una institución sobre...</div>
+    <div class="footer-section">Redes...</div>
+    <div class="footer-section">Cosas...</div>
+  </footer>
 
-    <script src="../../globales/msg/mensaje.js"></script>
-    <script src="../../globales/validacion/validacion.js"></script>
-    
-    <script type="module" src="vista_admin_usuarios.js"></script>
+  <script src="../../globales/config.js"></script>
+  <script src="../../globales/msg/mensaje.js"></script>
+  <script src="../../globales/validacion/validacion.js"></script>
 
-    <script src="../../header/finalizar_sesion.js"></script>
-    <script src="../../header/pagina_inicio.js"> </script>
+  <script type="module" src="vista_admin_usuarios.js"></script>
+
+  <script src="../../header/finalizar_sesion.js"></script>
+  <script src="../../header/pagina_inicio.js"> </script>
 
 
 </body>
+
 </html>

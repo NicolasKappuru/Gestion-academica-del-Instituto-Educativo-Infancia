@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const token = localStorage.getItem("access_token");
 
-            const response = await fetch("http://127.0.0.1:8000/api/listarCreacionAcudientes/", {
+            const response = await fetch(`${API_BASE_URL}/api/listarCreacionAcudientes/`, {
                 method: "POST",
-                headers: { 
+                headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const data = await response.json();
-            
+
             if (!response.ok) {
                 showMessage("Error al obtener datos, intente más tarde", "error");
                 console.error("Error al obtener listado:", data);
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/crearUsuarioAcudiente/", {
+            const response = await fetch(`${API_BASE_URL}/api/crearUsuarioAcudiente/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!response.ok) {
                 showMessage("Error: " + (data.error || "No se pudo procesar la solicitud"), "error");
-                
+
                 // IMPORTANTE: si ya existe el usuario, backend marca como Finalizada → recargar lista
                 if (data.error && data.error.includes("Ya existe un usuario")) {
                     cargarListado(paginaActual);

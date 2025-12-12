@@ -5,7 +5,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/login/", {
+    const response = await fetch(`${API_BASE_URL}/api/login/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -27,27 +27,27 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
       setTimeout(() => {
 
-      if (data.role === "acudiente") {
-        window.location.href = "../boletines/vista_boletines/boletines.html";
+        if (data.role === "acudiente") {
+          window.location.href = "../boletines/vista_boletines/boletines.html";
 
-      } else if (data.role === "profesor") {
-        window.location.href = "../evaluacion/vista_profesor/vista_profesor.html";
+        } else if (data.role === "profesor") {
+          window.location.href = "../evaluacion/vista_profesor/vista_profesor.html";
 
-      } else if (data.role === "administrador_academico") {
-        window.location.href = "../academico/vista_admin_academico/vista_admin_academico.html";
+        } else if (data.role === "administrador_academico") {
+          window.location.href = "../academico/vista_admin_academico/vista_admin_academico.html";
 
-      } else if (data.role === "administrador_usuarios") {
-        window.location.href = "../usuarios/vista_admin_usuarios/vista_admin_usuarios.html";
+        } else if (data.role === "administrador_usuarios") {
+          window.location.href = "../usuarios/vista_admin_usuarios/vista_admin_usuarios.html";
 
-      } else {
-        Intentos.registrarFallo();
-      }
+        } else {
+          Intentos.registrarFallo();
+        }
 
-    }, 500);
+      }, 500);
 
     } else {
-        window.Intentos.fallo();
-        showMessage(data.error || "Error en el inicio de sesión.");
+      window.Intentos.fallo();
+      showMessage(data.error || "Error en el inicio de sesión.");
     }
   } catch (error) {
     window.Intentos.fallo();

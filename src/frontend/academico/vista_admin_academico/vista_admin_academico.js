@@ -11,7 +11,7 @@ async function cargarGrupos() {
     try {
         const token = localStorage.getItem("access_token");
 
-        const response = await fetch("http://127.0.0.1:8000/api/listadoGruposPeriodo/", {
+        const response = await fetch(`${API_BASE_URL}/api/listadoGruposPeriodo/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

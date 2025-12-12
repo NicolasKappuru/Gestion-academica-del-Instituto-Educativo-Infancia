@@ -34,7 +34,7 @@ form.addEventListener('submit', async (e) => {
     const password_2 = document.getElementById('password_2').value;
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/restablecer/validar-contrasena/', {
+        const response = await fetch(`${API_BASE_URL}/api/restablecer/validar-contrasena/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

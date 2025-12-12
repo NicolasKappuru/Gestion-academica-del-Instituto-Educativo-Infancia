@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         console.log("ID", idEstudiante)
 
-        const resp = await fetch("http://127.0.0.1:8000/api/listEvaluacionEstudiante/", {
+        const resp = await fetch(`${API_BASE_URL}/api/listEvaluacionEstudiante/`, {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("access_token")}`
             },
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <td>${ev.logro}</td>
                 <td class="descripcion">${ev.descripcion}</td>
 
-                ${["corte1","corte2","corte3"].map(c => `
+                ${["corte1", "corte2", "corte3"].map(c => `
                     <td>
                         <select name="${c}_${index}" class="select-evaluacion">
                             ${opciones.map(opt => `
