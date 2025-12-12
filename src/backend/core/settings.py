@@ -77,12 +77,14 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
     "https://frontend-gestion-academica.onrender.com",
     "https://instituto-educativo-infancia.onrender.com",
+    FRONTEND_URL,
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://frontend-gestion-academica.onrender.com",
     "https://instituto-educativo-infancia.onrender.com",
     "https://backend-instituto-educativo-infancia.onrender.com",
+    FRONTEND_URL,
 ]
 
 REST_FRAMEWORK = {
